@@ -1,0 +1,33 @@
+<ion-view view-title="Forgot Password">
+  <ion-content >
+    <div class="bar bar-header">
+      <div class="col">
+      <a href="#/views/login/login.html"class="ion-arrow-left-c"></a>
+    </div>
+    </div>
+    <br><br>
+    <div class="text-center padding">
+      <i class="icon ion-wand larger positive"></i>
+      <h4>Digite seu Email</h4>
+    </div>
+    <form name="forgotForm" novalidate ng-submit="forgotForm.$valid && resetpassword(user)">
+   <div class="list">
+      <label class="item item-input item-floating-label" ng-class="{ 'has-error' : forgotForm.txtemail.$invalid && forgotForm.$submitted }">
+        <span class="input-label">Email</span>
+        <input name="txtemail" ng-model="user.email" placeholder="Email" type="email"
+        ng-minlength="5"
+        ng-maxlength="30"
+        required>
+      </label>
+      <div class="form-errors" ng-messages="forgotForm.txtemail.$error" ng-if="forgotForm.$submitted">
+        <div class="form-error" ng-message="required">Campo obrigatório</div>
+        <div class="form-error" ng-message="email">Digite um email válido</div>
+        <div class="form-error" ng-message="minlength">Este campo deve ter no mínimo 5 caracteres</div>
+        <div class="form-error" ng-message="maxlength">Este campo deve ter no máximo 30 caracteres</div>
+      </div>
+      <div class="padding-top">
+      <input type="submit" value="Redefinir Senha" class="button button-block button-positive"/>
+  </form>
+    </div>
+  </ion-content>
+</ion-view>

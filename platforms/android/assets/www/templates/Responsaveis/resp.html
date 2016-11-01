@@ -1,0 +1,93 @@
+<ion-view view-title="Responsáveis" ng-controller="responsaveisCtrl as vm">
+  <div ng-if="!vm.isCreating && !vm.isEditing">
+  <ion-content>
+    <label class="item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="search" placeholder="Digite o Nome e/ou CPF">
+    </label>
+    <div class="row">
+	  	<button class="col 20 button button-small">Pesquisar</button>
+  	</div>
+    <ion-list show-reorder="reordering">
+      <ion-item class="item-remove-animate item-icon-right" ng-repeat="object in vm.data"
+           ng-class="{'active':vm.isCurrent(object.id)}">
+            <h2>Nome: {{object.nome}}</h2>
+            <p>CPF: {{object.cpf}}</p>
+            <a ng-click="vm.setEdited(object)" class="button button-light icon ion-compose"></a>
+        <ion-option-button class="button-assertive icon-left ion-trash-b" ng-click="vm.delete(object.id)"></ion-option-button>
+      </ion-item>
+    </ion-list>
+
+    <br><br><br>
+  </ion-content>
+    <div class="tabs tabs-positive">
+      <a ng-click="vm.isCreating = true" class="tab-item  ion-person-add"> &nbsp;Adicionar</a>
+    </div>
+  </div>
+
+
+<div ng-if="vm.isCreating">
+<!--Criar-->
+
+  <ion-content>
+    <div class="bar bar-header">
+        <h2 class="title">Insira os dados do Responsável</h2>
+        <i ng-click="vm.cancelCreate()" class="ion-arrow-left-c"></i>
+    </div>
+    <br><br>
+		<form name="createForm" class="newForm" role="form" ng-submit="vm.create(vm.newObject)" novalidate>
+		<div class="list card">
+			<div class="item item-input item-floating-label">
+				<span class="input-label">CPF</span>
+        <input type="text" ng-minlength='11' ng-maxlength='11' ng-required="true" placeholder="CPF" ng-model="vm.newObject.cpf" name="formText"></input>
+          <h4 class="form-error" ng-show="createForm.$error.required">CPF Obrigatório!</h4>
+          <h4 class="form-error" ng-show="createForm.$error.maxlength">Digite um CPF válido!</h4>
+          <h4 class="form-error" ng-show="createForm.$error.minlength"></h4>
+			</div>
+      <div class="item item-input item-stacked-label">
+				<span class="input-label">Nome</span>
+        <input type="text" placeholder="Nome" ng-model="vm.newObject.nome"/>
+			</div>
+		</form>
+			<div class="padding">
+        <button class="button button-block button-positive" ng-show='createForm.$valid' type="submit">Salvar</button>
+			</div>
+
+		</div>
+	</ion-content>
+</ion-view>
+
+</div>
+<div ng-if="vm.isEditing && !vm.isCreating">
+
+<ion-content>
+<!--Editar-->
+  <div class="bar bar-header">
+      <h1 class="title"> {{vm.edited.nome}}</h1>
+      <span ng-click="vm.cancelEditing()" class="ion-arrow-left-c"></span>
+  </div>
+  <br><br>
+  <form name="editForm" role="form" ng-submit="vm.update(vm.edited)" novalidate>
+  <div class="list card">
+    <div class="item item-input item-floating-label">
+      <span class="input-label">CPF</span>
+      <span name="textCpf" class="input-label">CPF</span>
+      <input type="text" ng-minlength="11" ng-maxlength="11" ng-required="true" placeholder="CPF" ng-model="vm.edited.cpf"></input>
+      <h4 class="form-error" ng-show="editForm.$error.required">Campo Obrigatório!</h4>
+      <h4 class="form-error" ng-show="editForm.$error.maxlength">Digite um CPF válido!</h4>
+      <h4 class="form-error" ng-show="editForm.$error.minlength"></h4>
+    </div>
+    <div class="item item-input item-floating-label">
+      <span class="input-label">Nome</span>
+      <input type="text" placeholder="Nome" ng-model="vm.edited.nome"></input>
+    </div>
+    </form>
+    <div class="padding">
+      <button class="button button-block button-positive" ng-show='editForm.$valid' type="submit">Salvar</button>
+    </div>
+
+  </div>
+</ion-content>
+
+</div>
+</ion-view>

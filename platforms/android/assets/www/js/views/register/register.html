@@ -1,0 +1,48 @@
+<ion-view view-title="Register">
+  <ion-content>
+    <div class="bar bar-header">
+      <div class="col">
+      <a href="#/views/login/login.html"class="ion-arrow-left-c"></a>
+    </div>
+    </div>
+    <br><br>
+    <div class="text-center padding-top">
+
+      <i class="icon ion-person-add larger positive"></i>
+      <h4>Digite seu Email e Senha</h4>
+    </div>
+    <form name="registerForm" novalidate ng-submit="registerForm.$valid && register(user)"
+    ng-class="{ 'has-error' : registerForm.txtemail.$invalid && registerForm.$submitted }">
+    <div class="list">
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Email</span>
+        <input name="txtemail" type="email" ng-model="user.email" placeholder="Email"
+        ng-minlength="5"
+        ng-maxlength="30"
+        required>
+      </label>
+      <div class="form-errors" ng-messages="registerForm.txtemail.$error" ng-if="registerForm.$submitted">
+        <div class="form-error" ng-message="required">Exemplo: nome@gmail.com</div>
+        <div class="form-error" ng-message="email">Digite um email válido.</div>
+        <div class="form-error" ng-message="maxlength">Ops, esse email é muito grande!</div>
+      </div>
+        <label class="item item-input item-floating-label" ng-class="{ 'has-error-lr' : registerForm.txtpassword.$invalid  && registerForm.$submitted}">
+        <span class="input-label">Senha</span>
+        <input name="txtpassword" type="password" ng-model="user.password" placeholder="Senha"
+        ng-minlength="5"
+        ng-maxlength="25"
+        required>
+      </label>
+      <div class="form-errors" ng-messages="registerForm.txtpassword.$error" ng-if="registerForm.$submitted">
+        <div class="form-error" ng-message="required">Digite sua senha</div>
+        <div class="form-error" ng-message="minlength">Sua senha deve ter mais de 5 caracteres</div>
+        <div class="form-error" ng-message="maxlength">Sua senha deve ter até 25 caracteres</div>
+        <div class="form-error" ng-message="pattern">Digite apenas letras e números</div>
+      </div>
+    </div>
+    <div class="padding-top">
+      <input type="submit" value="Registrar" class="button button-block button-positive"/>
+    </div>
+  </form>
+  </ion-content>
+</ion-view>
