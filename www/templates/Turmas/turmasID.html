@@ -1,12 +1,9 @@
-<ion-view view-title="Turma: {{vm.perfil.turma}}" ng-controller="PerfilCtrl as vm">
+<ion-view view-title="{{vm.perfil.turma}}" ng-controller="TurmaIDCtrl as vm">
   <ion-content>
     <label class="item item-input">
         <i class="icon ion-search placeholder-icon"></i>
-        <input type="search" placeholder="Digite o Nome e/ou CPF">
+        <input type="search" placeholder="Digite o Nome do aluno ou do responsável" ng-model="searchText">
     </label>
-    <div class="row">
-      <button class="col 20 button button-small">Pesquisar</button>
-    </div>
     <ion-list show-reorder="reordering">
       <ion-item class="item-remove-animate item-icon-right" >
             <h2>Turma: {{vm.perfil.turma}}</h2>
@@ -17,11 +14,11 @@
     <div class="item item-divider">
       Alunos
     </div>
-    <ion-list show-reorder="reordering">
-      <ion-item data-ng-repeat="object in vm.data | filter: {turmas: '1' }" class="item-remove-animate item-icon-right" >
-        <h2>Turma: {{object.nome}}</h2>
-        <p>Matrícula: {{object.matricula}}</p>
-        <p>Responsável: {{object.__metadata.descriptives.responsaveis.label}}</p>
+    <ion-list>
+      <ion-item ng-repeat="object in vm.data | filter: {turmas: vm.turma} | filter:searchText">
+          <h2>Turma: {{object.nome}}</h2>
+          <p>Matrícula: {{object.matricula}}</p>
+          <p>Responsável: {{object.__metadata.descriptives.responsaveis.label}}</p>
       </ion-item>
     </ion-list>
   </ion-content>

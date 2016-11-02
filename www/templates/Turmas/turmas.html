@@ -3,12 +3,9 @@
   <ion-content>
     <label class="item item-input">
         <i class="icon ion-search placeholder-icon"></i>
-        <input type="search" placeholder="Digite o Nome e/ou CPF">
+        <input type="search" placeholder="Digite o nome da Turma. Ex: Turma A" ng-model="searchText">
     </label>
-    <div class="row">
-	  	<button class="col 20 button button-small">Pesquisar</button>
-  	</div>
-    <div  ng-repeat="object in vm.data" ng-class="{'active':vm.isCurrent(object.id)}" show-reorder="reordering">
+    <div  ng-repeat="object in vm.data | filter:searchText" ng-class="{'active':vm.isCurrent(object.id)}" show-reorder="reordering">
       <ion-item href="#/menu/turmas/{{object.id}}" class="item-remove-animate item-icon-right">
             <h2>Turma: {{object.turma}}</h2>
             <p>Período: {{object.periodo}}</p>
@@ -40,7 +37,7 @@
 		<div class="list card">
 			<div class="item item-input item-floating-label">
 				<span class="input-label">Turma</span>
-				<input type="text" placeholder="Turma" ng-model="vm.newObject.turma"></input>
+				<input type="text" placeholder="Turma" ng-model="vm.newObject.turma "></input>
 			</div>
       <div class="item item-input item-select">
         <span class="input-label">Período</span>

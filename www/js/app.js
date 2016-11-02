@@ -110,7 +110,7 @@
             views:{
               'menuContent':{
                 templateUrl:"templates/Turmas/turmasID.html",
-                controller: 'PerfilCtrl as vm'
+                controller: 'TurmaIDCtrl as vm'
               }
             }
         });
@@ -166,7 +166,7 @@
             }
         });
 
-$urlRouterProvider.otherwise("/menu/alunos");
+$urlRouterProvider.otherwise("/menu/turmas");
 });
 
 

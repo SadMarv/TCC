@@ -649,22 +649,11 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
           turmas.all()
                 .then(function (result) {
                     vm.data = result.data.data;
-                    $log.log(result);
+                    //$log.log(result);
                     Utils.hide();
                 });
         }
 
-        function getForID(id) {
-          turmas.fetch(id)
-                .then(function (result) {
-
-                    //$log.log(result);
-                    console.log(id);
-                    $state.go('menu.turmasID');
-                });
-
-
-        }
 
 
 
@@ -746,7 +735,6 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
         vm.isCurrent = isCurrent;
         vm.cancelEditing = cancelEditing;
         vm.cancelCreate = cancelCreate;
-        vm.getForID = getForID;
 
 
 
@@ -756,7 +744,19 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
 
     });
 
-    app.controller('PerfilCtrl', function(turmas, alunos, $stateParams, $scope, $log, Utils) {
+    app.filter('getById', function() {
+      return function(input, id) {
+        var i=0, len=input.length;
+        for (; i<len; i++) {
+          if (+input[i].id == +id) {
+            return input[i];
+          }
+        }
+        return null;
+      }
+    });
+
+    app.controller('TurmaIDCtrl', function(turmas, alunos, $stateParams, $scope, $log, $filter, Utils) {
           var vm = this;
 
 
@@ -767,14 +767,22 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
             turmas.fetch(id)
                   .then(function (result) {
                     vm.perfil = result.data;
+                    vm.turma = $stateParams.id;
                     Utils.hide();
 
-                      $log.log(result);
+
+                    // /  $log.log(vm.data);
                       //console.log(result);
                   });
 
 
           }
+
+          /*$scope.showdetails = function(turma_id){
+            var found = $filter('getById')(vm.data, turma_id);
+            $scope.selected = found[0].id;
+            console.log(found);
+       }*/
 
 
           function getAll() {
@@ -782,7 +790,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
             alunos.all()
                 .then(function (result) {
                     vm.data = result.data.data;
-                    $scope.perfil = vm.data;
+
                   //  $log.log('result' + JSON.stringify(vm.data));
                     //$log.log(result);
                     Utils.hide();
@@ -790,8 +798,9 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
           }
 
 
-          // Carrega perfil do usuario
+          // Carrega todos alunos
           getAll();
+          // Carrega turma por ID
           getForID($stateParams.id);
         });
 
@@ -1024,3 +1033,16 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
         getAll();
 
     });
+
+    app.controller('usuarioCtrl', function (responsaveis, $rootScope, $ionicPopup, $state, $scope) {
+
+      function getAll() {
+        responsaveis.all()
+              .then(function (result) {
+                  vm.data = result.data.data.length;
+                  $scope.numero = vm.data;
+                  console.log($scope.numero);
+              });
+      }
+
+});
