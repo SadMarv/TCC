@@ -1,0 +1,51 @@
+<ion-view view-title="{{vm.al.nome}}" ng-controller="TurmaIDCtrl as vm">
+<ion-content >
+    <!-- CREATING -->
+    <div class="bar bar-header">
+        <h2 class="title">Resumo do Dia de {{vm.al.nome}}</h2>
+    </div>
+    <br><br>
+    <div class="padding has-header">
+        <form name="resumoForm" class="create-form" role="form"
+              ng-submit="vm.create(vm.newObject)" novalidate>
+            <div class="list">
+              <div class="item item-input item-select">
+                <span class="input-label">Aluno</span>
+                <select ng-model="vm.newObject.alunos" >
+                  <option selected="{{vm.al.id}}" value="{{vm.al.id}}">{{vm.al.nome}}</option>
+                </select>
+              </div>
+              <label class="item item-input item-stacked-label">
+                  <span class="input-label">Data</span>
+                  <input type="date" class="form-control" ng-model="vm.newObject.data" placeholder="Digite a data">
+              </label>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Descrição</span>
+
+                    <textarea class="form-control" ng-model="vm.newObject.descricao" placeholder="Escreva a descrição"></textarea>
+                </label>
+                <ul class="list">
+                  <li class="item item-toggle">
+                     <strong>Fezes</strong>
+                     <label class="toggle toggle-positive">
+                       <input ng-model="vm.newObject.fezes" ng-init="vm.newObject.fezes = 'Não'" ng-true-value="'Sim'" ng-false-value="'Não'"  type="checkbox">
+                       <div class="track">
+                         <div class="handle"></div>
+                       </div>
+                     </label>
+                  </li>
+                  <li class="item item-toggle">
+                     <strong>Refeição</strong>
+                     <label class="toggle toggle-positive">
+                       <input ng-model="vm.newObject.refeicao" ng-init="vm.newObject.refeicao = 'Não'" ng-true-value="'Sim'" ng-false-value="'Não'"  type="checkbox">
+                       <div class="track">
+                         <div class="handle"></div>
+                       </div>
+                     </label>
+                  </li>
+                </ul>
+            </div>
+            <button class="button button-block button-positive" type="submit">Criar</button>
+        </form>
+    </div>
+</ion-content>

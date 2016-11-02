@@ -4,19 +4,16 @@
   <ion-content>
     <label class="item item-input">
         <i class="icon ion-search placeholder-icon"></i>
-        <input type="search" placeholder="Digite o Nome e/ou CPF">
+        <input type="search" placeholder="Digite o Nome e/ou CPF" ng-model="searchText">
     </label>
-    <div class="row">
-	  	<button class="col 20 button button-small">Pesquisar</button>
-  	</div>
     <div class="padding has-header">
-        <div class="list card" ng-repeat="object in vm.data"
+        <div class="list card" ng-repeat="object in vm.data | filter:searchText"
              ng-class="{'active':vm.isCurrent(object.id)}">
             <div class="item item-icon-right item-icon-left">
                 <i class="ion-compose icon" ng-click="vm.setEdited(object)"></i>
                 <p class="text-center">{{object.data | date: 'dd-MM-yyyy'}}</p>
                 <!--Abaixo virá o nome do Aluno com a relação do Banco de Dados-->
-                <h3 class="text-center"><b>{{object.name}}</b></h3>
+                <h3 class="text-center"><b>{{object.__metadata.descriptives.alunos.label}}</b></h3>
                 <br>
                 <i class="icon ion-close-round" ng-click="vm.delete(object.id)"></i>
             </div>
@@ -91,7 +88,7 @@
 <!--Editar-->
   <div class="bar bar-header">
       <!--Abaixo virá o nome do Aluno com a relação do Banco de Dados-->
-      <h1 class="title"> {{vm.edited.nome}}</h1>
+      <h1 class="title"> {{vm.edited.__metadata.descriptives.alunos.label}}</h1>
       <span ng-click="vm.cancelEditing()" class="ion-arrow-left-c"></span>
   </div>
   <br><br>

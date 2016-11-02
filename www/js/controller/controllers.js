@@ -157,7 +157,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
 
 
         function initCreateFormAtiv() {
-            vm.newObject = {data: '', descricao: '', fezes:'', refeicao:''};
+            vm.newObject = {data: '', descricao: '', fezes:'', refeicao:'', alunos:''};
         }
 
         function setEdited(object) {
@@ -744,7 +744,8 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
 
     });
 
-    app.filter('getById', function() {
+    //filtro por id
+    /*app.filter('getById', function() {
       return function(input, id) {
         var i=0, len=input.length;
         for (; i<len; i++) {
@@ -754,12 +755,64 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
         }
         return null;
       }
-    });
+    });*/
 
-    app.controller('TurmaIDCtrl', function(turmas, alunos, $stateParams, $scope, $log, $filter, Utils) {
-          var vm = this;
+    app.controller('TurmaIDCtrl', function(turmas, alunos, resumo, $stateParams, $state, $scope, $log, $filter, Utils) {
+      var vm = this;
+
+      $scope.date = new Date();
+
+      function getAll() {
+          Utils.show();
+          resumo.all()
+              .then(function (result) {
+                  vm.data = result.data.data;
+                  Utils.hide();
+                  $log.log(result);
+              });
+      }
+
+      function clearData(){
+          vm.data = null;
+      }
 
 
+
+      function create(object) {
+          resumo.create(object)
+              .then(function (result) {
+                  //cancelCreate();
+                  //getAll();
+                  
+                  $log.log(result);
+
+              });
+      }
+
+      function update(object) {
+          resumo.update(object.id, object)
+              .then(function (result) {
+                  cancelEditing();
+                  getAll();
+              });
+      }
+
+      function deleteObject(id) {
+         var confirmPopup = $ionicPopup.confirm({
+           title: 'Remover Resumo',
+           template: 'Tem certeza que deseja excluir?'
+         });
+         confirmPopup.then(function(res) {
+           if(res){
+             resumo.delete(id).then(function(result){
+                 getAll();
+             });
+           }else{
+                 cancelEditing();
+                 getAll();
+           }
+      });
+  }
 
 
           function getForID(id) {
@@ -777,6 +830,23 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
 
 
           }
+
+          function getalunoID(id) {
+            Utils.show();
+            alunos.fetch(id)
+                  .then(function (result) {
+                    vm.al = result.data;
+                    vm.aluno = $stateParams.id;
+                    Utils.hide();
+
+
+                    // /  $log.log(vm.data);
+                      //console.log(result);
+                  });
+
+
+          }
+          //filtro por id usando diretiva $filter
 
           /*$scope.showdetails = function(turma_id){
             var found = $filter('getById')(vm.data, turma_id);
@@ -797,11 +867,54 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
                 });
           }
 
+          function initCreateFormAtiv() {
+              vm.newObject = {data: '', descricao: '', fezes:'', refeicao:'', alunos:''};
+          }
+
+          function setEdited(object) {
+              vm.edited = angular.copy(object);
+              vm.isEditing = true;
+          }
+
+          function isCurrent(id) {
+              return vm.edited !== null && vm.edited.id === id;
+          }
+
+          function cancelEditing() {
+              vm.edited = null;
+              vm.isEditing = false;
+          }
+
+          function cancelCreate() {
+              initCreateFormAtiv();
+              vm.isCreating = false;
+          }
+
+          vm.objects = [];
+          vm.edited = null;
+          vm.isEditing = false;
+          vm.isCreating = false;
+          vm.getAll = getAll;
+          vm.create = create;
+          vm.update = update;
+          vm.delete = deleteObject;
+          vm.setEdited = setEdited;
+          vm.isCurrent = isCurrent;
+          vm.cancelEditing = cancelEditing;
+          vm.cancelCreate = cancelCreate;
+
+
+
+          initCreateFormAtiv();
+
+
 
           // Carrega todos alunos
           getAll();
           // Carrega turma por ID
           getForID($stateParams.id);
+
+          getalunoID($stateParams.id);
         });
 
     app.controller('alunosCtrl', function (alunos, turmas, responsaveis, $rootScope, $ionicPopup, $state, $scope, $http, Utils, $log, $filter) {
@@ -1033,16 +1146,3 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
         getAll();
 
     });
-
-    app.controller('usuarioCtrl', function (responsaveis, $rootScope, $ionicPopup, $state, $scope) {
-
-      function getAll() {
-        responsaveis.all()
-              .then(function (result) {
-                  vm.data = result.data.data.length;
-                  $scope.numero = vm.data;
-                  console.log($scope.numero);
-              });
-      }
-
-});

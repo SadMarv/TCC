@@ -115,6 +115,16 @@
             }
         });
 
+        $stateProvider.state("menu.alunoResumo",{
+            url:"/alunos/:id",
+            views:{
+              'menuContent':{
+                templateUrl:"templates/Turmas/alunoResumo.html",
+                controller: 'TurmaIDCtrl as vm'
+              }
+            }
+        });
+
         $stateProvider.state("menu.alunos",{
             url:"/alunos",
             views:{
@@ -166,7 +176,7 @@
             }
         });
 
-$urlRouterProvider.otherwise("/menu/turmas");
+$urlRouterProvider.otherwise("/menu/turmas/1");
 });
 
 

@@ -14,12 +14,21 @@
     <div class="item item-divider">
       Alunos
     </div>
-    <ion-list>
-      <ion-item ng-repeat="object in vm.data | filter: {turmas: vm.turma} | filter:searchText">
-          <h2>Turma: {{object.nome}}</h2>
+    <div>
+      <ion-item ng-repeat="object in vm.data | filter: {turmas: vm.turma} | filter:searchText"
+      class="item-icon-right" ng-class="{'active':vm.isCurrent(object.id)}" >
+          <h2>Aluno: {{object.nome}}</h2>
           <p>Matrícula: {{object.matricula}}</p>
           <p>Responsável: {{object.__metadata.descriptives.responsaveis.label}}</p>
+          <a href="#/menu/alunos/{{object.id}}" class="button button-light icon ion-compose"></a>
       </ion-item>
-    </ion-list>
+    </div>
   </ion-content>
+
+
+
+
+
+
+
   </ion-view>
