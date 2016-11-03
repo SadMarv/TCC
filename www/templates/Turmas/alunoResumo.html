@@ -9,19 +9,10 @@
         <form name="resumoForm" class="create-form" role="form"
               ng-submit="vm.create(vm.newObject)" novalidate>
             <div class="list">
-              <div class="item item-input item-select">
-                <span class="input-label">Aluno</span>
-                <select ng-model="vm.newObject.alunos" >
-                  <option selected="{{vm.al.id}}" value="{{vm.al.id}}">{{vm.al.nome}}</option>
-                </select>
-              </div>
-              <label class="item item-input item-stacked-label">
-                  <span class="input-label">Data</span>
-                  <input type="date" class="form-control" ng-model="vm.newObject.data" placeholder="Digite a data">
-              </label>
+                  <div class="id" ng-bind="vm.newObject.alunos = (vm.aluno)"></div>
+                  <div class="data" ng-bind="vm.newObject.data = date.substring(0, 21)"></div>
                 <label class="item item-input item-stacked-label">
                     <span class="input-label">Descrição</span>
-
                     <textarea class="form-control" ng-model="vm.newObject.descricao" placeholder="Escreva a descrição"></textarea>
                 </label>
                 <ul class="list">
@@ -45,7 +36,7 @@
                   </li>
                 </ul>
             </div>
-            <button class="button button-block button-positive" type="submit">Criar</button>
+            <button ng-click="$ionicGoBack()" class="button button-block button-positive" type="submit">Criar</button>
         </form>
     </div>
 </ion-content>

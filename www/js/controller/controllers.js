@@ -98,10 +98,10 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
     });
 
 
-    app.controller('resumoCtrl', function (resumo, $scope, $ionicPopup, Utils, $log) {
+    app.controller('resumoCtrl', function (resumo, alunos, $scope, $ionicPopup, Utils, $log) {
         var vm = this;
 
-        $scope.date = new Date();
+        $scope.date = moment().format('llll');
 
         function getAll() {
             Utils.show();
@@ -109,7 +109,17 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
                 .then(function (result) {
                     vm.data = result.data.data;
                     Utils.hide();
-                    $log.log(result);
+                  //  $log.log(result);
+                });
+        }
+
+        function getForAluno() {
+            Utils.show();
+            alunos.all()
+                .then(function (result) {
+                    vm.aluno = result.data.data;
+                    Utils.hide();
+                    $log.log(vm.aluno);
                 });
         }
 
@@ -183,6 +193,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
         vm.edited = null;
         vm.isEditing = false;
         vm.isCreating = false;
+        vm.getForAluno = getForAluno;
         vm.getAll = getAll;
         vm.create = create;
         vm.update = update;
@@ -196,6 +207,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
 
         initCreateFormAtiv();
         getAll();
+        getForAluno();
 
     });
 
@@ -757,10 +769,50 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
       }
     });*/
 
-    app.controller('TurmaIDCtrl', function(turmas, alunos, resumo, $stateParams, $state, $scope, $log, $filter, Utils) {
+    app.controller('TurmaIDCtrl', function(turmas, alunos, resumo, $stateParams, $state, $scope, $log, $ionicActionSheet, $ionicPopup, $location, $filter, moment, Utils) {
       var vm = this;
 
-      $scope.date = new Date();
+      $scope.date = moment().format('llll');
+
+
+    /*  $scope.clicked = function(){
+        $ionicActionSheet.show({
+          titleText: 'Opções',
+          buttons: [
+            { text: '<i class="icon ion-share"></i> Resumo do Dia' },
+          ],
+          destructiveText: 'Delete',
+          cancelText: 'Cancel',
+          cancel: function() {
+            console.log('CANCELLED');
+          },
+          buttonClicked: function() {
+            $state.go('menu.alunoResumo',{"id":vm.aluno});
+            console.log('BUTTON CLICKED');
+            return true;
+          },
+          destructiveButtonClicked: function deleteObject(id) {
+
+               var confirmPopup = $ionicPopup.confirm({
+                 title: 'Remover Resumo',
+                 template: 'Tem certeza que deseja excluir?'
+               });
+               confirmPopup.then(function(res) {
+                 if(res){
+                   resumo.delete(id).then(function(result){
+                       getAll();
+                   });
+                 }else{
+                       cancelEditing();
+                       getAll();
+                 }
+            });
+        }
+            //console.log('DESTRUCT');
+            // /return true;
+          });
+        }*/
+
 
       function getAll() {
           Utils.show();
@@ -782,8 +834,10 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
           resumo.create(object)
               .then(function (result) {
                   //cancelCreate();
-                  //getAll();
-                  
+               Utils.alertshow("Sucesso","Resumo do dia criado.")
+              //  /$location.path('menu.turmas');
+
+
                   $log.log(result);
 
               });
@@ -840,7 +894,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
                     Utils.hide();
 
 
-                    // /  $log.log(vm.data);
+                    $log.log(vm.al);
                       //console.log(result);
                   });
 
@@ -905,7 +959,9 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
 
 
 
+
           initCreateFormAtiv();
+
 
 
 

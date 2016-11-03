@@ -6,7 +6,7 @@
 
 (function(){
 
-  app = angular.module('UserDirectory', ['ionic', 'backand', 'UserDirectory.services', 'UserDirectory.controllers', 'ngSanitize', 'ngStorage', 'ngCordova', 'firebase', 'ngMessages', 'ui.router']);
+  app = angular.module('UserDirectory', ['ionic', 'backand', 'UserDirectory.services', 'UserDirectory.controllers', 'ngSanitize', 'ngStorage', 'ngCordova', 'firebase', 'ngMessages', 'ui.router','angularMoment']);
 
   app.config(function($stateProvider, $urlRouterProvider){
 
@@ -176,7 +176,7 @@
             }
         });
 
-$urlRouterProvider.otherwise("/menu/turmas/1");
+$urlRouterProvider.otherwise("/menu/turmas");
 });
 
 

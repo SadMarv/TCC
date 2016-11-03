@@ -1,4 +1,8 @@
 /* Empty. Add your own CSS if you like */
+div.id{
+	display:none;
+}
+
 
 .icon.new-item {
 	position: absolute;

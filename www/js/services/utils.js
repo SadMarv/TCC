@@ -11,6 +11,7 @@ angular.module('UserDirectory').factory('Utils', function($ionicLoading,$ionicPo
         template: '<p class="item-icon-left">Carregando...<ion-spinner icon="lines"/></p>'
       });
     },
+		
 
     hide: function(){
       $ionicLoading.hide();
