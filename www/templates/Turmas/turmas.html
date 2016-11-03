@@ -6,7 +6,7 @@
         <input type="search" placeholder="Digite o nome da Turma. Ex: Turma A" ng-model="searchText">
     </label>
     <div  ng-repeat="object in vm.data | filter:searchText" ng-class="{'active':vm.isCurrent(object.id)}" show-reorder="reordering">
-      <ion-item href="#/menu/turmas/{{object.id}}" class="item-remove-animate item-icon-right">
+      <ion-item href="#/menu/turmasID/{{object.id}}" class="item-remove-animate item-icon-right">
             <h2>Turma: {{object.turma}}</h2>
             <p>Período: {{object.periodo}}</p>
             <p>Ano: {{object.ano}}</p>

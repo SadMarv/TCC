@@ -56,6 +56,25 @@
             }
         });
 
+        $stateProvider.state('menu.dashboardTurma', {
+          url: '/dashboardTurma',
+          views: {
+            'menuContent': {
+                templateUrl: 'templates/Atividades/atividadesTurma.html'
+                    }
+                }
+            });
+
+        $stateProvider.state('menu.turmaAtividade', {
+          url: '/turmaAtividade/:id',
+          views: {
+            'menuContent': {
+                templateUrl: 'templates/Atividades/turmaAtividade.html'
+                    }
+                }
+            });
+
+
 
     $stateProvider.state("menu.home",{
             url:"/home",
@@ -106,7 +125,7 @@
         });
 
         $stateProvider.state("menu.turmasID",{
-            url:"/turmas/:id",
+            url:"/turmasID/:id",
             views:{
               'menuContent':{
                 templateUrl:"templates/Turmas/turmasID.html",
@@ -176,7 +195,7 @@
             }
         });
 
-$urlRouterProvider.otherwise("/menu/turmas");
+$urlRouterProvider.otherwise("/menu/home");
 });
 
 

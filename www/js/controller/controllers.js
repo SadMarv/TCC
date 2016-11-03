@@ -769,6 +769,153 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
       }
     });*/
 
+    app.controller('AtividadesIDCtrl', function(turmas, itemsAtiv, $stateParams, $state, $scope, $log, $ionicActionSheet, $ionicPopup, $location, $filter, moment, Utils) {
+      var vm = this;
+
+      $scope.date = moment().format('llll');
+
+
+
+          function getTurmas() {
+            Utils.show();
+            turmas.all()
+                  .then(function (result) {
+                    vm.dadosTurma = result.data.data;
+                    Utils.hide();
+                    // /  $log.log(vm.data);
+                      //console.log(result);
+                  });
+          }
+
+
+
+          function getForID(id) {
+            Utils.show();
+            turmas.fetch(id)
+                  .then(function (result) {
+                    vm.perfil = result.data;
+                    vm.turma = $stateParams.id;
+                    Utils.hide();
+
+
+                    // /  $log.log(vm.data);
+                      //console.log(result);
+                  });
+
+
+          }
+
+          function getAll() {
+              Utils.show();
+              itemsAtiv.all()
+                  .then(function (result) {
+                      vm.data = result.data.data;
+                      Utils.hide();
+                      $log.log(vm.data);
+                  });
+          }
+
+          function clearData(){
+              vm.data = null;
+          }
+
+          function create(object) {
+              itemsAtiv.create(object)
+                  .then(function (result) {
+                      cancelCreate();
+                      getAll();
+                      $state.go('menu.turmaAtividade', {"id":vm.turma} )
+
+                  });
+          }
+
+          function update(object) {
+              itemsAtiv.update(object.id, object)
+                  .then(function (result) {
+                      cancelEditing();
+                      getAll();
+                  });
+          }
+
+          function deleteObject(id) {
+             var confirmPopup = $ionicPopup.confirm({
+               title: 'Remover Atividade',
+               template: 'Tem certeza que deseja excluir?'
+             });
+             confirmPopup.then(function(res) {
+               if(res){
+                 itemsAtiv.delete(id).then(function(result){
+                     getAll();
+                 });
+               }else{
+                     cancelEditing();
+                     getAll();
+               }
+          });
+   }
+
+
+
+          function initCreateFormAtiv() {
+              vm.newObject = {name: '', description: '', date:'', turmas:''};
+          }
+
+          function setEdited(object) {
+              vm.edited = angular.copy(object);
+              vm.isEditing = true;
+          }
+
+          function isCurrent(id) {
+              return vm.edited !== null && vm.edited.id === id;
+          }
+
+          function cancelEditing() {
+              vm.edited = null;
+              vm.isEditing = false;
+          }
+
+          function cancelCreate() {
+              initCreateFormAtiv();
+              vm.isCreating = false;
+          }
+
+          vm.objects = [];
+          vm.edited = null;
+          vm.isEditing = false;
+          vm.isCreating = false;
+          vm.getAll = getAll;
+          vm.create = create;
+          vm.update = update;
+          vm.delete = deleteObject;
+          vm.setEdited = setEdited;
+          vm.isCurrent = isCurrent;
+          vm.cancelEditing = cancelEditing;
+          vm.cancelCreate = cancelCreate;
+
+
+          //filtro por id usando diretiva $filter
+
+          /*$scope.showdetails = function(turma_id){
+            var found = $filter('getById')(vm.data, turma_id);
+            $scope.selected = found[0].id;
+            console.log(found);
+       }*/
+
+
+
+
+
+          // Carrega todas turmas
+          getTurmas()
+          // Carrega todas atividades
+          getAll();
+          // Carrega turma por ID
+          getForID($stateParams.id);
+
+
+        });
+
+
     app.controller('TurmaIDCtrl', function(turmas, alunos, resumo, $stateParams, $state, $scope, $log, $ionicActionSheet, $ionicPopup, $location, $filter, moment, Utils) {
       var vm = this;
 
@@ -885,7 +1032,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
 
           }
 
-          function getalunoID(id) {
+          function getAlunoID(id) {
             Utils.show();
             alunos.fetch(id)
                   .then(function (result) {
@@ -970,7 +1117,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
           // Carrega turma por ID
           getForID($stateParams.id);
 
-          getalunoID($stateParams.id);
+          getAlunoID($stateParams.id);
         });
 
     app.controller('alunosCtrl', function (alunos, turmas, responsaveis, $rootScope, $ionicPopup, $state, $scope, $http, Utils, $log, $filter) {
