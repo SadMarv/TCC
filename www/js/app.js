@@ -211,7 +211,7 @@
               }
             }
         });
-$urlRouterProvider.otherwise("/menu/home");
+$urlRouterProvider.otherwise("/menu/usuarios");
 //$urlRouterProvider.otherwise("/login");
 $httpProvider.interceptors.push('APIInterceptor');
 });
@@ -275,9 +275,9 @@ $httpProvider.interceptors.push('APIInterceptor');
 
       */
 
-      BackandProvider.setAppName('tccagendapp');
-      BackandProvider.setSignUpToken('5d3a9329-ce9f-4bb7-a666-e1dddd04d13b');
-      BackandProvider.setAnonymousToken('ccc5fb1f-7717-46d9-b53d-ecbd3425ae6c');
+      BackandProvider.setAppName('tcc2agendapp');
+      BackandProvider.setSignUpToken('f090cf74-1ff0-409b-9150-9e0332598537');
+      BackandProvider.setAnonymousToken('a9b3a3d5-b2f7-41fc-8add-504670226a05');
 
 
 

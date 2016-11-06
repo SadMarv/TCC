@@ -746,7 +746,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
 
       });
 
-      app.controller('turmasCtrl', function (turmas, $scope, $ionicPopup, $state, $stateParams, $location, $log, Utils) {
+      app.controller('turmasCtrl', function (turmas, $scope, $ionicPopup, $state, Backand, $stateParams, $location, $log, Utils) {
 
         var vm = this;
 
@@ -756,11 +756,23 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
             turmas.all()
                   .then(function (result) {
                       vm.data = result.data.data;
-                      //$log.log(result);
+                      $log.log(result);
                       Utils.hide();
                   });
           }
 
+          function getForUserId(userId) {
+              //$rootScope.$broadcast('authorized');
+              //login.username = username || Backand.getUsername();
+              vm.userID = userId || Backand.getUserDetails();
+              vm.userID =  vm.userID.$$state.value.userId;
+
+              //console.log(Backand.getUsername());
+              console.log(vm.userID);
+
+          }
+
+            getForUserId(vm.userID);
 
 
 
@@ -808,7 +820,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
 
 
           function initCreateFormAdmin() {
-              vm.newObject = {turma: '', periodo: '', ano:'', alunos:''};
+              vm.newObject = {turma: '', periodo: '', ano:'', alunos:'', users:''};
           }
 
           function setEdited(object) {
@@ -847,6 +859,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
 
           initCreateFormAdmin();
           getAll();
+
 
 
       });
@@ -1337,7 +1350,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
 
       });
 
-      app.controller('responsaveisCtrl', function (Backand, responsaveis, $rootScope, $ionicPopup, $state, $scope, $log) {
+      app.controller('responsaveisCtrl', function (Backand, responsaveis, users, $rootScope, $ionicPopup, $state, $stateParams, $scope, $log) {
 
 
         var vm = this;
@@ -1355,6 +1368,10 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
 
           getForUserId(vm.fullName);
 
+          //pegando o id na base users
+
+
+
 
 
         //criando usuario responsaveis
@@ -1364,7 +1381,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
             responsaveis.all()
                   .then(function (result) {
                       vm.data = result.data.data;
-                      console.log(vm.data);
+                      //console.log(vm.data);
                   });
           }
 
@@ -1458,7 +1475,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
 
 
 
-      app.controller('respIDCtrl', function(Backand, LoginService, responsaveis, alunos, $stateParams, $state, $scope, $log, $ionicActionSheet, $ionicPopup, $location, $filter, moment, Utils) {
+      app.controller('respIDCtrl', function(Backand, LoginService, responsaveis, users, alunos, $stateParams, $state, $scope, $log, $ionicActionSheet, $ionicPopup, $location, $filter, moment, Utils) {
         var vm = this;
 
         //criando login para responsaveis
@@ -1471,8 +1488,8 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
             LoginService.signup(vm.firstName, vm.lastName, vm.email, vm.password, vm.again)
                 .then(function (response) {
                   Utils.alertshow("Sucesso","Login do Usuario criado.");
+                  });
 
-                });
         }
 
         vm.email = '';
@@ -1527,16 +1544,16 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
               responsaveis.fetch(id)
                     .then(function (result) {
                       vm.perfil = result.data;
-                      vm.resp = $stateParams.id;
                       Utils.hide();
 
 
-                      // /  $log.log(vm.data);
+                       $log.log(vm.perfil);
                         //console.log(result);
                     });
 
 
             }
+
 
 
 
@@ -1578,6 +1595,126 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
             // Carrega turma por ID
             getForID($stateParams.id);
 
+
+
+          });
+
+          app.controller('usersCtrl', function (Backand, responsaveis, users, $rootScope, $ionicPopup, $state, $scope, $log) {
+
+
+            var vm = this;
+
+            function getForUserId(fullName) {
+                //$rootScope.$broadcast('authorized');
+                //login.username = username || Backand.getUsername();
+                vm.fullName = fullName || Backand.getUserDetails();
+                vm.fullName =  vm.fullName.$$state.value.fullName;
+
+                //console.log(Backand.getUsername());
+                //console.log(vm.fullName);
+
+            }
+
+              getForUserId(vm.fullName);
+
+
+
+            //criando usuario responsaveis
+
+
+              function getAll() {
+                users.all()
+                      .then(function (result) {
+                          vm.data = result.data.data;
+                          console.log(vm.data);
+                      });
+              }
+
+
+              function clearData(){
+                  vm.data = null;
+              }
+
+
+              function create(object) {
+                  users.create(object)
+                      .then(function (result) {
+                        console.log("passou");
+                          cancelCreate();
+                          getAll();
+                          $state.go('menu.responsaveis');
+
+                      });
+              }
+
+              function update(object) {
+                users.update(object.id, object)
+                      .then(function (result) {
+                          cancelEditing();
+                          getAll();
+                      });
+              }
+
+              function deleteObject(id) {
+                 var confirmPopup = $ionicPopup.confirm({
+                   title: 'Remover Responsável',
+                   template: 'Tem certeza que deseja excluir?'
+                 });
+                 confirmPopup.then(function(res) {
+                   if(res){
+                    users.delete(id).then(function(result){
+                         getAll();
+                     });
+                   }else{
+                         cancelEditing();
+                         getAll();
+                   }
+              });
+       }
+
+
+
+              function initCreateFormAdmin() {
+                  vm.newObject = {cpf: '', nome: ''};
+              }
+
+              function setEdited(object) {
+                  vm.edited = angular.copy(object);
+                  vm.isEditing = true;
+              }
+
+              function isCurrent(id) {
+                  return vm.edited !== null && vm.edited.id === id;
+              }
+
+              function cancelEditing() {
+                  vm.edited = null;
+                  vm.isEditing = false;
+              }
+
+              function cancelCreate() {
+                  initCreateFormAdmin();
+                  vm.isCreating = false;
+              }
+
+              vm.objects = [];
+              vm.edited = null;
+              vm.isEditing = false;
+              vm.isCreating = false;
+              vm.getAll = getAll;
+              vm.create = create;
+              vm.update = update;
+              vm.delete = deleteObject;
+              vm.setEdited = setEdited;
+              vm.isCurrent = isCurrent;
+              vm.cancelEditing = cancelEditing;
+              vm.cancelCreate = cancelCreate;
+
+
+
+
+              initCreateFormAdmin();
+              getAll();
 
           });
 

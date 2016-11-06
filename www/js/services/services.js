@@ -167,6 +167,7 @@ app = angular.module('UserDirectory.services', [])
     })
 
 
+
     app.service('resumo', function ($http, Backand) {
         var service = this,
             baseUrl = '/1/objects/',

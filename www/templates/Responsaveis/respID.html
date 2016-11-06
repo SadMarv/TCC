@@ -1,11 +1,11 @@
-<ion-view view-title="{{vm.perfil.nome}}" ng-controller="respIDCtrl as vm">
+<ion-view view-title="Criar Login" ng-controller="respIDCtrl as vm">
   <ion-content>
 
     <ion-list>
       <ion-item class="item-remove-animate item-icon-right" >
             <h2>CPF: {{vm.perfil.cpf}}</h2>
             <h2>Responsável: {{vm.perfil.nome}}</h2>
-            <p ng-repeat="object in vm.aluno | filter: {responsaveis: vm.perfil.id}">Filho: {{object.nome}}</p>
+            <p ng-repeat="object in vm.aluno | filter: {responsaveis: vm.perfil.id}">Filho(a): {{object.nome}}</p>
       </ion-item>
     </ion-list>
     <div class="item item-divider">

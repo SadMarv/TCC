@@ -8,6 +8,13 @@ div.id{
 	font-size: 20px;
 	bottom: 13px;
 }
+.cancel-create {
+	position: absolute;
+	right: 20px;
+	font-size: 14px;
+	bottom: 13px;
+	color:#ef4e3a;
+}
 .ion-arrow-left-c {
 	position: absolute;
 	left: 5px;
