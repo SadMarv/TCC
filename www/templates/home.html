@@ -1,14 +1,14 @@
-<ion-view view-title="Home">
+<ion-view view-title="Home" ng-controller="homeCtrl as vm">
   <ion-content>
     <div class="card">
     <div class="item item-avatar">
     <img src="img/xavier.jpg">
-    <h2>Xavier</h2>
+    <h2>{{vm.userID}}</h2>
     <p>Professor</p>
   </div>
   </div>
   &nbsp;&nbsp;&nbsp;
-  <a class="button button-block" href="#/menu/dashboard">
+  <a class="button button-block" href="#/menu/dashboardTurma">
     Atividades
   </a>
   <a class="button button-block" href="#/menu/turmas">

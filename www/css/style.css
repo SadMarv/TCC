@@ -2,16 +2,6 @@
 div.id{
 	display:none;
 }
-
-.cancel-create {
-	position: absolute;
-	right: 20px;
-	font-size: 14px;
-	bottom: 13px;
-	color:#ef4e3a;
-}
-
-
 .icon.new-item {
 	position: absolute;
 	right: 20px;

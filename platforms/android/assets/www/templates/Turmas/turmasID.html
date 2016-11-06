@@ -1,0 +1,35 @@
+<ion-view view-title="{{vm.perfil.turma}}" ng-controller="TurmaIDCtrl as vm">
+  <ion-content>
+    <label class="item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="search" placeholder="Digite o Nome do aluno ou do responsável" ng-model="searchText">
+    </label>
+    <ion-list show-reorder="reordering">
+      <ion-item class="item-remove-animate item-icon-right" >
+            <h2>Turma: {{vm.perfil.turma}}</h2>
+            <p>Período: {{vm.perfil.periodo}}</p>
+            <p>Ano: {{vm.perfil.ano}}</p>
+      </ion-item>
+    </ion-list>
+    <div class="item item-divider">
+      Alunos
+    </div>
+    <div>
+      <ion-item ng-repeat="object in vm.data | filter: {turmas: vm.turma} | filter:searchText"
+      class="item-icon-right" ng-class="{'active':vm.isCurrent(object.id)}" >
+          <h2>Aluno: {{object.nome}}</h2>
+          <p>Matrícula: {{object.matricula}}</p>
+          <p>Responsável: {{object.__metadata.descriptives.responsaveis.label}}</p>
+          <a href="#/menu/alunos/{{object.id}}" class="button button-light icon ion-clipboard"></a>
+          <!--<a ng-click="clicked()" class="button button-light icon ion-clipboard"></a>-->
+      </ion-item>
+    </div>
+  </ion-content>
+
+
+
+
+
+
+
+  </ion-view>

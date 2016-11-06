@@ -1,5 +1,25 @@
-<ion-view view-title={{home}}>
+<ion-view view-title="Home" ng-controller="homeCtrl as vm">
   <ion-content>
-    <h1>{{home}}</h1>
+    <div class="card">
+    <div class="item item-avatar">
+    <img src="img/xavier.jpg">
+    <h2>{{vm.userID}}</h2>
+    <p>Professor</p>
+  </div>
+  </div>
+  &nbsp;&nbsp;&nbsp;
+  <a class="button button-block" href="#/menu/dashboard">
+    Atividades
+  </a>
+  <a class="button button-block" href="#/menu/turmas">
+    Turmas
+  </a>
+  <a class="button button-block" href="#/menu/ResumoDoDia">
+    Resumo do Dia
+  </a>
+  <a class="button button-block" href="#/menu/comunicados">
+    Comunicados
+  </a>
+
   </ion-content>
 </ion-view>

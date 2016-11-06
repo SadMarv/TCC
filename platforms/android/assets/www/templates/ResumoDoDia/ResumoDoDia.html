@@ -1,0 +1,83 @@
+<ion-view cache-view="false" view-title="Resumo do Dia" ng-controller="resumoCtrl as vm">
+
+  <div ng-if="!vm.isEditing">
+  <ion-content>
+    <label class="item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="search" placeholder="Digite data ou nome do aluno. Ex: qua, 2 de nov" ng-model="searchText">
+    </label>
+    <div class="padding has-header">
+        <div class="list card" ng-repeat="object in vm.data | filter:searchText"
+             ng-class="{'active':vm.isCurrent(object.id)}">
+            <div class="item item-icon-right item-icon-left">
+                <i class="ion-compose icon" ng-click="vm.setEdited(object)"></i>
+                <p class="text-center">{{object.data}}</p>
+                <!--Abaixo virá o nome do Aluno com a relação do Banco de Dados-->
+                <h3 class="text-center"><b>{{object.__metadata.descriptives.alunos.label}}</b></h3>
+                <br>
+                <i class="icon ion-close-round" ng-click="vm.delete(object.id)"></i>
+            </div>
+            <div class="item item-body">
+                {{object.descricao}}
+            </div>
+            <div class="item">
+              <p>Fezes: {{object.fezes}}</p>
+              <p>Refeição: {{object.refeicao}}</p>
+            </div>
+        </div>
+    </div>
+    <br>
+</ion-content>
+</div>
+</div>
+
+
+<div ng-if="vm.isEditing">
+
+<ion-content>
+<!--Editar-->
+  <div class="bar bar-header">
+      <!--Abaixo virá o nome do Aluno com a relação do Banco de Dados-->
+      <h1 class="title"> {{vm.edited.__metadata.descriptives.alunos.label}}</h1>
+      <span ng-click="vm.cancelEditing()" class="ion-arrow-left-c"></span>
+  </div>
+  <br><br>
+  <div class="padding has-header">
+  <form name="resumoForm" class="create-form" role="form"
+        ng-submit="vm.update(vm.edited)" novalidate>
+      <div class="list">
+        <div class="data">{{vm.edited.data.substring(0, 21)}}</div>
+          <label class="item item-input item-stacked-label">
+              <span class="input-label">Descrição</span>
+
+              <textarea class="form-control" ng-model="vm.edited.descricao" placeholder="Escreva a descrição"></textarea>
+          </label>
+          <ul class="list">
+            <li class="item item-toggle">
+               <strong>Fezes</strong>
+               <label class="toggle toggle-positive">
+                 <input ng-model="vm.edited.fezes" ng-true-value="'Sim'" ng-false-value="'Não'"  type="checkbox">
+                 <div class="track">
+                   <div class="handle"></div>
+                 </div>
+               </label>
+            </li>
+            <li class="item item-toggle">
+               <strong>Refeição</strong>
+               <label class="toggle toggle-positive">
+                 <input ng-model="vm.edited.refeicao" ng-true-value="'Sim'" ng-false-value="'Não'"  type="checkbox">
+                 <div class="track">
+                   <div class="handle"></div>
+                 </div>
+               </label>
+            </li>
+          </ul>
+      </div>
+      <button class="button button-block button-positive" type="submit">Salvar</button>
+    </div>
+  </form>
+  </div>
+</ion-content>
+
+</div>
+</ion-view>

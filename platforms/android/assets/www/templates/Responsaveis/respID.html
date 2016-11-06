@@ -1,0 +1,75 @@
+<ion-view view-title="{{vm.perfil.nome}}" ng-controller="respIDCtrl as vm">
+  <ion-content>
+
+    <ion-list>
+      <ion-item class="item-remove-animate item-icon-right" >
+            <h2>CPF: {{vm.perfil.cpf}}</h2>
+            <p>Responsável: {{vm.perfil.nome}}</p>
+      </ion-item>
+    </ion-list>
+    <div class="item item-divider">
+      Criar Login de {{vm.perfil.nome}}
+    </div>
+    <div>
+      <form ng-submit="vm.signup()">
+          <div class="list">
+              <div class="row">
+                  <div class="col">
+                      <label class="item item-input">
+                          <input id="email" name="email" type="email" placeholder="Your email"
+                                 ng-model="vm.email">
+                      </label>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col">
+                      <label class="item item-input">
+                          <input id="firstname" name="firstname" type="text" placeholder="Your first name"
+                                 ng-model="vm.firstName">
+                      </label>
+                  </div>
+                  <div class="col">
+                      <label class="item item-input">
+                          <input id="username" name="lastname" type="text" placeholder="Your last name"
+                                 ng-model="vm.lastName">
+                      </label>
+
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col">
+
+                      <label class="item item-input">
+                          <input id="password" name="password" type="password" placeholder="Your password"
+                                 ng-model="vm.password">
+                      </label>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col">
+
+                      <label class="item item-input">
+                          <input id="again" name="again" type="password" placeholder="confirm your password"
+                                 ng-model="vm.again">
+                      </label>
+                  </div>
+              </div>
+              <h4 style="color:red;" ng-bind="vm.errorMessage"></h4>
+
+              <div class="">
+                  <button ng-click="$ionicGoBack()" class="button button-block button-stable" type="submit">
+                      Criar
+                  </button>
+              </div>
+          </div>
+      </form>
+    </div>
+  </ion-content>
+
+
+
+
+
+
+
+  </ion-view>

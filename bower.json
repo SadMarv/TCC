@@ -3,9 +3,5 @@
   "private": "true",
   "devDependencies": {
     "ionic": "driftyco/ionic-bower#1.2.1"
-  },
-  "dependencies": {
-    "moment": "^2.15.2",
-    "angular-moment": "^1.0.0"
   }
 }

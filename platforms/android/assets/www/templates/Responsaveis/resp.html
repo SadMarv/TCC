@@ -3,14 +3,11 @@
   <ion-content>
     <label class="item item-input">
         <i class="icon ion-search placeholder-icon"></i>
-        <input type="search" placeholder="Digite o Nome e/ou CPF">
+        <input type="search" placeholder="Digite o Nome e/ou CPF" ng-model="searchText">
     </label>
-    <div class="row">
-	  	<button class="col 20 button button-small">Pesquisar</button>
-  	</div>
     <ion-list show-reorder="reordering">
-      <ion-item class="item-remove-animate item-icon-right" ng-repeat="object in vm.data"
-           ng-class="{'active':vm.isCurrent(object.id)}">
+      <ion-item class="item-remove-animate item-icon-right" ng-repeat="object in vm.data | filter: searchText"
+           ng-class="{'active':vm.isCurrent(object.id)}" href="#/menu/respID/{{object.id}}" >
             <h2>Nome: {{object.nome}}</h2>
             <p>CPF: {{object.cpf}}</p>
             <a ng-click="vm.setEdited(object)" class="button button-light icon ion-compose"></a>
@@ -44,7 +41,7 @@
           <h4 class="form-error" ng-show="createForm.$error.maxlength">Digite um CPF válido!</h4>
           <h4 class="form-error" ng-show="createForm.$error.minlength"></h4>
 			</div>
-      <div class="item item-input item-stacked-label">
+      <div class="item item-input item-floating-label">
 				<span class="input-label">Nome</span>
         <input type="text" placeholder="Nome" ng-model="vm.newObject.nome"/>
 			</div>

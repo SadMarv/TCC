@@ -6,37 +6,33 @@
 
 (function(){
 
-  app = angular.module('UserDirectory', ['ionic', 'backand', 'UserDirectory.services', 'UserDirectory.controllers', 'components', 'ngStorage', 'ngCordova', 'firebase', 'ngMessages']);
+  app = angular.module('UserDirectory', ['ionic', 'backand', 'UserDirectory.services', 'UserDirectory.controllers', 'ngSanitize', 'ngStorage', 'ngCordova', 'ngMessages', 'ui.router','angularMoment']);
 
-  app.config(function($stateProvider, $urlRouterProvider){
+  app.config(function($stateProvider, $urlRouterProvider, $httpProvider){
 
 
     //rotas para login
 
     $stateProvider.state('login', {
       url: '/login',
-      templateUrl: 'js/views/login/login.html',
-      controller:'loginController'
+      templateUrl: 'js/views/login/velhologin.html',
+      controller: 'LoginCtrl as login'
     });
     $stateProvider.state('forgot', {
       url: '/forgot',
       templateUrl: 'js/views/forgot/forgot.html',
-      controller:'forgotController'
+      //controller:'forgotController'
     });
-    $stateProvider.state('register', {
-      url: '/register',
-      templateUrl: 'js/views/register/register.html',
-      controller:'registerController'
-    });
+
     $stateProvider.state('home', {
       url: '/home',
       templateUrl: 'js/views/home/home.html',
-      controller:'homeController'
+      //controller:'homeController'
     });
     $stateProvider.state('profile', {
       url: '/profile',
       templateUrl: 'js/views/profile/profile.html',
-      controller:'profileController'
+      //controller:'profileController'
     });
 
 
@@ -44,7 +40,18 @@
       url:"/menu",
       templateUrl:"templates/menu.html",
       abstract: true,
-      controller:"initCtrl"
+      //controller:"initCtrl"
+    });
+
+    $stateProvider.state('menu.register', {
+      url: '/register',
+      views: {
+        'menuContent': {
+          templateUrl: 'js/views/register/signup.html',
+          controller: 'SignUpCtrl as vm'
+                }
+            }
+
     });
 
     $stateProvider.state('menu.dashboard', {
@@ -56,11 +63,31 @@
             }
         });
 
+        $stateProvider.state('menu.dashboardTurma', {
+          url: '/dashboardTurma',
+          views: {
+            'menuContent': {
+                templateUrl: 'templates/Atividades/atividadesTurma.html'
+                    }
+                }
+            });
+
+        $stateProvider.state('menu.turmaAtividade', {
+          url: '/turmaAtividade/:id',
+          views: {
+            'menuContent': {
+                templateUrl: 'templates/Atividades/turmaAtividade.html'
+                    }
+                }
+            });
+
+
+
     $stateProvider.state("menu.home",{
             url:"/home",
             views:{
               'menuContent':{
-                templateUrl:"templates/home.html"
+                templateUrl:"templates/home.html",
               }
             }
         });
@@ -104,6 +131,26 @@
             }
         });
 
+        $stateProvider.state("menu.turmasID",{
+            url:"/turmasID/:id",
+            views:{
+              'menuContent':{
+                templateUrl:"templates/Turmas/turmasID.html",
+                controller: 'TurmaIDCtrl as vm'
+              }
+            }
+        });
+
+        $stateProvider.state("menu.alunoResumo",{
+            url:"/alunos/:id",
+            views:{
+              'menuContent':{
+                templateUrl:"templates/Turmas/alunoResumo.html",
+                controller: 'TurmaIDCtrl as vm'
+              }
+            }
+        });
+
         $stateProvider.state("menu.alunos",{
             url:"/alunos",
             views:{
@@ -113,6 +160,7 @@
               }
             }
         });
+
 
         $stateProvider.state("menu.responsaveis",{
             url:"/responsaveis",
@@ -124,71 +172,114 @@
             }
         });
 
+        $stateProvider.state("menu.respID",{
+            url:"/respID/:id",
+            views:{
+              'menuContent':{
+                templateUrl:"templates/Responsaveis/respID.html",
+                controller: 'respIDCtrl as vm'
+              }
+            }
+        });
+
+        $stateProvider.state("menu.ResumoDoDia",{
+            url:"/ResumoDoDia",
+            views:{
+              'menuContent':{
+                templateUrl:"templates/ResumoDoDia/ResumoDoDia.html",
+                controller: 'resumoCtrl as vm'
+              }
+            }
+        });
+
+        $stateProvider.state("menu.comunicados",{
+            url:"/comunicados",
+            views:{
+              'menuContent':{
+                templateUrl:"templates/Comunicados/comunicados.html",
+                controller: 'comunicadosCtrl as vm'
+              }
+            }
+        });
+
+        $stateProvider.state("menu.eventos",{
+            url:"/eventos",
+            views:{
+              'menuContent':{
+                templateUrl:"templates/Eventos/eventos.html",
+                controller: 'eventosCtrl as vm'
+              }
+            }
+        });
+
 $urlRouterProvider.otherwise("/login");
+$httpProvider.interceptors.push('APIInterceptor');
 });
 
 
 
-  app.constant('FURL', {
-    apiKey: "AIzaSyCpC0f4IUbkHlFfE67L13Y2JQ92YGJMsOg",
-    authDomain: "agendapp-425aa.firebaseapp.com",
-    databaseURL: "https://agendapp-425aa.firebaseio.com",
-    storageBucket: "agendapp-425aa.appspot.com",
-  }
-  )
 
 
 
-  app.run(function($ionicPlatform) {
-    $ionicPlatform.ready(function(FURL) {
+  app.run(function ($ionicPlatform, $rootScope, $state, LoginService, Backand) {
+
+        $ionicPlatform.ready(function () {
+
+            // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+            // for form inputs)
+            if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
+                cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+                cordova.plugins.Keyboard.disableScroll(true);
+            }
+
+            if (window.StatusBar) {
+                // org.apache.cordova.statusbar required
+                StatusBar.styleLightContent();
+            }
 
 
-      // AdMob
-              if(window.AdMob) {
-                  var admobid;
+            var isMobile = !(ionic.Platform.platforms[0] == "browser");
+            Backand.setIsMobile(isMobile);
+            Backand.setRunSignupAfterErrorInSigninSocial(true);
+        });
 
-                  if (device.platform == "Android") {
-                      admobid = { // for Android
-                          banner: 'ca-app-pub-8943241156434100/4304279677',
-                          interstitial: 'ca-app-pub-8943241156434100/3994725276'
-                      };
-                  } else {
-                      admobid = { // for iOS
-                          banner: 'ca-app-pub-8943241156434100/7257746078',
-                          interstitial: 'ca-app-pub-8943241156434100/2378391279'
-                      };
-                  }
-                  console.log("admobid" + angular.toJson(admobid));
+        function unauthorized() {
+            console.log("user is unauthorized, sending to login");
+            $state.go('tab.login');
+        }
 
-                  $adMob.createBanner( {
-                      adId: admobid.banner,
-                      autoShow: true,
-                      bgColor: 'black',
-                      position: $adMob.position.BOTTOM_CENTER
-                  });
+        function signout() {
+            LoginService.signout();
+        }
 
-                  $adMob.prepareInterstitial({
-                      adId: admobid.interstitial,
-                      autoShow: false
-                  });
-              }
-      // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-      // for form inputs)
-      if(window.cordova && window.cordova.plugins.Keyboard) {
-        cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-      }
-      if(window.StatusBar) {
-        StatusBar.styleDefault();
-      }
-    });
-  });
+        $rootScope.$on('unauthorized', function () {
+            unauthorized();
+        });
+
+        $rootScope.$on('$stateChangeSuccess', function (event, toState) {
+            if (toState.name == 'tab.login') {
+                signout();
+            }
+            else if (toState.name != 'tab.login' && Backand.getToken() === undefined) {
+                unauthorized();
+            }
+        });
+
+    })
 
   app.config(function (BackandProvider, $stateProvider, $urlRouterProvider, $httpProvider) {
 
+      /*BackandProvider.setAppName('agendapp4');
+      BackandProvider.setSignUpToken('60846160-838b-446d-9cfe-e35859b4fd2b');
+      BackandProvider.setAnonymousToken('e44fa971-034d-4080-8ea1-21dd92014c86');
 
-    BackandProvider.setAppName('agendapp1');
-    BackandProvider.setSignUpToken('503f9e26-3910-4417-a2d1-cbb9a37a1bda');
-    BackandProvider.setAnonymousToken('105ec633-a009-4da9-9607-1e275f5e967a');
+      */
+
+      BackandProvider.setAppName('tccagendapp');
+      BackandProvider.setSignUpToken('5d3a9329-ce9f-4bb7-a666-e1dddd04d13b');
+      BackandProvider.setAnonymousToken('ccc5fb1f-7717-46d9-b53d-ecbd3425ae6c');
+
+
 
    });
 
