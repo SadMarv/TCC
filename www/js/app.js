@@ -211,8 +211,8 @@
               }
             }
         });
-
-$urlRouterProvider.otherwise("/login");
+$urlRouterProvider.otherwise("/menu/home");
+//$urlRouterProvider.otherwise("/login");
 $httpProvider.interceptors.push('APIInterceptor');
 });
 

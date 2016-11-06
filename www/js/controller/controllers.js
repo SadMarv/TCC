@@ -1456,23 +1456,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
 
       });
 
-      app.controller('homeCtrl', function(Backand, LoginService, responsaveis, alunos, $stateParams, $state, $scope, $log, $ionicActionSheet, $ionicPopup, $location, $filter, moment, Utils) {
-        var vm = this;
 
-        function getForUserId(userId) {
-            //$rootScope.$broadcast('authorized');
-            //login.username = username || Backand.getUsername();
-            vm.userID = userId || Backand.getUserDetails();
-            vm.userID =  vm.userID.$$state.value.fullName;
-
-            //console.log(Backand.getUsername());
-            console.log(vm.userID);
-
-        }
-
-          getForUserId(vm.userID);
-
-        });
 
       app.controller('respIDCtrl', function(Backand, LoginService, responsaveis, alunos, $stateParams, $state, $scope, $log, $ionicActionSheet, $ionicPopup, $location, $filter, moment, Utils) {
         var vm = this;
@@ -1562,7 +1546,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
                 alunos.all()
                   .then(function(result){
                     vm.aluno = result.data.data;
-                    $scope.showdetails = function(turma_id){
+                    /*$scope.showdetails = function(turma_id){
                       var found = $filter('getById')(vm.aluno, turma_id);
                       $scope.selected = found[0].__metadata.descriptives.responsaveis.value;
                       console.log(found);
@@ -1570,6 +1554,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
                     //vm.aluno = vm.aluno.__metadata.descriptives.responsaveis.value;
                     $log.log($scope.selected);
                   }
+                  */
                 });
             }
 
@@ -1589,9 +1574,27 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
 
 
             // Carrega todos alunos
-               //getAll()
+               getAll()
             // Carrega turma por ID
             getForID($stateParams.id);
 
 
           });
+
+          app.controller('homeCtrl', function(Backand, LoginService, responsaveis, alunos, $stateParams, $state, $scope, $log, $ionicActionSheet, $ionicPopup, $location, $filter, moment, Utils) {
+            var vm = this;
+
+            function getForUserId(userId) {
+                //$rootScope.$broadcast('authorized');
+                //login.username = username || Backand.getUsername();
+                vm.userID = userId || Backand.getUserDetails();
+                vm.userID =  vm.userID.$$state.value.fullName;
+
+                //console.log(Backand.getUsername());
+                console.log(vm.userID);
+
+            }
+
+              getForUserId(vm.userID);
+
+            });

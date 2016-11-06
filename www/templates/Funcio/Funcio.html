@@ -3,13 +3,10 @@
   <ion-content>
     <label class="item item-input">
         <i class="icon ion-search placeholder-icon"></i>
-        <input type="search" placeholder="Digite o Nome e/ou CPF">
+        <input type="search" placeholder="Digite o Nome ou CPF" ng-model="searchText">
     </label>
-    <div class="row">
-	  	<button class="col 20 button button-small">Pesquisar</button>
-  	</div>
     <ion-list show-reorder="reordering">
-      <ion-item class="item-remove-animate item-icon-right" ng-repeat="object in vm.data"
+      <ion-item class="item-remove-animate item-icon-right" ng-repeat="object in vm.data | filter: searchText"
            ng-class="{'active':vm.isCurrent(object.id)}">
             <h2>Nome: {{object.nome}}</h2>
             <p>CPF: {{object.cpf}}</p>
