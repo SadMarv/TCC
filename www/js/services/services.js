@@ -37,8 +37,8 @@ app = angular.module('UserDirectory.services', [])
             return Backand.signout();
         };
 
-        service.signup = function(firstName, lastName, email, password, confirmPassword){
-            return Backand.signup(firstName, lastName, email, password, confirmPassword);
+        service.signup = function(firstName, lastName, email, password, confirmPassword, parameters){
+            return Backand.signup(firstName, lastName, email, password, confirmPassword, parameters);
         }
     })
 
@@ -379,6 +379,80 @@ app = angular.module('UserDirectory.services', [])
         var service = this,
             baseUrl = '/1/objects/',
             objectName = 'alunos/';
+            objectDeep = '';
+
+
+        function getUrl() {
+            return Backand.getApiUrl() + baseUrl + objectName;
+        }
+
+        function getUrlForId(id) {
+            return getUrl() + id;
+        }
+
+
+        service.all = function () {
+            return $http.get(getUrl());
+        };
+
+
+        service.fetch = function (id) {
+            return $http.get(getUrlForId(id));
+        };
+
+        service.create = function (object) {
+            return $http.post(getUrl(), object);
+        };
+
+        service.update = function (id, object) {
+            return $http.put(getUrlForId(id), object);
+        };
+
+        service.delete = function (id) {
+            return $http.delete(getUrlForId(id));
+        };
+    })
+
+    app.service('turmas', function ($http, Backand) {
+        var service = this,
+            baseUrl = '/1/objects/',
+            objectName = 'turmas/';
+            objectDeep = '/?deep=true';
+
+        function getUrl() {
+            return Backand.getApiUrl() + baseUrl + objectName;
+        }
+
+        function getUrlForId(id) {
+            return getUrl() + id;
+        }
+
+        service.all = function () {
+            return $http.get(getUrl());
+        };
+
+
+        service.fetch = function (id) {
+            return $http.get(getUrlForId(id));
+        };
+
+        service.create = function (object) {
+            return $http.post(getUrl(), object);
+        };
+
+        service.update = function (id, object) {
+            return $http.put(getUrlForId(id), object);
+        };
+
+        service.delete = function (id) {
+            return $http.delete(getUrlForId(id));
+        };
+    })
+
+    app.service('users_turmas', function ($http, Backand) {
+        var service = this,
+            baseUrl = '/1/objects/',
+            objectName = 'users_turmas/';
             objectDeep = '';
 
 

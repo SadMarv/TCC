@@ -35,6 +35,7 @@
     <br><br>
 		<form name="createForm" class="newForm" role="form" ng-submit="vm.create(vm.newObject)" novalidate>
 		<div class="list card">
+
 			<div class="item item-input item-floating-label">
 				<span class="input-label">CPF</span>
 				<input type="text" ng-minlength='11' ng-maxlength='11' ng-required="true" placeholder="CPF" ng-model="vm.newObject.cpf" name="formText"></input>
@@ -51,6 +52,12 @@
         <select ng-model="vm.newObject.funcao">
           <option selected>Professor</option>
           <option>Coordenador</option>
+        </select>
+      </div>
+      <div class="item item-input item-select">
+        <span class="input-label">Turmas</span>
+        <select ng-model="vm.newObject.turma" >
+          <option ng-repeat="object in vm.turmas" value="{{object.id}}">{{object.turma}}</option>
         </select>
       </div>
 		</form>
