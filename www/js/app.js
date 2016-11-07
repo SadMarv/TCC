@@ -8,6 +8,79 @@
 
   app = angular.module('UserDirectory', ['ionic', 'backand', 'UserDirectory.services', 'UserDirectory.controllers', 'ngSanitize', 'ngStorage', 'ngCordova', 'ngMessages', 'ui.router','angularMoment']);
 
+
+  app.run(function ($ionicPlatform, $rootScope, $state, LoginService, Backand, Utils) {
+
+
+
+        $ionicPlatform.ready(function () {
+
+            // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+            // for form inputs)
+            if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
+                cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+                cordova.plugins.Keyboard.disableScroll(true);
+            }
+
+            if (window.StatusBar) {
+                // org.apache.cordova.statusbar required
+                StatusBar.styleLightContent();
+            }
+
+
+            var isMobile = !(ionic.Platform.platforms[0] == "browser");
+            Backand.setIsMobile(isMobile);
+            //Backand.setRunSignupAfterErrorInSigninSocial(true);
+
+            if($rootScope.token = Backand.getToken()!== null){
+              $rootScope.token = localStorage.getItem("BACKANDtoken");
+              $rootScope.$broadcast('authorized');
+              $state.go('menu.home');
+
+            //console.log(Backand.getUsername());
+            console.log($rootScope.token);
+          }else{
+            $state.go('login')
+          }
+        });
+
+        function unauthorized() {
+            Utils.alertshow('Usuário não autorizado','Você não tem permissão de acesso.')
+            console.log("Usuário não autorizado, enviando para página de login.");
+            $state.go('login');
+        }
+
+        function signout() {
+            LoginService.signout();
+        }
+
+        $rootScope.$on('unauthorized', function () {
+            unauthorized();
+        });
+
+
+
+    })
+
+  app.config(function (BackandProvider, $stateProvider, $urlRouterProvider, $httpProvider) {
+
+      /*BackandProvider.setAppName('agendapp4');
+      BackandProvider.setSignUpToken('60846160-838b-446d-9cfe-e35859b4fd2b');
+      BackandProvider.setAnonymousToken('e44fa971-034d-4080-8ea1-21dd92014c86');
+
+      */
+      /*
+      BackandProvider.setAppName('tcc3agendapp1');
+      BackandProvider.setSignUpToken('6cb9b63a-6151-43ef-9f35-ec75d8438d02');
+      BackandProvider.setAnonymousToken('9fc0a5a0-b2c8-41ad-a29d-8aca9e14fc2b');
+      */
+      BackandProvider.setAppName('tcc2agendapp');
+      BackandProvider.setSignUpToken('f090cf74-1ff0-409b-9150-9e0332598537');
+      BackandProvider.setAnonymousToken('a9b3a3d5-b2f7-41fc-8add-504670226a05');
+
+
+   });
+
   app.config(function($stateProvider, $urlRouterProvider, $httpProvider){
 
 
@@ -208,7 +281,7 @@
             }
         });
 //$urlRouterProvider.otherwise("/menu/usuarios");
-$urlRouterProvider.otherwise("/login");
+//$urlRouterProvider.otherwise("/login");
 $httpProvider.interceptors.push('APIInterceptor');
 });
 
@@ -217,74 +290,6 @@ $httpProvider.interceptors.push('APIInterceptor');
 
 
 
-  app.run(function ($ionicPlatform, $rootScope, $state, LoginService, Backand, Utils) {
 
-
-
-        $ionicPlatform.ready(function () {
-
-            // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-            // for form inputs)
-            if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
-                cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-                cordova.plugins.Keyboard.disableScroll(true);
-            }
-
-            if (window.StatusBar) {
-                // org.apache.cordova.statusbar required
-                StatusBar.styleLightContent();
-            }
-
-
-            var isMobile = !(ionic.Platform.platforms[0] == "browser");
-            Backand.setIsMobile(isMobile);
-            //Backand.setRunSignupAfterErrorInSigninSocial(true);
-
-            if($rootScope.token = Backand.getToken()!== null){
-              $rootScope.token = localStorage.getItem("BACKANDtoken");
-              $rootScope.$broadcast('authorized');
-              $state.go('menu.home');
-
-            //console.log(Backand.getUsername());
-            console.log($rootScope.token);
-          }
-        });
-
-        function unauthorized() {
-            Utils.alertshow('Usuário não autorizado','Você não tem permissão de acesso.')
-            console.log("Usuário não autorizado, enviando para página de login.");
-            $state.go('login');
-        }
-
-        function signout() {
-            LoginService.signout();
-        }
-
-        $rootScope.$on('unauthorized', function () {
-            unauthorized();
-        });
-
-
-
-    })
-
-  app.config(function (BackandProvider, $stateProvider, $urlRouterProvider, $httpProvider) {
-
-      /*BackandProvider.setAppName('agendapp4');
-      BackandProvider.setSignUpToken('60846160-838b-446d-9cfe-e35859b4fd2b');
-      BackandProvider.setAnonymousToken('e44fa971-034d-4080-8ea1-21dd92014c86');
-
-      */
-      /*
-      BackandProvider.setAppName('tcc3agendapp1');
-      BackandProvider.setSignUpToken('6cb9b63a-6151-43ef-9f35-ec75d8438d02');
-      BackandProvider.setAnonymousToken('9fc0a5a0-b2c8-41ad-a29d-8aca9e14fc2b');
-      */
-      BackandProvider.setAppName('tcc2agendapp');
-      BackandProvider.setSignUpToken('f090cf74-1ff0-409b-9150-9e0332598537');
-      BackandProvider.setAnonymousToken('a9b3a3d5-b2f7-41fc-8add-504670226a05');
-
-
-   });
 
 }());
