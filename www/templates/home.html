@@ -3,8 +3,8 @@
     <div class="card">
     <div class="item item-avatar">
     <img src="img/avatar.png">
-    <h2 ng-bind='vm.userID'></h2>
-    <p>Professor</p>
+    <h2 ng-bind='vm.fullName'></h2>
+    <p ng-repeat="object in vm.data | filter: {id: vm.userID}">{{object.tipo}}</p>
   </div>
   </div>
   &nbsp;&nbsp;&nbsp;

@@ -108,8 +108,22 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
             vm.errorMessage = '';
         });
 
-        app.controller('DashboardCtrl', function (itemsAtiv, $scope, $ionicPopup, Utils) {
+        app.controller('DashboardCtrl', function (Backand, itemsAtiv, $scope, $ionicPopup, Utils) {
           var vm = this;
+
+
+          function getForUserId(userId) {
+              //$rootScope.$broadcast('authorized');
+              //login.username = username || Backand.getUsername();
+              vm.userID = userId || Backand.getUserDetails();
+              vm.userID =  vm.userID.$$state.value.userId;
+
+              //console.log(Backand.getUsername());
+              //console.log(vm.userID);
+
+          }
+
+            getForUserId(vm.userID);
 
           $scope.date = new Date();
 
@@ -217,7 +231,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
                   .then(function (result) {
                       vm.data = result.data.data;
                       Utils.hide();
-                    //  $log.log(result);
+                    //$log.log(result);
                   });
           }
 
@@ -227,7 +241,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
                   .then(function (result) {
                       vm.aluno = result.data.data;
                       Utils.hide();
-                    //  $log.log(vm.aluno);
+                    // $log.log(vm.aluno);
                   });
           }
 
@@ -788,14 +802,14 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
 
           };
 
-        function getUsersID(id){
+        function getUsersID(){
 
-          users.fetch(id)
+          users.all()
             .then(function (result){
-              vm.usersID = $stateParams.id;
-              //console.log(vm.usersID);
+              vm.usersID = result.data.data;
+              console.log(vm.usersID);
             });
-            getUsersID($stateParams.id);
+
         }
 
         function getForUserId(userId) {
@@ -910,6 +924,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
 
           initCreateFormAdmin();
           getAll();
+          getUsersID();
           //readOne();
 
 
@@ -1307,7 +1322,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
             alunos.all()
                 .then(function (result) {
                     vm.data = result.data.data;
-                    //$log.log(result);
+                    $log.log(result);
                     Utils.hide();
                 });
           }
@@ -1422,7 +1437,13 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
           getForUserId(vm.fullName);
 
           //pegando o id na base users
-
+          function getUsersResp() {
+            users.all()
+                  .then(function (result) {
+                      vm.users = result.data.data;
+                      //console.log(vm.data);
+                  });
+          }
 
 
 
@@ -1523,12 +1544,13 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
 
           initCreateFormAdmin();
           getAll();
+          getUsersResp();
 
       });
 
 
 
-      app.controller('respIDCtrl', function(Backand, LoginService, responsaveis, users, alunos, $stateParams, $state, $scope, $log, $ionicActionSheet, $ionicPopup, $location, $filter, moment, Utils) {
+      app.controller('respIDCtrl', function(Backand, LoginService, turmas, responsaveis, users, alunos, $stateParams, $state, $scope, $log, $ionicActionSheet, $ionicPopup, $location, $filter, moment, Utils) {
         var vm = this;
 
         //criando login para responsaveis
@@ -1539,7 +1561,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
             Utils.show();
             vm.errorMessage = '';
 
-            LoginService.signup(vm.firstName, vm.lastName, vm.email, vm.password, vm.again)
+            LoginService.signup(vm.firstName, vm.lastName, vm.email, vm.password, vm.again, {tipo: vm.tipo},{turma: vm.turma})
                 .then(function (response) {
                   Utils.hide();
                   Utils.alertshow("Sucesso","Login do usuário criado.");
@@ -1552,6 +1574,8 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
         vm.again = '';
         vm.firstName = '';
         vm.lastName = '';
+        vm.tipo= '';
+        vm.turma= '';
         vm.errorMessage = '';
 
 
@@ -1609,6 +1633,24 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
 
             }
 
+            function getTurmasAll(){
+              Utils.show();
+                turmas.all()
+                  .then(function(result){
+                    vm.turmas = result.data.data;
+                    /*$scope.showdetails = function(turma_id){
+                      var found = $filter('getById')(vm.aluno, turma_id);
+                      $scope.selected = found[0].__metadata.descriptives.responsaveis.value;
+                      console.log(found);
+                    //vm.aluno = vm.aluno[].__metadata.descriptives.responsaveis.value;
+                    //vm.aluno = vm.aluno.__metadata.descriptives.responsaveis.value;
+                    $log.log($scope.selected);
+                  }
+                  */
+                  Utils.hide();
+                });
+            }
+
 
 
 
@@ -1649,6 +1691,8 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
                getAll()
             // Carrega turma por ID
             getForID($stateParams.id);
+
+            getTurmasAll();
 
 
 
@@ -1773,20 +1817,41 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
 
           });
 
-          app.controller('homeCtrl', function(Backand, LoginService, responsaveis, alunos,  $rootScope, $stateParams, $state, $scope, $log, $ionicActionSheet, $ionicPopup, $location, $filter, moment, Utils) {
+          app.controller('homeCtrl', function(Backand, LoginService, users,  $rootScope, $stateParams, $state, $scope, $log, $ionicActionSheet, $ionicPopup, $location, $filter, moment, Utils) {
             var vm = this;
 
-            function getForUserId(userId) {
+            function getAll(){
+              users.all().then(function(result){
+                  vm.data = result.data.data;
+                  console.log(vm.data);
+
+              });
+            }
+
+            function getForUserId(fullName, userId) {
+              //users.all().then(function (result){
+                  //vm.data = result.data.data;
+                  //console.log(vm.data);
+
+
                 //$rootScope.$broadcast('authorized');
                 //login.username = username || Backand.getUsername();
+                vm.fullName = fullName || Backand.getUserDetails();
+                vm.fullName =  vm.fullName.$$state.value.fullName;
+
                 vm.userID = userId || Backand.getUserDetails();
-                vm.userID =  vm.userID.$$state.value.fullName;
+                vm.userID =  vm.userID.$$state.value.userId;
+                //vm.userID === vm.data;
 
                 //console.log(Backand.getUsername());
-                //console.log(vm.userID);
+                console.log(vm.userID);
+              //});
+
 
             }
 
-              getForUserId(vm.userID);
+              getForUserId(vm.fullName, vm.userID);
+              //getUsersID($stateParams.id);
+              getAll();
 
             });

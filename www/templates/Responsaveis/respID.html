@@ -13,7 +13,8 @@
     </div>
     <div>
       <form ng-submit="vm.signup()">
-        <div class="id" ng-bind="vm.firstName = (vm.perfil.nome)"></div>
+        <div ng-repeat="object in vm.aluno | filter: {responsaveis: vm.perfil.id}" class="id" ng-bind="vm.turma = (object.turmas)"></div>
+        <div class="id" ng-bind="vm.tipo = 'Responsável'"></div>
           <div class="list">
               <div class="row">
                   <div class="col">
@@ -21,6 +22,21 @@
                           <input id="email" name="email" type="email" placeholder="Email"
                                  ng-model="vm.email">
                       </label>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col">
+                      <label class="item item-input">
+                          <input id="firstname" name="firstname" type="text" placeholder="Nome"
+                                 ng-model="vm.firstName">
+                      </label>
+                  </div>
+                  <div class="col">
+                      <label class="item item-input">
+                          <input id="username" name="lastname" type="text" placeholder="Sobrenome"
+                                 ng-model="vm.lastName">
+                      </label>
+
                   </div>
               </div>
               <div class="row">
@@ -38,6 +54,14 @@
                           <input id="again" name="again" type="password" placeholder="Confirme a senha"
                                  ng-model="vm.again">
                       </label>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col">
+                    <select ng-model="vm.turma" >
+                      <option ng-repeat="object in vm.turmas" value="{{object.id}}">{{object.turma}}</option>
+                    </select>
+
                   </div>
               </div>
 

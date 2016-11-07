@@ -38,9 +38,9 @@
               $state.go('menu.home');
 
             //console.log(Backand.getUsername());
-            console.log($rootScope.token);
+            //console.log($rootScope.token);
           }else{
-            $state.go('login')
+            $state.go('login');
           }
         });
 
