@@ -7,43 +7,44 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
               users.all()
                 .then(function(result){
                   login.userDados = result.data.data;
-                  login.userDados = login.userDados[2].responsaveis;
-                  console.log(login.userDados);
+                  //login.userDados = login.userDados[2].responsaveis;
+                  //console.log(login.userDados);
 
                 });
 
             }
 
             function signin() {
+              Utils.show();
                 LoginService.signin(login.email, login.password)
                     .then(function () {
-                      Utils.show();
                         getAll();
                         onLogin();
                         Utils.hide();
                     },  function(err) {
-
+                      Utils.hide();
                        Utils.errMessage(err);
                     })
             }
 
 
-            function onLogin(username, userID) {
+            function onLogin(username, userID, token) {
                 $rootScope.$broadcast('authorized');
-                login.username = username || Backand.getUsername();
+                //login.username = username || Backand.getUsername();
                 login.userID = userID || Backand.getUserDetails();
                 //login.userID =  login.userID.$$state.value.userId;
                 //console.log(Backand.getUsername());
-                console.log(login.userID);
+                //console.log(login.userID);
+                //console.log(login.token);
                 $state.go('menu.home');
-        }
+            }
 
             function signout() {
                 LoginService.signout()
                     .then(function () {
-                        //$state.go('tab.signup');
                         $rootScope.$broadcast('logout');
-                        $state.go($state.current, {}, {reload: true});
+                        $state.go('login');
+
                     })
 
             }
@@ -226,7 +227,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
                   .then(function (result) {
                       vm.aluno = result.data.data;
                       Utils.hide();
-                      $log.log(vm.aluno);
+                    //  $log.log(vm.aluno);
                   });
           }
 
@@ -241,7 +242,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
                   .then(function (result) {
                       cancelCreate();
                       getAll();
-                      $log.log(result);
+                      //$log.log(result);
 
                   });
           }
@@ -334,7 +335,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
                   .then(function (result) {
                       vm.data = result.data.data;
                       Utils.hide();
-                      $log.log(result);
+                      //$log.log(result);
                   });
           }
 
@@ -439,7 +440,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
                   .then(function (result) {
                       vm.data = result.data.data;
                       Utils.hide();
-                      $log.log(result);
+                      //$log.log(result);
                   });
           }
 
@@ -470,7 +471,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
           function fetch(object) {
               eventos.fetch(object.id, object)
                   .then(function (result) {
-                      console.log("passou");
+                      //console.log("passou");
                       getAll();
                   });
           }
@@ -655,7 +656,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
               turmas.all()
                   .then(function (result) {
                       vm.turmas = result.data.data;
-                      console.log(vm.turmas );
+                      //console.log(vm.turmas );
                       Utils.hide();
                   });
           }
@@ -666,7 +667,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
               userFuncio.all()
                   .then(function (result) {
                       vm.data = result.data.data;
-                      console.log(vm.data);
+                      //console.log(vm.data);
                       Utils.hide();
                   });
           }
@@ -770,15 +771,29 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
 
       });
 
-      app.controller('turmasCtrl', function (turmas, users, $scope, $ionicPopup, $state, Backand, $stateParams, $location, $log, Utils) {
+      app.controller('turmasCtrl', function (turmas, users, $scope, $ionicPopup, $state, Backand, $http, $stateParams, $location, $log, Utils) {
 
         var vm = this;
+
+        // GET an single task with all its users
+        function readOne() {
+            return $http({
+              method: 'GET',
+              url: Backand.getApiUrl() + '/1/objects/' + 'turmas/1?deep=true',
+
+            }).then(function(response) {
+              //vm.data = response.data.data;
+              //console.log(vm.data);
+            });
+
+          };
 
         function getUsersID(id){
 
           users.fetch(id)
             .then(function (result){
               vm.usersID = $stateParams.id;
+              //console.log(vm.usersID);
             });
             getUsersID($stateParams.id);
         }
@@ -790,7 +805,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
             vm.userID =  vm.userID.$$state.value.userId;
 
             //console.log(Backand.getUsername());
-            console.log(vm.userID);
+            //console.log(vm.userID);
 
         }
 
@@ -803,7 +818,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
             turmas.all()
                   .then(function (result) {
                       vm.data = result.data.data;
-                      $log.log(result);
+                      //$log.log(result);
                       Utils.hide();
                   });
           }
@@ -895,7 +910,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
 
           initCreateFormAdmin();
           getAll();
-
+          //readOne();
 
 
       });
@@ -967,7 +982,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
                 .then(function (result) {
                     vm.data = result.data.data;
                     Utils.hide();
-                    $log.log(result);
+                    //$log.log(result);
                 });
         }
 
@@ -985,7 +1000,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
                 //  /$location.path('menu.turmas');
 
 
-                    $log.log(result);
+                    //$log.log(result);
 
                 });
         }
@@ -1041,7 +1056,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
                       Utils.hide();
 
 
-                      $log.log(vm.al);
+                      //$log.log(vm.al);
                         //console.log(result);
                     });
 
@@ -1152,7 +1167,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
                     .then(function (result) {
                         vm.data = result.data.data;
                         Utils.hide();
-                        $log.log(vm.data);
+                        //$log.log(vm.data);
                     });
             }
 
@@ -1292,7 +1307,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
             alunos.all()
                 .then(function (result) {
                     vm.data = result.data.data;
-                    $log.log(result);
+                    //$log.log(result);
                     Utils.hide();
                 });
           }
@@ -1521,11 +1536,13 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
         vm.signup = signUp;
 
         function signUp(){
+            Utils.show();
             vm.errorMessage = '';
 
-            LoginService.signup(vm.firstName, vm.lastName, vm.email, vm.password, vm.again, {users_turmas: vm.users_turmas})
+            LoginService.signup(vm.firstName, vm.lastName, vm.email, vm.password, vm.again)
                 .then(function (response) {
-                  Utils.alertshow("Sucesso","Login do Usuario criado.");
+                  Utils.hide();
+                  Utils.alertshow("Sucesso","Login do usuário criado.");
                   });
 
         }
@@ -1585,7 +1602,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
                       Utils.hide();
 
 
-                       $log.log(vm.perfil);
+                       //$log.log(vm.perfil);
                         //console.log(result);
                     });
 
@@ -1664,7 +1681,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
                 users.all()
                       .then(function (result) {
                           vm.data = result.data.data;
-                          console.log(vm.data);
+                          //console.log(vm.data);
                       });
               }
 
@@ -1677,7 +1694,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
               function create(object) {
                   users.create(object)
                       .then(function (result) {
-                        console.log("passou");
+                        //console.log("passou");
                           cancelCreate();
                           getAll();
                           $state.go('menu.responsaveis');
@@ -1756,7 +1773,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
 
           });
 
-          app.controller('homeCtrl', function(Backand, LoginService, responsaveis, alunos, $stateParams, $state, $scope, $log, $ionicActionSheet, $ionicPopup, $location, $filter, moment, Utils) {
+          app.controller('homeCtrl', function(Backand, LoginService, responsaveis, alunos,  $rootScope, $stateParams, $state, $scope, $log, $ionicActionSheet, $ionicPopup, $location, $filter, moment, Utils) {
             var vm = this;
 
             function getForUserId(userId) {
@@ -1766,7 +1783,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
                 vm.userID =  vm.userID.$$state.value.fullName;
 
                 //console.log(Backand.getUsername());
-                console.log(vm.userID);
+                //console.log(vm.userID);
 
             }
 

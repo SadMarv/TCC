@@ -13,6 +13,7 @@
     </div>
     <div>
       <form ng-submit="vm.signup()">
+        <div class="id" ng-bind="vm.firstName = (vm.perfil.nome)"></div>
           <div class="list">
               <div class="row">
                   <div class="col">
@@ -24,22 +25,6 @@
               </div>
               <div class="row">
                   <div class="col">
-                      <label class="item item-input">
-                          <input id="firstname" name="firstname" type="text" placeholder="Nome"
-                                 ng-model="vm.firstName">
-                      </label>
-                  </div>
-                  <div class="col">
-                      <label class="item item-input">
-                          <input id="username" name="lastname" type="text" placeholder="Sobrenome"
-                                 ng-model="vm.lastName">
-                      </label>
-
-                  </div>
-              </div>
-              <div class="row">
-                  <div class="col">
-
                       <label class="item item-input">
                           <input id="password" name="password" type="password" placeholder="Senha"
                                  ng-model="vm.password">
@@ -55,6 +40,7 @@
                       </label>
                   </div>
               </div>
+
               <h4 style="color:red;" ng-bind="vm.errorMessage"></h4>
 
               <div class="">

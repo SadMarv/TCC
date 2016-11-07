@@ -3,10 +3,10 @@
   <ion-content>
     <label class="item item-input">
         <i class="icon ion-search placeholder-icon"></i>
-        <input type="search" placeholder="Digite o Nome e/ou CPF" ng-model="searchText">
+        <input type="search" placeholder="Digite o Nome ou CPF" ng-model="searchText">
     </label>
     <ion-list show-reorder="reordering">
-      <ion-item class="item-remove-animate item-icon-right" ng-repeat="object in vm.data | filter: searchText"
+      <ion-item class="item-icon-right" ng-repeat="object in vm.data | filter: searchText"
            ng-class="{'active':vm.isCurrent(object.id)}" href="#/menu/respID/{{object.id}}" >
             <h2>Nome: {{object.nome}}</h2>
             <p>CPF: {{object.cpf}}</p>
@@ -33,6 +33,7 @@
     </div>
     <br><br>
 		<form name="createForm" class="newForm" role="form" ng-submit="vm.create(vm.newObject)" novalidate>
+      <div class="id" ng-bind="vm.newObject.users = (vm.aluno)"></div>
 		<div class="list card">
 			<div class="item item-input item-floating-label">
 				<span class="input-label">CPF</span>
@@ -61,7 +62,7 @@
 <!--Editar-->
   <div class="bar bar-header">
       <h1 class="title"> {{vm.edited.nome}}</h1>
-      <span ng-click="vm.cancelEditing()" class="ion-arrow-left-c"></span>
+      <span ng-click="vm.cancelEditing()" class="cancel-create">Cancelar</span>
   </div>
   <br><br>
   <form name="editForm" role="form" ng-submit="vm.update(vm.edited)" novalidate>

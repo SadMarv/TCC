@@ -24,11 +24,7 @@
       //controller:'forgotController'
     });
 
-    $stateProvider.state('home', {
-      url: '/home',
-      templateUrl: 'js/views/home/home.html',
-      //controller:'homeController'
-    });
+
     $stateProvider.state('profile', {
       url: '/profile',
       templateUrl: 'js/views/profile/profile.html',
@@ -40,7 +36,7 @@
       url:"/menu",
       templateUrl:"templates/menu.html",
       abstract: true,
-      //controller:"initCtrl"
+      controller:"LoginCtrl as login"
     });
 
     $stateProvider.state('menu.register', {
@@ -211,7 +207,7 @@
               }
             }
         });
-
+//$urlRouterProvider.otherwise("/menu/usuarios");
 $urlRouterProvider.otherwise("/login");
 $httpProvider.interceptors.push('APIInterceptor');
 });
@@ -221,7 +217,9 @@ $httpProvider.interceptors.push('APIInterceptor');
 
 
 
-  app.run(function ($ionicPlatform, $rootScope, $state, LoginService, Backand) {
+  app.run(function ($ionicPlatform, $rootScope, $state, LoginService, Backand, Utils) {
+
+
 
         $ionicPlatform.ready(function () {
 
@@ -240,12 +238,22 @@ $httpProvider.interceptors.push('APIInterceptor');
 
             var isMobile = !(ionic.Platform.platforms[0] == "browser");
             Backand.setIsMobile(isMobile);
-            Backand.setRunSignupAfterErrorInSigninSocial(true);
+            //Backand.setRunSignupAfterErrorInSigninSocial(true);
+
+            if($rootScope.token = Backand.getToken()!== null){
+              $rootScope.token = localStorage.getItem("BACKANDtoken");
+              $rootScope.$broadcast('authorized');
+              $state.go('menu.home');
+
+            //console.log(Backand.getUsername());
+            console.log($rootScope.token);
+          }
         });
 
         function unauthorized() {
-            console.log("user is unauthorized, sending to login");
-            $state.go('tab.login');
+            Utils.alertshow('Usuário não autorizado','Você não tem permissão de acesso.')
+            console.log("Usuário não autorizado, enviando para página de login.");
+            $state.go('login');
         }
 
         function signout() {
@@ -256,14 +264,7 @@ $httpProvider.interceptors.push('APIInterceptor');
             unauthorized();
         });
 
-        $rootScope.$on('$stateChangeSuccess', function (event, toState) {
-            if (toState.name == 'tab.login') {
-                signout();
-            }
-            else if (toState.name != 'tab.login' && Backand.getToken() === undefined) {
-                unauthorized();
-            }
-        });
+
 
     })
 
@@ -274,11 +275,14 @@ $httpProvider.interceptors.push('APIInterceptor');
       BackandProvider.setAnonymousToken('e44fa971-034d-4080-8ea1-21dd92014c86');
 
       */
-
-      BackandProvider.setAppName('tccagendapp');
-      BackandProvider.setSignUpToken('5d3a9329-ce9f-4bb7-a666-e1dddd04d13b');
-      BackandProvider.setAnonymousToken('ccc5fb1f-7717-46d9-b53d-ecbd3425ae6c');
-
+      /*
+      BackandProvider.setAppName('tcc3agendapp1');
+      BackandProvider.setSignUpToken('6cb9b63a-6151-43ef-9f35-ec75d8438d02');
+      BackandProvider.setAnonymousToken('9fc0a5a0-b2c8-41ad-a29d-8aca9e14fc2b');
+      */
+      BackandProvider.setAppName('tcc2agendapp');
+      BackandProvider.setSignUpToken('f090cf74-1ff0-409b-9150-9e0332598537');
+      BackandProvider.setAnonymousToken('a9b3a3d5-b2f7-41fc-8add-504670226a05');
 
 
    });

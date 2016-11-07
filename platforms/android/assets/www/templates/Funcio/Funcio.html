@@ -3,13 +3,10 @@
   <ion-content>
     <label class="item item-input">
         <i class="icon ion-search placeholder-icon"></i>
-        <input type="search" placeholder="Digite o Nome e/ou CPF">
+        <input type="search" placeholder="Digite o Nome ou CPF" ng-model="searchText">
     </label>
-    <div class="row">
-	  	<button class="col 20 button button-small">Pesquisar</button>
-  	</div>
     <ion-list show-reorder="reordering">
-      <ion-item class="item-remove-animate item-icon-right" ng-repeat="object in vm.data"
+      <ion-item class="item-remove-animate item-icon-right" ng-repeat="object in vm.data | filter: searchText"
            ng-class="{'active':vm.isCurrent(object.id)}">
             <h2>Nome: {{object.nome}}</h2>
             <p>CPF: {{object.cpf}}</p>
@@ -33,11 +30,12 @@
   <ion-content>
     <div class="bar bar-header">
         <h2 class="title">Insira os dados do Funcionário</h2>
-        <i ng-click="vm.cancelCreate()" class="ion-arrow-left-c"></i>
+        <span ng-click="vm.cancelCreate()" class="ion-arrow-left-c"></span>
     </div>
     <br><br>
 		<form name="createForm" class="newForm" role="form" ng-submit="vm.create(vm.newObject)" novalidate>
 		<div class="list card">
+
 			<div class="item item-input item-floating-label">
 				<span class="input-label">CPF</span>
 				<input type="text" ng-minlength='11' ng-maxlength='11' ng-required="true" placeholder="CPF" ng-model="vm.newObject.cpf" name="formText"></input>
@@ -56,6 +54,12 @@
           <option>Coordenador</option>
         </select>
       </div>
+      <div class="item item-input item-select">
+        <span class="input-label">Turma</span>
+        <select ng-model="vm.newObject.turma" >
+          <option ng-repeat="object in vm.turmas" value="{{object.id}}">{{object.turma}}</option>
+        </select>
+      </div>
 		</form>
 			<div class="padding">
 				<button class="button button-block button-positive" ng-show='createForm.$valid' type="submit">Salvar</button>
@@ -72,7 +76,7 @@
 <!--Editar-->
   <div class="bar bar-header">
       <h1 class="title"> {{vm.edited.nome}}</h1>
-      <span ng-click="vm.cancelEditing()" class="ion-arrow-left-c"></span>
+      <span ng-click="vm.cancelEditing()" class="cancel-create">Cancelar</span>
   </div>
   <br><br>
   <form name="editForm" role="form" ng-submit="vm.update(vm.edited)" novalidate>

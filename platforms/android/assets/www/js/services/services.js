@@ -37,99 +37,12 @@ app = angular.module('UserDirectory.services', [])
             return Backand.signout();
         };
 
-        service.signup = function(firstName, lastName, email, password, confirmPassword){
-            return Backand.signup(firstName, lastName, email, password, confirmPassword);
+        service.signup = function(firstName, lastName, email, password, confirmPassword, parameters){
+            return Backand.signup(firstName, lastName, email, password, confirmPassword, parameters);
         }
     })
 
-    app.service('AuthService', function($http, Backand){
-
-    var self = this;
-    var baseUrl = Backand.getApiUrl() + '/1/objects/';
-    self.appName = '';//CONSTS.appName || '';
-    self.currentUser = {};
-
-    loadUserDetails();
-
-    function loadUserDetails() {
-        self.currentUser.name = Backand.getUsername();
-        if (self.currentUser.name) {
-            getCurrentUserInfo()
-                .then(function (data) {
-                    self.currentUser.details = data;
-                });
-        }
-    }
-
-    self.getSocialProviders = function () {
-        return Backand.getSocialProviders()
-    };
-
-    self.socialSignIn = function (provider) {
-        return Backand.socialSignIn(provider)
-            .then(function (response) {
-                loadUserDetails();
-                return response;
-            });
-    };
-
-    self.socialSignUp = function (provider) {
-        return Backand.socialSignUp(provider)
-            .then(function (response) {
-                loadUserDetails();
-                return response;
-            });
-    };
-
-    self.setAppName = function (newAppName) {
-        self.appName = newAppName;
-    };
-
-    self.signIn = function (username, password, appName) {
-        return Backand.signin(username, password, appName)
-            .then(function (response) {
-                loadUserDetails();
-                return response;
-            });
-    };
-
-
-    self.changePassword = function (oldPassword, newPassword) {
-        return Backand.changePassword(oldPassword, newPassword)
-    };
-
-    self.requestResetPassword = function (username) {
-        return Backand.requestResetPassword(username, self.appName)
-    };
-
-    self.resetPassword = function (password, token) {
-        return Backand.resetPassword(password, token)
-    };
-
-    self.logout = function () {
-        Backand.signout().then(function () {
-            angular.copy({}, self.currentUser);
-        });
-    };
-
-    function getCurrentUserInfo() {
-        return $http({
-            method: 'GET',
-            url: baseUrl + "users",
-            params: {
-                filter: JSON.stringify([{
-                    fieldName: "email",
-                    operator: "contains",
-                    value: self.currentUser.name
-                }])
-            }
-        }).then(function (response) {
-            if (response.data && response.data.data && response.data.data.length == 1)
-                return response.data.data[0];
-        });
-    }
-
-    })
+    
 
 
     app.service('itemsAtiv', function ($http, Backand) {
@@ -165,6 +78,7 @@ app = angular.module('UserDirectory.services', [])
             return $http.delete(getUrlForId(id));
         };
     })
+
 
 
     app.service('resumo', function ($http, Backand) {
@@ -342,6 +256,80 @@ app = angular.module('UserDirectory.services', [])
         var service = this,
             baseUrl = '/1/objects/',
             objectName = 'turmas/';
+            objectDeep = '?deep=true';
+
+        function getUrl() {
+            return Backand.getApiUrl() + baseUrl + objectName;
+        }
+
+        function getUrlForId(id) {
+            return getUrl() + id + objectDeep;
+        }
+
+        service.all = function () {
+            return $http.get(getUrl());
+        };
+
+
+        service.fetch = function (id) {
+            return $http.get(getUrlForId(id));
+        };
+
+        service.create = function (object) {
+            return $http.post(getUrl(), object);
+        };
+
+        service.update = function (id, object) {
+            return $http.put(getUrlForId(id), object);
+        };
+
+        service.delete = function (id) {
+            return $http.delete(getUrlForId(id));
+        };
+    })
+
+    app.service('alunos', function ($http, Backand) {
+        var service = this,
+            baseUrl = '/1/objects/',
+            objectName = 'alunos/';
+            objectDeep = '';
+
+
+        function getUrl() {
+            return Backand.getApiUrl() + baseUrl + objectName;
+        }
+
+        function getUrlForId(id) {
+            return getUrl() + id;
+        }
+
+
+        service.all = function () {
+            return $http.get(getUrl());
+        };
+
+
+        service.fetch = function (id) {
+            return $http.get(getUrlForId(id));
+        };
+
+        service.create = function (object) {
+            return $http.post(getUrl(), object);
+        };
+
+        service.update = function (id, object) {
+            return $http.put(getUrlForId(id), object);
+        };
+
+        service.delete = function (id) {
+            return $http.delete(getUrlForId(id));
+        };
+    })
+
+    app.service('turmas', function ($http, Backand) {
+        var service = this,
+            baseUrl = '/1/objects/',
+            objectName = 'turmas/';
             objectDeep = '/?deep=true';
 
         function getUrl() {
@@ -374,10 +362,10 @@ app = angular.module('UserDirectory.services', [])
         };
     })
 
-    app.service('alunos', function ($http, Backand) {
+    app.service('users_turmas', function ($http, Backand) {
         var service = this,
             baseUrl = '/1/objects/',
-            objectName = 'alunos/';
+            objectName = 'users_turmas/';
             objectDeep = '';
 
 

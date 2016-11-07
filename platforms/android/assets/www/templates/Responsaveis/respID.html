@@ -1,10 +1,11 @@
-<ion-view view-title="{{vm.perfil.nome}}" ng-controller="respIDCtrl as vm">
+<ion-view view-title="Criar Login" ng-controller="respIDCtrl as vm">
   <ion-content>
 
     <ion-list>
       <ion-item class="item-remove-animate item-icon-right" >
             <h2>CPF: {{vm.perfil.cpf}}</h2>
-            <p>Responsável: {{vm.perfil.nome}}</p>
+            <h2>Responsável: {{vm.perfil.nome}}</h2>
+            <p ng-repeat="object in vm.aluno | filter: {responsaveis: vm.perfil.id}">Filho(a): {{object.nome}}</p>
       </ion-item>
     </ion-list>
     <div class="item item-divider">
@@ -12,11 +13,12 @@
     </div>
     <div>
       <form ng-submit="vm.signup()">
+        <div class="id" ng-bind="vm.firstName = (vm.perfil.nome)"></div>
           <div class="list">
               <div class="row">
                   <div class="col">
                       <label class="item item-input">
-                          <input id="email" name="email" type="email" placeholder="Your email"
+                          <input id="email" name="email" type="email" placeholder="Email"
                                  ng-model="vm.email">
                       </label>
                   </div>
@@ -24,23 +26,7 @@
               <div class="row">
                   <div class="col">
                       <label class="item item-input">
-                          <input id="firstname" name="firstname" type="text" placeholder="Your first name"
-                                 ng-model="vm.firstName">
-                      </label>
-                  </div>
-                  <div class="col">
-                      <label class="item item-input">
-                          <input id="username" name="lastname" type="text" placeholder="Your last name"
-                                 ng-model="vm.lastName">
-                      </label>
-
-                  </div>
-              </div>
-              <div class="row">
-                  <div class="col">
-
-                      <label class="item item-input">
-                          <input id="password" name="password" type="password" placeholder="Your password"
+                          <input id="password" name="password" type="password" placeholder="Senha"
                                  ng-model="vm.password">
                       </label>
                   </div>
@@ -49,11 +35,12 @@
                   <div class="col">
 
                       <label class="item item-input">
-                          <input id="again" name="again" type="password" placeholder="confirm your password"
+                          <input id="again" name="again" type="password" placeholder="Confirme a senha"
                                  ng-model="vm.again">
                       </label>
                   </div>
               </div>
+
               <h4 style="color:red;" ng-bind="vm.errorMessage"></h4>
 
               <div class="">
