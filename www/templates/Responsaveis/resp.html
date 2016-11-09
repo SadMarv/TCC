@@ -6,10 +6,9 @@
         <input type="search" placeholder="Digite o Nome ou CPF" ng-model="searchText">
     </label>
     <ion-list show-reorder="reordering">
-      <ion-item class="item-icon-right" ng-repeat="object in vm.data | filter: searchText"
+      <ion-item class="item-icon-right" ng-repeat="object in vm.data | filter: {tipo: 'Responsável'} | filter: searchText"
            ng-class="{'active':vm.isCurrent(object.id)}" href="#/menu/respID/{{object.id}}" >
-            <h2>Nome: {{object.nome}}</h2>
-            <p>CPF: {{object.cpf}}</p>
+            <h2>{{object.firstName}}&nbsp;{{object.lastName}}</h2>
             <a ng-click="vm.setEdited(object)" class="button button-light icon ion-compose"></a>
         <ion-option-button class="button-assertive icon-left ion-trash-b" ng-click="vm.delete(object.id)"></ion-option-button>
       </ion-item>
@@ -33,22 +32,18 @@
     </div>
     <br><br>
 		<form name="createForm" class="newForm" role="form" ng-submit="vm.create(vm.newObject)" novalidate>
-      <div class="id" ng-bind="vm.newObject.users = (vm.aluno)"></div>
 		<div class="list card">
-			<div class="item item-input item-floating-label">
-				<span class="input-label">CPF</span>
-        <input type="text" ng-minlength='11' ng-maxlength='11' ng-required="true" placeholder="CPF" ng-model="vm.newObject.cpf" name="formText"></input>
-          <h4 class="form-error" ng-show="createForm.$error.required">CPF Obrigatório!</h4>
-          <h4 class="form-error" ng-show="createForm.$error.maxlength">Digite um CPF válido!</h4>
-          <h4 class="form-error" ng-show="createForm.$error.minlength"></h4>
-			</div>
       <div class="item item-input item-floating-label">
 				<span class="input-label">Nome</span>
-        <input type="text" placeholder="Nome" ng-model="vm.newObject.nome"/>
+        <input type="text" placeholder="Nome" ng-model="vm.newObject.firstName"/>
+			</div>
+      <div class="item item-input item-floating-label">
+				<span class="input-label">Sobrenome</span>
+        <input type="text" placeholder="Nome" ng-model="vm.newObject.lastName"/>
 			</div>
 		</form>
 			<div class="padding">
-        <button class="button button-block button-positive" ng-show='createForm.$valid' type="submit">Salvar</button>
+        <button class="button button-block button-positive" type="submit">Salvar</button>
 			</div>
 
 		</div>
@@ -61,23 +56,19 @@
 <ion-content>
 <!--Editar-->
   <div class="bar bar-header">
-      <h1 class="title"> {{vm.edited.nome}}</h1>
+      <h1 class="title"> {{vm.edited.firstName}}&nbsp;{{vm.edited.lastName}}</h1>
       <span ng-click="vm.cancelEditing()" class="cancel-create">Cancelar</span>
   </div>
   <br><br>
   <form name="editForm" role="form" ng-submit="vm.update(vm.edited)" novalidate>
   <div class="list card">
     <div class="item item-input item-floating-label">
-      <span class="input-label">CPF</span>
-      <span name="textCpf" class="input-label">CPF</span>
-      <input type="text" ng-minlength="11" ng-maxlength="11" ng-required="true" placeholder="CPF" ng-model="vm.edited.cpf"></input>
-      <h4 class="form-error" ng-show="editForm.$error.required">Campo Obrigatório!</h4>
-      <h4 class="form-error" ng-show="editForm.$error.maxlength">Digite um CPF válido!</h4>
-      <h4 class="form-error" ng-show="editForm.$error.minlength"></h4>
+      <span class="input-label">Nome</span>
+      <input type="text" placeholder="Nome" ng-model="vm.edited.firstName"/>
     </div>
     <div class="item item-input item-floating-label">
-      <span class="input-label">Nome</span>
-      <input type="text" placeholder="Nome" ng-model="vm.edited.nome"></input>
+      <span class="input-label">Sobrenome</span>
+      <input type="text" placeholder="Nome" ng-model="vm.edited.lastName"/>
     </div>
     </form>
     <div class="padding">

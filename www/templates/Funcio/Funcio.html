@@ -6,11 +6,10 @@
         <input type="search" placeholder="Digite o Nome ou CPF" ng-model="searchText">
     </label>
     <ion-list show-reorder="reordering">
-      <ion-item class="item-remove-animate item-icon-right" ng-repeat="object in vm.data | filter: searchText"
+      <ion-item class="item-remove-animate item-icon-right" ng-repeat="object in vm.data | filter: {tipo: 'Professor'} | filter: searchText"
            ng-class="{'active':vm.isCurrent(object.id)}">
-            <h2>Nome: {{object.nome}}</h2>
-            <p>CPF: {{object.cpf}}</p>
-            <p>Função: {{object.funcao}}</p>
+            <h2>Nome: {{object.firstName}}&nbsp;{{object.lastName}}</h2>
+            <p>Função: {{object.tipo}}</p>
             <a ng-click="vm.setEdited(object)" class="button button-light icon ion-compose"></a>
         <ion-option-button class="button-assertive icon-left ion-trash-b" ng-click="vm.delete(object.id)"></ion-option-button>
       </ion-item>
@@ -19,7 +18,7 @@
     <br><br><br>
   </ion-content>
     <div class="tabs tabs-positive">
-      <a ng-click="vm.isCreating = true" class="tab-item  ion-person-add"> &nbsp;Adicionar</a>
+      <a ui-sref="menu.CriarFuncio" class="tab-item  ion-person-add"> &nbsp;Adicionar</a>
     </div>
   </div>
 

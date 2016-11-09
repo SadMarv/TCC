@@ -190,6 +190,16 @@
             }
         });
 
+        $stateProvider.state("menu.CriarFuncio",{
+            url:"/CriarFuncio",
+            views:{
+              'menuContent':{
+                templateUrl:"templates/Funcio/CriarFuncio.html",
+                controller: 'CriarFuncioCtrl as vm'
+              }
+            }
+        });
+
         $stateProvider.state("menu.turmas",{
             url:"/turmas",
             views:{
@@ -280,7 +290,7 @@
               }
             }
         });
-//$urlRouterProvider.otherwise("/menu/usuarios");
+$urlRouterProvider.otherwise("/menu/CriarFuncio");
 //$urlRouterProvider.otherwise("/login");
 $httpProvider.interceptors.push('APIInterceptor');
 });
