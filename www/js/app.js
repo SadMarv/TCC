@@ -32,11 +32,16 @@
             Backand.setIsMobile(isMobile);
             //Backand.setRunSignupAfterErrorInSigninSocial(true);
 
-            if($rootScope.token = Backand.getToken()!== null){
+            var role = Backand.getUserRole();
+
+            if($rootScope.token = Backand.getToken()!== null && role === 'User' ){
+              $rootScope.token = localStorage.getItem("BACKANDtoken");
+              $rootScope.$broadcast('authorized');
+              $state.go('menu.usuarios');
+            }else if($rootScope.token = Backand.getToken()!== null && role === 'Responsavel' ){
               $rootScope.token = localStorage.getItem("BACKANDtoken");
               $rootScope.$broadcast('authorized');
               $state.go('menu.home');
-
             //console.log(Backand.getUsername());
             //console.log($rootScope.token);
           }else{
@@ -77,6 +82,8 @@
       BackandProvider.setAppName('tcc2agendapp');
       BackandProvider.setSignUpToken('f090cf74-1ff0-409b-9150-9e0332598537');
       BackandProvider.setAnonymousToken('a9b3a3d5-b2f7-41fc-8add-504670226a05');
+
+      //BackandProvider.runSocket(true);
 
 
    });
@@ -290,7 +297,7 @@
               }
             }
         });
-$urlRouterProvider.otherwise("/menu/CriarFuncio");
+//$urlRouterProvider.otherwise("/menu/CriarFuncio");
 //$urlRouterProvider.otherwise("/login");
 $httpProvider.interceptors.push('APIInterceptor');
 });

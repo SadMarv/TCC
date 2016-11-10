@@ -1,9 +1,9 @@
-<ion-view view-title="Responsáveis" ng-controller="responsaveisCtrl as vm">
+<ion-view cache-view="false" view-title="Responsáveis" ng-controller="responsaveisCtrl as vm">
   <div ng-if="!vm.isCreating && !vm.isEditing">
   <ion-content>
     <label class="item item-input">
         <i class="icon ion-search placeholder-icon"></i>
-        <input type="search" placeholder="Digite o Nome ou CPF" ng-model="searchText">
+        <input type="search" placeholder="Digite o Nome" ng-model="searchText">
     </label>
     <ion-list show-reorder="reordering">
       <ion-item class="item-icon-right" ng-repeat="object in vm.data | filter: {tipo: 'Responsável'} | filter: searchText"
@@ -17,7 +17,7 @@
     <br><br><br>
   </ion-content>
     <div class="tabs tabs-positive">
-      <a ng-click="vm.isCreating = true" class="tab-item  ion-person-add"> &nbsp;Adicionar</a>
+      <a ui-sref="menu.respID" class="tab-item  ion-person-add"> &nbsp;Adicionar</a>
     </div>
   </div>
 
@@ -68,7 +68,7 @@
     </div>
     <div class="item item-input item-floating-label">
       <span class="input-label">Sobrenome</span>
-      <input type="text" placeholder="Nome" ng-model="vm.edited.lastName"/>
+      <input type="text" placeholder="Sobrenome" ng-model="vm.edited.lastName"/>
     </div>
     </form>
     <div class="padding">

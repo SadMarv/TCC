@@ -37,12 +37,12 @@ app = angular.module('UserDirectory.services', [])
             return Backand.signout();
         };
 
-        service.signup = function(firstName, lastName, email, password, confirmPassword, parameters){
-            return Backand.signup(firstName, lastName, email, password, confirmPassword, parameters);
+        service.signup = function(firstName, lastName, email, role, password, confirmPassword, parameters){
+            return Backand.signup(firstName, lastName, email, role, password, confirmPassword, parameters);
         }
     })
 
-    
+
 
 
     app.service('itemsAtiv', function ($http, Backand) {

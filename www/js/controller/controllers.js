@@ -14,6 +14,14 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
 
             }
 
+            //filtro por id usando diretiva $filter
+
+            /*$scope.showdetails = function(turma_id){
+              var found = $filter('getById')(vm.data, turma_id);
+              $scope.selected = found[0].id;
+              console.log(found);
+         }*/
+
             function signin() {
               Utils.show();
                 LoginService.signin(login.email, login.password)
@@ -28,15 +36,19 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
             }
 
 
-            function onLogin(username, userID, token) {
+            function onLogin(username, role, token) {
                 $rootScope.$broadcast('authorized');
                 //login.username = username || Backand.getUsername();
-                login.userID = userID || Backand.getUserDetails();
-                //login.userID =  login.userID.$$state.value.userId;
+                login.role = role || Backand.getUserRole();
+                if(login.role !== 'Responsavel'){
+                  $state.go('menu.usuarios');
+                }else{
+                  $state.go('menu.home', {}, {reload: true});
+                }
                 //console.log(Backand.getUsername());
-                //console.log(login.userID);
+                console.log(login.role);
                 //console.log(login.token);
-                $state.go('menu.home');
+
             }
 
             function signout() {
@@ -797,7 +809,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
             Utils.show();
             vm.errorMessage = '';
 
-            LoginService.signup(vm.firstName, vm.lastName, vm.email, vm.password, vm.again, {tipo: vm.tipo})
+            LoginService.signup(vm.firstName, vm.lastName, vm.email, vm.role, vm.password, vm.again, {tipo: vm.tipo})
                 .then(function (response) {
                   Utils.hide();
                   Utils.alertshow("Sucesso","Login do usuário criado.");
@@ -811,6 +823,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
         vm.firstName = '';
         vm.lastName = '';
         vm.tipo= '';
+        vm.role= '';
         vm.errorMessage = '';
 
 
@@ -1697,6 +1710,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
                 .then(function (response) {
                   Utils.hide();
                   Utils.alertshow("Sucesso","Login do usuário criado.");
+                  $state.go('menu.responsaveis', {}, {reload: true});
                   });
 
         }
@@ -1953,7 +1967,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
                 vm.fullName =  vm.fullName.$$state.value.fullName;
 
                 vm.userID = userId || Backand.getUserDetails();
-                //vm.userID =  vm.userID.$$state.value.userId;
+                vm.userID =  vm.userID.$$state.value.userId;
                 //vm.userID === vm.data;
 
                 //console.log(Backand.getUsername());
