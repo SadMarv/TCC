@@ -37,7 +37,7 @@
             if($rootScope.token = Backand.getToken()!== null && role === 'User' ){
               $rootScope.token = localStorage.getItem("BACKANDtoken");
               $rootScope.$broadcast('authorized');
-              $state.go('menu.usuarios');
+              $state.go('menuUser.homeUser');
             }else if($rootScope.token = Backand.getToken()!== null && role === 'Responsavel' ){
               $rootScope.token = localStorage.getItem("BACKANDtoken");
               $rootScope.$broadcast('authorized');
@@ -53,6 +53,7 @@
             Utils.alertshow('Usuário não autorizado','Você não tem permissão de acesso.')
             console.log("Usuário não autorizado, enviando para página de login.");
             $state.go('login');
+            Utils.hide();
         }
 
         function signout() {
@@ -119,6 +120,10 @@
       controller:"LoginCtrl as login"
     });
 
+
+
+
+
     $stateProvider.state('menu.register', {
       url: '/register',
       views: {
@@ -167,6 +172,8 @@
               }
             }
         });
+
+
 
       $stateProvider.state("menu.usuarios",{
             url:"/usuarios",
@@ -258,12 +265,22 @@
             }
         });
 
+        $stateProvider.state("menu.criarResp",{
+            url:"/criarResp",
+            views:{
+              'menuContent':{
+                templateUrl:"templates/Responsaveis/criarResp.html",
+                controller: 'criarRespCtrl as vm'
+              }
+            }
+        });
+
         $stateProvider.state("menu.respID",{
             url:"/respID/:id",
             views:{
               'menuContent':{
                 templateUrl:"templates/Responsaveis/respID.html",
-                controller: 'respIDCtrl as vm'
+                controller: 'RespIDCtrl as vm'
               }
             }
         });
@@ -297,6 +314,56 @@
               }
             }
         });
+
+
+        //ROUTE DE ROLE = USER
+
+      $stateProvider.state("menuUser",{
+        url:"/menuUser",
+        templateUrl:"templatesUser/menuUser.html",
+        abstract: true,
+        controller:"LoginCtrl as login"
+      });
+
+      $stateProvider.state("menuUser.homeUser",{
+              url:"/homeUser",
+              views:{
+                'menuUserContent':{
+                  templateUrl:"templatesUser/homeUser.html",
+                    }
+                  }
+              });
+
+              $stateProvider.state("menuUser.turmasUser",{
+                  url:"/turmasUser",
+                  views:{
+                    'menuUserContent':{
+                      templateUrl:"templatesUser/Turmas/turmasUser.html",
+                      controller: 'turmasUserCtrl as vm'
+                    }
+                  }
+              });
+
+              $stateProvider.state("menuUser.turmasUserID",{
+                  url:"/turmasUserID/:id",
+                  views:{
+                    'menuUserContent':{
+                      templateUrl:"templatesUser/Turmas/turmasUserID.html",
+                      controller: 'TurmaUserIDCtrl as vm'
+                    }
+                  }
+              });
+
+              $stateProvider.state("menuUser.ResumoDoDiaUser",{
+                  url:"/ResumoDoDiaUser",
+                  views:{
+                    'menuUserContent':{
+                      templateUrl:"templatesUser/ResumoDoDia/ResumoDoDiaUser.html",
+                      controller: 'resumoUserCtrl as vm'
+                    }
+                  }
+              });
+
 //$urlRouterProvider.otherwise("/menu/CriarFuncio");
 //$urlRouterProvider.otherwise("/login");
 $httpProvider.interceptors.push('APIInterceptor');

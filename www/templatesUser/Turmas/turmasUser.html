@@ -1,4 +1,4 @@
-<ion-view view-title="Turmas" ng-controller="turmasCtrl as vm">
+<ion-view view-title="Turmas" ng-controller="turmasUserCtrl as vm">
   <div ng-if="!vm.isCreating && !vm.isEditing">
   <ion-content>
     <label class="item item-input">
@@ -6,21 +6,16 @@
         <input type="search" placeholder="Digite o nome da Turma. Ex: Turma A" ng-model="searchText">
     </label>
     <ion-list  ng-repeat="object in vm.data | filter:searchText" ng-class="{'active':vm.isCurrent(object.id)}" >
-      <ion-item href="#/menu/turmasID/{{object.id}}" class="item-icon-right">
+      <ion-item href="#/menuUser/turmasUserID/{{object.id}}" class="item-icon-right">
             <h2>Turma: {{object.turma}}</h2>
             <p>Período: {{object.periodo}}</p>
             <p>Ano: {{object.ano}}</p>
-
-            <a ng-click="vm.setEdited(object)" class="button button-light icon ion-compose"></a>
-        <ion-option-button class="button-assertive icon-left ion-trash-b" ng-click="vm.delete(object.id)"></ion-option-button>
       </ion-item>
     </ion-list>
 
     <br><br><br>
   </ion-content>
-    <div class="tabs tabs-positive">
-      <a ng-click="vm.isCreating = true" class="tab-item  ion-person-add"> &nbsp;Adicionar</a>
-    </div>
+
   </div>
 
 
