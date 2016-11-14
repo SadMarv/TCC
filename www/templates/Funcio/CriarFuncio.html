@@ -5,7 +5,6 @@
     </div>
     <br><br>
       <form ng-submit="vm.signup()">
-        <div class="id" ng-bind="vm.tipo = 'Professor'"></div>
           <div class="list">
 
               <div class="row">
@@ -24,6 +23,20 @@
                   </div>
               </div>
               <div class="row">
+                <div class="col">
+
+                <label class="item item-input item-select">
+                  <div class="input-label">
+                    Função
+                  </div>
+                  <select ng-model="vm.tipo">
+                    <option selected>Professor</option>
+                    <option>Coordenador</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+              <div class="row">
                   <div class="col">
                       <label class="item item-input">
                           <input id="email" name="email" type="email" placeholder="Email"
@@ -31,6 +44,7 @@
                       </label>
                   </div>
               </div>
+
               <div class="row">
                   <div class="col">
                       <label class="item item-input">

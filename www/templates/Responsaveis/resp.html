@@ -6,7 +6,7 @@
         <input type="search" placeholder="Digite o Nome" ng-model="searchText">
     </label>
     <ion-list show-reorder="reordering">
-      <ion-item class="item-icon-right" ng-repeat="object in vm.data | filter: {tipo: 'Responsável'} | filter: searchText"
+      <ion-item class="item-icon-right" ng-repeat="object in vm.data | filter: {tipo: 'Responsavel'} | filter: searchText"
            ng-class="{'active':vm.isCurrent(object.id)}" href="#/menu/respID/{{object.id}}" >
             <h2>{{object.firstName}}&nbsp;{{object.lastName}}</h2>
             <a ng-click="vm.setEdited(object)" class="button button-light icon ion-compose"></a>

@@ -1,0 +1,21 @@
+<ion-view view-title="Eventos" ng-controller="eventosUserCtrl as vm">
+  <ion-content>
+    <label class="item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="month" placeholder="Digite o Título" ng-model="searchText">
+    </label>
+    <div class="padding has-header">
+        <div class="list card" ng-repeat="object in vm.data | filter:searchText"
+             ng-class="{'active':vm.isCurrent(object.id)}">
+            <div class="item item-icon-right item-icon-left">
+                <p class="text-center">{{object.data | date: 'dd/MM/yyyy'}}</p>
+                <h3 class="text-center"><b>{{object.titulo}}</b></h3>
+                <br>
+            </div>
+            <div class="item item-body">
+                {{object.descricao}}
+            </div>
+        </div>
+    </div>
+</ion-content>
+</ion-view>

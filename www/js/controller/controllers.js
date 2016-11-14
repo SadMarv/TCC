@@ -40,13 +40,15 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
                 $rootScope.$broadcast('authorized');
                 //login.username = username || Backand.getUsername();
                 login.role = role || Backand.getUserRole();
-                if(login.role !== 'Responsavel'){
+                if(login.role === 'User'){
                   $state.go('menuUser.homeUser', {}, {reload: true});
+                }else if(login.role === 'Admin' || login.role === 'Coordenador'){
+                  $state.go('menu.home', {}, {reload: true});
                 }else{
                   $state.go('menu.home', {}, {reload: true});
                 }
                 //console.log(Backand.getUsername());
-                console.log(login.role);
+                console.log(Backand.getUserRole());
                 //console.log(login.token);
 
             }

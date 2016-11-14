@@ -4,14 +4,14 @@
   <ion-content>
     <label class="item item-input">
         <i class="icon ion-search placeholder-icon"></i>
-        <input type="search" placeholder="Digite o Nome e/ou CPF" ng-model="searchText">
+        <input type="search" placeholder="Digite o Título do Evento" ng-model="searchText">
     </label>
     <div class="padding has-header">
         <div class="list card" ng-repeat="object in vm.data | filter:searchText"
              ng-class="{'active':vm.isCurrent(object.id)}">
             <div class="item item-icon-right item-icon-left">
                 <i class="ion-compose icon" ng-click="vm.setEdited(object)"></i>
-                <p class="text-center">{{object.data | date: 'dd-MM-yyyy'}}</p>
+                <p class="text-center">{{object.data | date: 'dd/MM/yyyy'}}</p>
                 <h3 class="text-center"><b>{{object.titulo}}</b></h3>
                 <br>
                 <i class="icon ion-close-round" ng-click="vm.delete(object.id)"></i>

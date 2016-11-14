@@ -41,12 +41,14 @@
             }else if($rootScope.token = Backand.getToken()!== null && role === 'Responsavel' ){
               $rootScope.token = localStorage.getItem("BACKANDtoken");
               $rootScope.$broadcast('authorized');
-              $state.go('menu.home');
-            //console.log(Backand.getUsername());
-            //console.log($rootScope.token);
-          }else{
-            $state.go('login');
-          }
+              $state.go('menuResp.homeResp');
+            }else if($rootScope.token = Backand.getToken()!== null && role === 'Admin' || role === 'Coordenador' ){
+              $rootScope.token = localStorage.getItem("BACKANDtoken");
+              $rootScope.$broadcast('authorized');
+              $state.go('menu.usuarios');
+            }else{
+              $state.go('login');
+            }
         });
 
         function unauthorized() {
@@ -354,15 +356,114 @@
                   }
               });
 
-              $stateProvider.state("menuUser.ResumoDoDiaUser",{
-                  url:"/ResumoDoDiaUser",
+              $stateProvider.state("menuUser.turmasResumoUser",{
+                  url:"/turmasResumoUser",
                   views:{
                     'menuUserContent':{
-                      templateUrl:"templatesUser/ResumoDoDia/ResumoDoDiaUser.html",
-                      controller: 'resumoUserCtrl as vm'
+                      templateUrl:"templatesUser/ResumoDoDia/turmasResumoUser.html",
+                      controller: 'turmasResumoUserCtrl as vm'
                     }
                   }
               });
+
+              $stateProvider.state("menuUser.resumoTurmasUserID",{
+                  url:"/resumoTurmasUserID/:id",
+                  views:{
+                    'menuUserContent':{
+                      templateUrl:"templatesUser/ResumoDoDia/resumoTurmasUserID.html",
+                      controller: 'resumoTurmasUserIDCtrl as vm'
+                    }
+                  }
+              });
+
+              $stateProvider.state("menuUser.alunoResumo",{
+                  url:"/alunos/:id",
+                  views:{
+                    'menuUserContent':{
+                      templateUrl:"templatesUser/ResumoDoDia/alunoResumo.html",
+                      controller: 'resumoTurmasUserIDCtrl as vm'
+                    }
+                  }
+              });
+
+              $stateProvider.state("menuUser.ResumoDoDiaUser",{
+                  url:"/ResumoDoDiaUser/:id",
+                  views:{
+                    'menuUserContent':{
+                      templateUrl:"templatesUser/ResumoDoDia/ResumoDoDiaUser.html",
+                      controller: 'resumoTurmasUserIDCtrl as vm'
+                    }
+                  }
+              });
+
+              $stateProvider.state('menuUser.dashboardTurmaUser', {
+                url: '/dashboardTurmaUser',
+                views: {
+                  'menuUserContent': {
+                      templateUrl: 'templatesUser/Atividades/atividadesTurmaUser.html'
+                          }
+                      }
+                  });
+
+
+                  $stateProvider.state('menuUser.turmaAtividadeUser', {
+                    url: '/turmaAtividadeUser/:id',
+                    views: {
+                      'menuUserContent': {
+                          templateUrl: 'templatesUser/Atividades/turmaAtividadeUser.html',
+                          //controller: 'resumoTurmasUserIDCtrl as vm'
+                              }
+                          }
+                      });
+
+                      $stateProvider.state("menuUser.turmaComunicadosUser",{
+                          url:"/turmaComunicadosUser",
+                          views:{
+                            'menuUserContent':{
+                              templateUrl:"templatesUser/Comunicados/turmaComunicadosUser.html",
+                              // controller: 'comunicadosUserCtrl as vm'
+                            }
+                          }
+                      });
+
+                      $stateProvider.state("menuUser.comunicadosUserID",{
+                          url:"/comunicadosTurmaUserID/:id",
+                          views:{
+                            'menuUserContent':{
+                              templateUrl:"templatesUser/Comunicados/comunicadosTurmaUser.html",
+                              controller: 'comunicadosUserIDCtrl as vm'
+                            }
+                          }
+                      });
+
+                      $stateProvider.state("menuUser.eventosUser",{
+                          url:"/eventosUser",
+                          views:{
+                            'menuUserContent':{
+                              templateUrl:"templatesUser/Eventos/eventosUser.html",
+                              controller: 'eventosUserCtrl as vm'
+                            }
+                          }
+                      });
+
+                      //ROUTE DE ROLE = RESPONSAVEL
+
+                      $stateProvider.state("menuResp",{
+                      url:"/menuResp",
+                      templateUrl:"templatesResp/menuResp.html",
+                      abstract: true,
+                      controller:"LoginCtrl as login"
+                      });
+
+                      $stateProvider.state("menuResp.homeResp",{
+                            url:"/homeResp",
+                            views:{
+                              'menuRespContent':{
+                                templateUrl:"templatesResp/homeResp.html",
+                                  }
+                                }
+                            });
+
 
 //$urlRouterProvider.otherwise("/menu/CriarFuncio");
 //$urlRouterProvider.otherwise("/login");
