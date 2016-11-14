@@ -1,5 +1,5 @@
 'Use Strict';
-angular.module('UserDirectory').controller('resumoUserCtrl', function (resumo, alunos, $scope, $ionicPopup, Utils, $log) {
+angular.module('UserDirectory').controller('resumoRespCtrl', function (resumo, alunos, $scope, $ionicPopup, Utils, $log) {
     var vm = this;
 
     $scope.date = moment().format('llll');
@@ -112,7 +112,7 @@ angular.module('UserDirectory').controller('resumoUserCtrl', function (resumo, a
 
 });
 
-angular.module('UserDirectory').controller('turmasResumoUserCtrl', function(turmas, alunos, resumo, $stateParams, $state, $scope, $log, $ionicActionSheet, $ionicPopup, $location, $filter, moment, Utils) {
+angular.module('UserDirectory').controller('turmasResumoRespCtrl', function(turmas, alunos, resumo, $stateParams, $state, $scope, $log, $ionicActionSheet, $ionicPopup, $location, $filter, moment, Utils) {
   var vm = this;
 
   $scope.date = moment().format('llll');
@@ -139,7 +139,7 @@ angular.module('UserDirectory').controller('turmasResumoUserCtrl', function(turm
     });
 
 
-    angular.module('UserDirectory').controller('resumoTurmasUserIDCtrl', function(turmas, alunos, resumo, $stateParams, $state, $scope, $log, $ionicActionSheet, $ionicPopup, $location, $filter, moment, Utils) {
+    angular.module('UserDirectory').controller('resumoTurmasRespIDCtrl', function(turmas, alunos, resumo, $stateParams, $state, $scope, $log, $ionicActionSheet, $ionicPopup, $location, $filter, moment, Utils) {
       var vm = this;
 
       $scope.date = moment().format('llll');

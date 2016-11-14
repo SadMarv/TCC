@@ -45,7 +45,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
                 }else if(login.role === 'Admin' || login.role === 'Coordenador'){
                   $state.go('menu.home', {}, {reload: true});
                 }else{
-                  $state.go('menu.home', {}, {reload: true});
+                  $state.go('menuResp.homeResp', {}, {reload: true});
                 }
                 //console.log(Backand.getUsername());
                 console.log(Backand.getUserRole());
@@ -1440,7 +1440,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
 
 
 
-      app.controller('alunosCtrl', function (alunos, turmas, responsaveis, $rootScope, $ionicPopup, $state, $scope, $http, Utils, $log, $filter) {
+      app.controller('alunosCtrl', function (alunos, turmas, users, $rootScope, $ionicPopup, $state, $scope, $http, Utils, $log, $filter) {
 
 
         var vm = this;
@@ -1459,8 +1459,8 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
 
 
         function getResp() {
-          responsaveis.all().then(function (resposta) {
-              vm.dadoResp = resposta.data.data;
+          users.all().then(function (resposta) {
+              vm.userResp = resposta.data.data;
               //$log.log(resposta);
               });
 
@@ -1525,7 +1525,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
 
 
           function initCreateFormAdmin() {
-              vm.newObject = {matricula: '', nome: '', responsaveis:'', periodo:''};
+              vm.newObject = {matricula: '', nome: '', users:'', periodo:''};
           }
 
           function setEdited(object) {
@@ -1809,9 +1809,9 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
                               console.log(found);
                             //vm.aluno = vm.aluno[].__metadata.descriptives.responsaveis.value;
                             //vm.aluno = vm.aluno.__metadata.descriptives.responsaveis.value;
-                            $log.log($scope.selected);
                           }
-                          */
+                            */
+                            $log.log(vm.aluno);
                         });
                     }
 

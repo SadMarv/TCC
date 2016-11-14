@@ -43,7 +43,7 @@
                 }else if(login.role === 'Admin' || login.role === 'Coordenador'){
                   $state.go('menu.usuarios', {}, {reload: true});
                 }else{
-                  $state.go('menu.home', {}, {reload: true});
+                  $state.go('menuResp.homeResp', {}, {reload: true});
                 }
                 //console.log(Backand.getUsername());
                 console.log(login.role);
@@ -124,7 +124,7 @@
 
 
 
-      
+
 
 
           app.controller('homeCtrl', function(Backand, LoginService, users,  $rootScope, $stateParams, $state, $scope, $log, $ionicActionSheet, $ionicPopup, $location, $filter, moment, Utils) {

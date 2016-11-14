@@ -1,5 +1,5 @@
 'Use Strict';
-angular.module('UserDirectory').controller('atividadesUserCtrl', function (turmas, users, $scope, $ionicPopup, $state, Backand, $http, $stateParams, $location, $log, Utils) {
+angular.module('UserDirectory').controller('atividadesRespCtrl', function (turmas, users, $scope, $ionicPopup, $state, Backand, $http, $stateParams, $location, $log, Utils) {
 
   var vm = this;
 
@@ -135,7 +135,7 @@ angular.module('UserDirectory').controller('atividadesUserCtrl', function (turma
 
 
 
-angular.module('UserDirectory').controller('AtividadesUserIDCtrl', function(turmas, itemsAtiv, $stateParams, $state, $scope, $log, $ionicActionSheet, $ionicPopup, $location, $filter, moment, Utils) {
+angular.module('UserDirectory').controller('AtividadesRespIDCtrl', function(turmas, itemsAtiv, $stateParams, $state, $scope, $log, $ionicActionSheet, $ionicPopup, $location, $filter, moment, Utils) {
   var vm = this;
 
   $scope.date = moment().format('llll');

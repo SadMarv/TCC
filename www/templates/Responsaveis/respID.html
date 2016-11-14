@@ -8,6 +8,6 @@
       <ion-item class="item-remove-animate item-icon-right" >
             <h2>Responsável: {{vm.perfil.firstName}}&nbsp;{{vm.perfil.lastName}}</h2>
             <p>Email: {{vm.perfil.email}}</p>
-            <p ng-repeat="object in vm.aluno">Filho(a): {{vm.perfil.ano}}</p>
+            <p ng-repeat="object in vm.aluno | filter: {users:vm.perfil.id}">Filho(a): {{object.nome}}</p>
       </ion-item>
     </ion-list>

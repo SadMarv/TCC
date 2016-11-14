@@ -8,7 +8,7 @@
     <ion-list ng-repeat="object in vm.data | filter:searchText">
       <ion-item class="item-remove-animate item-icon-right"
            ng-class="{'active':vm.isCurrent(object.id)}">
-            <h2>Nome: {{object.nome}}</h2><h4>Responsável: {{object.__metadata.descriptives.responsaveis.label}}</h4>
+            <h2>Nome: {{object.nome}}</h2><h4>Responsável: {{object.__metadata.descriptives.users.label}}</h4>
             <p>Matrícula: {{object.matricula}}</p>
             <p>Turma: {{object.__metadata.descriptives.turmas.label}}</p>
 
@@ -43,19 +43,20 @@
         <h4 class="form-error" ng-show="createForm.$error.maxlength">Digite uma matrícula com até 15 dígitos!</h4>
         <h4 class="form-error" ng-show="createForm.$error.minlength"></h4>
 			</div>
+      <div class="item item-input item-select">
+        <span class="input-label">Responsável</span>
+        <select ng-model="vm.newObject.users">
+          <option ng-repeat="object in vm.userResp | filter: {tipo:'Responsavel'}" value="{{object.id}}">{{object.firstName}}&nbsp;{{object.lastName}}</option>
+        </select>
+      </div>
 			<div class="item item-input item-floating-label">
 				<span class="input-label">Nome</span>
 				<input type="text" placeholder="Nome" ng-model="vm.newObject.nome"/>
         <h4 class="form-error" ng-show="createForm.$error.required">Campo Obrigatório!</h4>
 			</div>
+
       <div class="item item-input item-select">
-        <span class="input-label">Responsável</span>
-        <select ng-model="vm.newObject.responsaveis">
-          <option ng-repeat="object in vm.dadoResp" value="{{object.id}}">{{object.nome}}</option>
-        </select>
-      </div>
-      <div class="item item-input item-select">
-        <span class="input-label">Turmas</span>
+        <span class="input-label">Turma</span>
         <select ng-model="vm.newObject.turmas" >
           <option ng-repeat="object in vm.dadoTurmas" value="{{object.id}}">{{object.turma}}</option>
         </select>
@@ -89,9 +90,9 @@
       <h4 class="form-error" ng-show="editForm.$error.minlength"></h4>
     </div>
     <div class="item item-input item-select">
-      <span class="input-label">Turmas</span>
-      <select ng-model="vm.edited.turmas" >
-        <option ng-repeat="object in vm.dadoTurmas" value="{{object.id}}">{{object.turma}}</option>
+      <span class="input-label">Responsável</span>
+      <select ng-model="vm.edited.users" >
+        <option ng-repeat="object in vm.userResp | filter: {tipo: 'Responsavel'}" value="{{object.id}}">{{object.firstName}}&nbsp;{{object.lastName}}</option>
       </select>
     </div>
     <div class="item item-input item-floating-label">
@@ -99,17 +100,9 @@
       <input type="text" placeholder="Nome" ng-model="vm.edited.nome"/>
     </div>
     <div class="item item-input item-select">
-      <span class="input-label">Responsável</span>
-      <select ng-model="vm.edited.responsaveis" >
-        <option ng-repeat="object in vm.dadoResp" value="{{object.id}}">{{object.nome}}</option>
-      </select>
-    </div>
-    <div class="item item-input item-select">
-      <span class="input-label">Período</span>
-      <select ng-model="vm.edited.periodo">
-        <option selected>Manhã</option>
-        <option>Tarde</option>
-        <option>Integral</option>
+      <span class="input-label">Turma</span>
+      <select ng-model="vm.edited.turmas" >
+        <option ng-repeat="object in vm.dadoTurmas" value="{{object.id}}">{{object.turma}}</option>
       </select>
     </div>
     <div class="padding">

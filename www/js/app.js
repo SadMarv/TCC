@@ -464,6 +464,83 @@
                                 }
                             });
 
+                            $stateProvider.state('menuResp.dashboardTurmaResp', {
+                              url: '/dashboardTurmaResp',
+                              views: {
+                                'menuRespContent': {
+                                    templateUrl: 'templatesResp/Atividades/atividadesTurmaResp.html'
+                                        }
+                                    }
+                                });
+
+
+                                $stateProvider.state('menuResp.turmaAtividadeResp', {
+                                  url: '/turmaAtividadeResp/:id',
+                                  views: {
+                                    'menuRespContent': {
+                                        templateUrl: 'templatesResp/Atividades/turmaAtividadeResp.html',
+                                        //controller: 'resumoTurmasUserIDCtrl as vm'
+                                            }
+                                        }
+                                    });
+
+                                    $stateProvider.state("menuResp.turmasResumoResp",{
+                                        url:"/turmasResumoResp",
+                                        views:{
+                                          'menuRespContent':{
+                                            templateUrl:"templatesResp/ResumoDoDia/turmasResumoResp.html",
+                                            controller: 'turmasResumoRespCtrl as vm'
+                                          }
+                                        }
+                                    });
+
+                                    $stateProvider.state("menuResp.resumoTurmasRespID",{
+                                        url:"/resumoTurmasRespID/:id",
+                                        views:{
+                                          'menuRespContent':{
+                                            templateUrl:"templatesResp/ResumoDoDia/resumoTurmasRespID.html",
+                                            controller: 'resumoTurmasRespIDCtrl as vm'
+                                          }
+                                        }
+                                    });
+                                    $stateProvider.state("menuResp.ResumoDoDiaResp",{
+                                        url:"/ResumoDoDiaResp/:id",
+                                        views:{
+                                          'menuRespContent':{
+                                            templateUrl:"templatesResp/ResumoDoDia/ResumoDoDiaResp.html",
+                                            controller: 'resumoTurmasRespIDCtrl as vm'
+                                          }
+                                        }
+                                    });
+                                    $stateProvider.state("menuResp.turmaComunicadosResp",{
+                                        url:"/turmaComunicadosResp",
+                                        views:{
+                                          'menuRespContent':{
+                                            templateUrl:"templatesResp/Comunicados/turmaComunicadosResp.html",
+                                            controller: 'comunicadosRespCtrl as vm'
+                                          }
+                                        }
+                                    });
+
+                                    $stateProvider.state("menuResp.comunicadosRespID",{
+                                        url:"/comunicadosTurmaRespID/:id",
+                                        views:{
+                                          'menuRespContent':{
+                                            templateUrl:"templatesResp/Comunicados/comunicadosTurmaResp.html",
+                                            controller: 'comunicadosRespIDCtrl as vm'
+                                          }
+                                        }
+                                    });
+                                    $stateProvider.state("menuResp.eventosResp",{
+                                        url:"/eventosResp",
+                                        views:{
+                                          'menuRespContent':{
+                                            templateUrl:"templatesResp/Eventos/eventosResp.html",
+                                            controller: 'eventosRespCtrl as vm'
+                                          }
+                                        }
+                                    });
+
 
 //$urlRouterProvider.otherwise("/menu/CriarFuncio");
 //$urlRouterProvider.otherwise("/login");

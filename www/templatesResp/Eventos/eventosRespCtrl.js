@@ -1,5 +1,5 @@
 'Use Strict';
-angular.module('UserDirectory').controller('eventosUserCtrl', function (eventos, $scope, $ionicPopup, Utils, $log) {
+angular.module('UserDirectory').controller('eventosRespCtrl', function (eventos, $scope, $ionicPopup, Utils, $log) {
     var vm = this;
 
 
