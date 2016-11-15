@@ -35,6 +35,8 @@
     </div>
     <br><br>
 		<form  name="createForm" ng-submit="vm.create(vm.newObject)" novalidate>
+      <div ng-bind="vm.newObject.user = vm.newObject.users"></div>
+      <div ng-bind="vm.newObject.turma = vm.newObject.turmas"></div>
 		<div class="list card">
 			<div class="item item-input item-floating-label">
 				<span class="input-label">Matrícula</span>

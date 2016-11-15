@@ -801,7 +801,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
       });
 
 
-      app.controller('CriarFuncioCtrl', function(Backand, LoginService, turmas, responsaveis, users, alunos, $stateParams, $state, $scope, $log, $ionicActionSheet, $ionicPopup, $location, $filter, moment, Utils) {
+      app.controller('CriarFuncioCtrl', function(Backand, LoginService, turmas, users_turmas, users, alunos, $stateParams, $state, $scope, $log, $ionicActionSheet, $ionicPopup, $location, $filter, moment, Utils) {
         var vm = this;
 
         //criando login para responsaveis
@@ -810,15 +810,17 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
 
         function signUp(){
             Utils.show();
-            vm.errorMessage = '';
-
             LoginService.signup(vm.firstName, vm.lastName, vm.email, vm.password, vm.again, {tipo: vm.tipo})
                 .then(function (response) {
-                  Utils.hide();
-                  Utils.alertshow("Sucesso","Login do usuário criado.");
-                  $state.go('menu.Funcio',{},{reload:true})
-                  });
-
+                    Utils.hide();
+                    Utils.alertshow("Sucesso","Login do usuário criado.");
+                    $state.go('menu.Funcio',{},{reload:true})
+                  }).catch(function(e) {
+                      Utils.hide();
+                      Utils.alertshow("Erro","Usuário já está cadastrado.");
+                      //console.log('Error: ', e);
+                      //throw e;
+                    });
         }
 
         vm.email = '';
@@ -830,50 +832,15 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
 
 
 
-      /*  $scope.clicked = function(){
-          $ionicActionSheet.show({
-            titleText: 'Opções',
-            buttons: [
-              { text: '<i class="icon ion-share"></i> Resumo do Dia' },
-            ],
-            destructiveText: 'Delete',
-            cancelText: 'Cancel',
-            cancel: function() {
-              console.log('CANCELLED');
-            },
-            buttonClicked: function() {
-              $state.go('menu.alunoResumo',{"id":vm.aluno});
-              console.log('BUTTON CLICKED');
-              return true;
-            },
-            destructiveButtonClicked: function deleteObject(id) {
-
-                 var confirmPopup = $ionicPopup.confirm({
-                   title: 'Remover Resumo',
-                   template: 'Tem certeza que deseja excluir?'
-                 });
-                 confirmPopup.then(function(res) {
-                   if(res){
-                     resumo.delete(id).then(function(result){
-                         getAll();
-                     });
-                   }else{
-                         cancelEditing();
-                         getAll();
-                   }
-              });
-          }
-              //console.log('DESTRUCT');
-              // /return true;
-            });
-          }*/
 
             function getForID(id) {
               Utils.show();
-              responsaveis.fetch(id)
+              users.fetch(id)
                     .then(function (result) {
-                      vm.perfil = result.data;
                       Utils.hide();
+                      vm.perfil = result.data;
+                      vm.userid = $stateParams.id;
+                      //vm.perfil = $stateParams.id;
 
 
                        //$log.log(vm.perfil);
@@ -884,7 +851,15 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
             }
 
 
-
+            function getTurmas(){
+              Utils.show();
+                turmas.all()
+                  .then(function(result){
+                    vm.turmas = result.data.data;
+                    Utils.hide();
+                    //$log.log(vm.turmas);
+                });
+            }
 
 
 
@@ -892,39 +867,50 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
               Utils.show();
                 alunos.all()
                   .then(function(result){
+                    Utils.hide();
                     vm.aluno = result.data.data;
-                    /*$scope.showdetails = function(turma_id){
-                      var found = $filter('getById')(vm.aluno, turma_id);
-                      $scope.selected = found[0].__metadata.descriptives.responsaveis.value;
-                      console.log(found);
-                    //vm.aluno = vm.aluno[].__metadata.descriptives.responsaveis.value;
-                    //vm.aluno = vm.aluno.__metadata.descriptives.responsaveis.value;
-                    $log.log($scope.selected);
-                  }
-                  */
                 });
             }
 
+            function create(object) {
+              Utils.show();
+              users_turmas.create(object)
+                .then(function(result){
+                  Utils.hide();
+                  var confirmPopup = $ionicPopup.confirm({
+                    title: 'Turma cadastrada para usuário',
+                    template: 'Deseja incluir outra turma?'
+                  });
+                  confirmPopup.then(function(res) {
+                    if(res){
+                      Utils.hide();
+                      $state.go($state.current, {}, {reload: true});
+                    }else{
+                          Utils.hide();
+                          $state.go('menu.Funcio')
 
-            //filtro por id usando diretiva $filter
-
-            /*$scope.showdetails = function(turma_id){
-              var found = $filter('getById')(vm.data, turma_id);
-              $scope.selected = found[0].id;
-              console.log(found);
-         }*/
+                    }
+                  });
+               });
+             }
 
 
+         function initCreateFormUsers_Turmas() {
+             vm.newObject = {turma:'', user:''};
+         }
+
+         vm.create = create;
 
 
-
+         initCreateFormUsers_Turmas();
 
 
             // Carrega todos alunos
             //   getAll()
-            // Carrega turma por ID
-            //  getForID($stateParams.id);
-
+            // Carrega user por ID
+              getForID($stateParams.id);
+            // Carrega turmas
+              getTurmas();
 
 
 
@@ -938,11 +924,14 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
         function readOne() {
             return $http({
               method: 'GET',
-              url: Backand.getApiUrl() + '/1/objects/' + 'turmas/1?deep=true',
+              url: Backand.getApiUrl() + '/1/objects/' + 'users/',
+              params: {
+                deep: true // to get the related user objects
+              }
 
             }).then(function(response) {
-              //vm.data = response.data.data;
-              //console.log(vm.data);
+              vm.user = response.data.data;
+              console.log(response);
             });
 
           };
@@ -1070,7 +1059,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
           initCreateFormAdmin();
           getAll();
           getUsersID();
-          //readOne();
+          readOne();
 
 
       });
@@ -1440,7 +1429,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
 
 
 
-      app.controller('alunosCtrl', function (alunos, turmas, users, $rootScope, $ionicPopup, $state, $scope, $http, Utils, $log, $filter) {
+      app.controller('alunosCtrl', function (alunos, turmas, users, users_turmas, $rootScope, $ionicPopup, $state, $scope, $http, Utils, $log, $filter) {
 
 
         var vm = this;
@@ -1487,7 +1476,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
 
 
           function create(object) {
-              alunos.create(object)
+              alunos.create(object),users_turmas.create(object)
                   .then(function (result) {
                     console.log(result);
                       cancelCreate();
@@ -1495,15 +1484,21 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
                       $state.go('menu.alunos');
 
                   });
+
           }
 
+
+
+
           function update(object) {
-            alunos.update(object.id, object)
+            alunos.update(object.id, object),users_turmas.update(object.id, object)
                   .then(function (result) {
                       cancelEditing();
                       getAll();
                   });
           }
+
+
 
           function deleteObject(id) {
              var confirmPopup = $ionicPopup.confirm({
@@ -1523,9 +1518,12 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
           }
 
 
-
-          function initCreateFormAdmin() {
+          function initCreateFormAlunos() {
               vm.newObject = {matricula: '', nome: '', users:'', periodo:''};
+          }
+
+          function initCreateFormUsers_Turmas() {
+              vm.newObject = {turma: '', user:''};
           }
 
           function setEdited(object) {
@@ -1543,7 +1541,8 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
           }
 
           function cancelCreate() {
-              initCreateFormAdmin();
+              initCreateFormUsers_Turmas();
+              initCreateFormAlunos();
               vm.isCreating = false;
           }
 
@@ -1561,8 +1560,8 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
           vm.cancelCreate = cancelCreate;
 
 
-
-          initCreateFormAdmin();
+          initCreateFormUsers_Turmas();
+          initCreateFormAlunos();
           getAll();
           getTurmas();
           getResp();
@@ -1713,14 +1712,17 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
 
         function signUp(){
             Utils.show();
-            vm.errorMessage = '';
-
             LoginService.signup(vm.firstName, vm.lastName, vm.email, vm.password, vm.again, {tipo: vm.tipo})
                 .then(function (response) {
                   Utils.hide();
                   Utils.alertshow("Sucesso","Login do usuário criado.");
                   $state.go('menu.responsaveis',{},{reload:true});
-                  });
+                  }).catch(function(e) {
+                      Utils.hide();
+                      Utils.alertshow("Erro","Usuário já está cadastrado.");
+                      //console.log('Error: ', e);
+                      //throw e;
+                    });
 
         }
 
@@ -1797,7 +1799,6 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
 
 
 
-
                     function getAll(){
                       Utils.show();
                         alunos.all()
@@ -1835,6 +1836,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
                        getAll();
                     // Carrega turma por ID
                       getForID($stateParams.id);
+
 
 
 

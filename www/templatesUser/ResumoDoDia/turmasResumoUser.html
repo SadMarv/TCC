@@ -5,7 +5,7 @@
         <input type="search" placeholder="Digite o nome da Turma. Ex: Turma A" ng-model="searchText">
     </label>
   <div class="item item-divider">Selecione uma Turma</div>
-    <ion-list  ng-repeat="object in vm.data | filter:searchText" ng-class="{'active':vm.isCurrent(object.id)}" >
+    <ion-list  ng-repeat="object in vm.data | filter:{users_turmas:vm.userID} | filter:searchText" ng-class="{'active':vm.isCurrent(object.id)}" >
       <ion-item href="#/menuUser/resumoTurmasUserID/{{object.id}}" class="item-icon-right">
             <h2>Turma: {{object.turma}}</h2>
             <p>Período: {{object.periodo}}</p>

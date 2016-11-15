@@ -1,4 +1,4 @@
-<ion-view view-title="Atividade de Casa" ng-controller="atividadesUserCtrl as vm">
+<ion-view view-title="Atividade de Casa" ng-controller="atividadesRespCtrl as vm">
 <ion-content>
   <label class="item item-input">
       <i class="icon ion-search placeholder-icon"></i>
@@ -7,7 +7,7 @@
   <div class="item item-divider">
     Selecione uma Turma
   </div>
-  <div  ng-repeat="object in vm.data | filter:searchText" ng-class="{'active':vm.isCurrent(object.id)}" show-reorder="reordering">
+  <div ng-repeat="object in vm.data | filter:{users_turmas:vm.userID} | filter:searchText" ng-class="{'active':vm.isCurrent(object.id)}" show-reorder="reordering">
     <ion-item href="#/menuResp/turmaAtividadeResp/{{object.id}}" class="item-remove-animate item-icon-right">
           <h2>Turma: {{object.turma}}</h2>
           <p>Período: {{object.periodo}}</p>

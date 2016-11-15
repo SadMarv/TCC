@@ -46,7 +46,7 @@
                   $state.go('menuResp.homeResp', {}, {reload: true});
                 }
                 //console.log(Backand.getUsername());
-                console.log(login.role);
+                //console.log(login.role);
                 //console.log(login.token);
 
             }
@@ -133,7 +133,7 @@
             function getAll(){
               users.all().then(function(result){
                   vm.data = result.data.data;
-                  console.log(vm.data);
+                  //console.log(vm.data);
 
               });
             }
@@ -154,7 +154,7 @@
                 //vm.userID === vm.data;
 
                 //console.log(Backand.getUsername());
-                console.log(vm.userID);
+                //console.log(vm.userID);
               //});
 
 

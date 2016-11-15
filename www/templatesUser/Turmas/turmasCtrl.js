@@ -46,6 +46,8 @@ angular.module('UserDirectory').controller('turmasUserCtrl', function (turmas, u
 
     function clearData(){
         vm.data = null;
+        vm.turmas = null;
+        vm.UserID = null;
     }
 
 

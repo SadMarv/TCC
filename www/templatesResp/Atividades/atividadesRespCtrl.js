@@ -3,17 +3,37 @@ angular.module('UserDirectory').controller('atividadesRespCtrl', function (turma
 
   var vm = this;
 
+  function readOne() {
+      return $http({
+        method: 'GET',
+        url: Backand.getApiUrl() + '/1/objects/' + 'users/',
+        params: {
+          deep: true // to get the related user objects
+        }
 
-
-  function getUsersID(){
-
-    users.all()
-      .then(function (result){
-        vm.usersID = result.data.data;
-        //console.log(vm.usersID);
+      }).then(function(response) {
+        vm.user = response.data.data;
+        //console.log(response);
       });
 
-  }
+    };
+
+    function readTurma() {
+        return $http({
+          method: 'GET',
+          url: Backand.getApiUrl() + '/1/objects/' + 'turmas/',
+          params: {
+            deep: true // to get the related user objects
+          }
+
+        }).then(function(response) {
+          vm.turma = response.data.data;
+          //console.log(response);
+        });
+
+      };
+
+
 
   function getForUserId(userId) {
       //$rootScope.$broadcast('authorized');
@@ -26,7 +46,7 @@ angular.module('UserDirectory').controller('atividadesRespCtrl', function (turma
 
   }
 
-    getForUserId(vm.userID);
+
 
 
     //turmas
@@ -35,7 +55,7 @@ angular.module('UserDirectory').controller('atividadesRespCtrl', function (turma
       turmas.all()
             .then(function (result) {
                 vm.data = result.data.data;
-                //$log.log(result);
+                $log.log(result);
                 Utils.hide();
             });
     }
@@ -127,8 +147,8 @@ angular.module('UserDirectory').controller('atividadesRespCtrl', function (turma
 
     initCreateFormAdmin();
     getAll();
-    getUsersID();
-    //readOne();
+    getForUserId(vm.userID);
+    readOne();
 
 
 });

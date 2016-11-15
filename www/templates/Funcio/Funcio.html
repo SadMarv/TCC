@@ -1,5 +1,5 @@
 <ion-view cache-view="false" view-title="Funcionários" ng-controller="userFuncioCtrl as vm">
-  <div ng-if="!vm.isCreating && !vm.isEditing">
+  <div ng-if="!vm.isEditing">
   <ion-content>
     <label class="item item-input">
         <i class="icon ion-search placeholder-icon"></i>
@@ -7,9 +7,9 @@
     </label>
   <div class="item item-divider">Professores</div>
     <ion-list show-reorder="reordering">
-      <ion-item class="item-icon-right" ng-repeat="object in vm.data | filter: {tipo: 'Professor'} | filter: searchText"
+      <ion-item href="#/menu/FuncioID/{{object.id}}" class="item-icon-right" ng-repeat="object in vm.data | filter: {tipo: 'Professor'} | filter: searchText"
            ng-class="{'active':vm.isCurrent(object.id)}">
-            <h2>Nome: {{object.firstName}}&nbsp;{{object.lastName}}</h2>
+            <h2>Nome: {{object.firstName}}</h2>
             <p>Função: {{object.tipo}}</p>
             <a ng-click="vm.setEdited(object)" class="button button-light icon ion-compose"></a>
         <ion-option-button class="button-assertive icon-left ion-trash-b" ng-click="vm.delete(object.id)"></ion-option-button>
@@ -17,9 +17,9 @@
     </ion-list>
     <div class="item item-divider">Coordenadores</div>
     <ion-list show-reorder="reordering">
-      <ion-item class="item-icon-right" ng-repeat="object in vm.data | filter: {tipo:'Coordenador'} | filter: searchText"
+      <ion-item href="#/menu/FuncioID/{{object.id}}" class="item-icon-right" ng-repeat="object in vm.data | filter: {tipo:'Coordenador'} | filter: searchText"
            ng-class="{'active':vm.isCurrent(object.id)}">
-            <h2>Nome: {{object.firstName}}&nbsp;{{object.lastName}}</h2>
+            <h2>Nome: {{object.firstName}}</h2>
             <p>Função: {{object.tipo}}</p>
             <a ng-click="vm.setEdited(object)" class="button button-light icon ion-compose"></a>
         <ion-option-button class="button-assertive icon-left ion-trash-b" ng-click="vm.delete(object.id)"></ion-option-button>
@@ -34,53 +34,7 @@
   </div>
 
 
-<div ng-if="vm.isCreating">
-<!--Criar-->
-
-  <ion-content>
-    <div class="bar bar-header">
-        <h2 class="title">Insira os dados do Funcionário</h2>
-        <span ng-click="vm.cancelCreate()" class="ion-arrow-left-c"></span>
-    </div>
-    <br><br>
-		<form name="createForm" class="newForm" role="form" ng-submit="vm.create(vm.newObject)" novalidate>
-		<div class="list card">
-
-			<div class="item item-input item-floating-label">
-				<span class="input-label">CPF</span>
-				<input type="text" ng-minlength='11' ng-maxlength='11' ng-required="true" placeholder="CPF" ng-model="vm.newObject.cpf" name="formText"></input>
-          <h4 class="form-error" ng-show="createForm.$error.required">CPF Obrigatório!</h4>
-          <h4 class="form-error" ng-show="createForm.$error.maxlength">Digite um CPF válido!</h4>
-          <h4 class="form-error" ng-show="createForm.$error.minlength"></h4>
-			</div>
-			<div class="item item-input item-floating-label">
-				<span class="input-label">Nome</span>
-        <input type="text" placeholder="Nome" ng-model="vm.newObject.nome"/>
-			</div>
-      <div class="item item-input item-select">
-        <span class="input-label">Função</span>
-        <select ng-model="vm.newObject.funcao">
-          <option selected>Professor</option>
-          <option>Coordenador</option>
-        </select>
-      </div>
-      <div class="item item-input item-select">
-        <span class="input-label">Turma</span>
-        <select ng-model="vm.newObject.turma" >
-          <option ng-repeat="object in vm.turmas" value="{{object.id}}">{{object.turma}}</option>
-        </select>
-      </div>
-		</form>
-			<div class="padding">
-				<button class="button button-block button-positive" ng-show='createForm.$valid' type="submit">Salvar</button>
-			</div>
-
-		</div>
-	</ion-content>
-</ion-view>
-
-</div>
-<div ng-if="vm.isEditing && !vm.isCreating">
+<div ng-if="vm.isEditing">
 
 <ion-content>
 <!--Editar-->

@@ -3,7 +3,20 @@ angular.module('UserDirectory').controller('atividadesUserCtrl', function (turma
 
   var vm = this;
 
+  function readOne() {
+      return $http({
+        method: 'GET',
+        url: Backand.getApiUrl() + '/1/objects/' + 'users/',
+        params: {
+          deep: true // to get the related user objects
+        }
 
+      }).then(function(response) {
+        vm.user = response.data.data;
+        console.log(response);
+      });
+
+    };
 
   function getUsersID(){
 
@@ -128,7 +141,7 @@ angular.module('UserDirectory').controller('atividadesUserCtrl', function (turma
     initCreateFormAdmin();
     getAll();
     getUsersID();
-    //readOne();
+    readOne();
 
 
 });

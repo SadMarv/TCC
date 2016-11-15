@@ -1,5 +1,5 @@
 'Use Strict';
-angular.module('UserDirectory').controller('comunicadosUserCtrl', function (turmas, comunicados, $scope, $ionicPopup, Utils, $log) {
+angular.module('UserDirectory').controller('comunicadosUserCtrl', function (turmas, Backand, comunicados, $scope, $ionicPopup, Utils, $log) {
     var vm = this;
 
 
@@ -14,6 +14,19 @@ angular.module('UserDirectory').controller('comunicadosUserCtrl', function (turm
                   Utils.hide();
               });
       }
+
+      function getForUserId(userId) {
+          //$rootScope.$broadcast('authorized');
+          //login.username = username || Backand.getUsername();
+          vm.userID = userId || Backand.getUserDetails();
+          vm.userID =  vm.userID.$$state.value.userId;
+
+          //console.log(Backand.getUsername());
+          //console.log(vm.userID);
+
+      }
+
+        getForUserId(vm.userID);
 
 
 

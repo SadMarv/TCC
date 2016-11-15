@@ -112,7 +112,7 @@ angular.module('UserDirectory').controller('resumoRespCtrl', function (resumo, a
 
 });
 
-angular.module('UserDirectory').controller('turmasResumoRespCtrl', function(turmas, alunos, resumo, $stateParams, $state, $scope, $log, $ionicActionSheet, $ionicPopup, $location, $filter, moment, Utils) {
+angular.module('UserDirectory').controller('turmasResumoRespCtrl', function(turmas, Backand, alunos, resumo, $stateParams, $state, $scope, $log, $ionicActionSheet, $ionicPopup, $location, $filter, moment, Utils) {
   var vm = this;
 
   $scope.date = moment().format('llll');
@@ -127,6 +127,18 @@ angular.module('UserDirectory').controller('turmasResumoRespCtrl', function(turm
           });
   }
 
+  function getForUserId(userId) {
+      //$rootScope.$broadcast('authorized');
+      //login.username = username || Backand.getUsername();
+      vm.userID = userId || Backand.getUserDetails();
+      vm.userID =  vm.userID.$$state.value.userId;
+
+      //console.log(Backand.getUsername());
+      //console.log(vm.userID);
+
+  }
+getForUserId(vm.userID);
+
   function clearData(){
       vm.data = null;
   }
@@ -139,49 +151,10 @@ angular.module('UserDirectory').controller('turmasResumoRespCtrl', function(turm
     });
 
 
-    angular.module('UserDirectory').controller('resumoTurmasRespIDCtrl', function(turmas, alunos, resumo, $stateParams, $state, $scope, $log, $ionicActionSheet, $ionicPopup, $location, $filter, moment, Utils) {
+    angular.module('UserDirectory').controller('resumoTurmasRespIDCtrl', function(turmas, Backand, alunos, resumo, $stateParams, $state, $scope, $log, $ionicActionSheet, $ionicPopup, $location, $filter, moment, Utils) {
       var vm = this;
 
       $scope.date = moment().format('llll');
-
-
-    /*  $scope.clicked = function(){
-        $ionicActionSheet.show({
-          titleText: 'Opções',
-          buttons: [
-            { text: '<i class="icon ion-share"></i> Resumo do Dia' },
-          ],
-          destructiveText: 'Delete',
-          cancelText: 'Cancel',
-          cancel: function() {
-            console.log('CANCELLED');
-          },
-          buttonClicked: function() {
-            $state.go('menu.alunoResumo',{"id":vm.aluno});
-            console.log('BUTTON CLICKED');
-            return true;
-          },
-          destructiveButtonClicked: function deleteObject(id) {
-
-               var confirmPopup = $ionicPopup.confirm({
-                 title: 'Remover Resumo',
-                 template: 'Tem certeza que deseja excluir?'
-               });
-               confirmPopup.then(function(res) {
-                 if(res){
-                   resumo.delete(id).then(function(result){
-                       getAll();
-                   });
-                 }else{
-                       cancelEditing();
-                       getAll();
-                 }
-            });
-        }
-            //console.log('DESTRUCT');
-            // /return true;
-          });
-        }*/
 
 
       function getResumosAll() {
@@ -278,6 +251,17 @@ angular.module('UserDirectory').controller('turmasResumoRespCtrl', function(turm
             console.log(found);
        }*/
 
+       function getForUserId(userId) {
+           //$rootScope.$broadcast('authorized');
+           //login.username = username || Backand.getUsername();
+           vm.userID = userId || Backand.getUserDetails();
+           vm.userID =  vm.userID.$$state.value.userId;
+
+           //console.log(Backand.getUsername());
+           console.log(vm.userID);
+
+       }
+     getForUserId(vm.userID);
 
           function getAll() {
             Utils.show();

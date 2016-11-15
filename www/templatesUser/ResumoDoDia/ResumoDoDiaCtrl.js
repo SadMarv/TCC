@@ -112,7 +112,7 @@ angular.module('UserDirectory').controller('resumoUserCtrl', function (resumo, a
 
 });
 
-angular.module('UserDirectory').controller('turmasResumoUserCtrl', function(turmas, alunos, resumo, $stateParams, $state, $scope, $log, $ionicActionSheet, $ionicPopup, $location, $filter, moment, Utils) {
+angular.module('UserDirectory').controller('turmasResumoUserCtrl', function(turmas, Backand, alunos, resumo, $stateParams, $state, $scope, $log, $ionicActionSheet, $ionicPopup, $location, $filter, moment, Utils) {
   var vm = this;
 
   $scope.date = moment().format('llll');
@@ -130,6 +130,20 @@ angular.module('UserDirectory').controller('turmasResumoUserCtrl', function(turm
   function clearData(){
       vm.data = null;
   }
+
+  function getForUserId(userId) {
+      //$rootScope.$broadcast('authorized');
+      //login.username = username || Backand.getUsername();
+      vm.userID = userId || Backand.getUserDetails();
+      vm.userID =  vm.userID.$$state.value.userId;
+
+      //console.log(Backand.getUsername());
+      //console.log(vm.userID);
+
+  }
+
+    getForUserId(vm.userID);
+
 
       // Carrega todos alunos
       getAll();

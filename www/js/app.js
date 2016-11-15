@@ -206,6 +206,16 @@
             }
         });
 
+        $stateProvider.state("menu.FuncioID",{
+            url:"/FuncioID/:id",
+            views:{
+              'menuContent':{
+                templateUrl:"templates/Funcio/FuncioID.html",
+                controller: 'CriarFuncioCtrl as vm'
+              }
+            }
+        });
+
         $stateProvider.state("menu.CriarFuncio",{
             url:"/CriarFuncio",
             views:{
