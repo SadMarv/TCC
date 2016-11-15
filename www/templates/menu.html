@@ -11,7 +11,7 @@
     <ion-nav-view name="menuContent"></ion-nav-view>
   </ion-side-menu-content>
 
-  <ion-side-menu side="left" ng-controller="LoginCtrl">
+  <ion-side-menu  width="250" side="left" ng-controller="LoginCtrl">
     <ion-header-bar class="bar-positive">
       <h1 class="title">Menu</h1>
     </ion-header-bar>
@@ -23,7 +23,7 @@
         <ion-item menu-close href="#/menu/turmas"><i class="ion-university"></i> &nbsp;Turmas</ion-item>
         <div class="item item-divider"></div>
         <ion-item menu-close href="#/menu/dashboardTurma">&nbsp;&nbsp;<i class="ion-edit"></i> &nbsp;Atividades de Casa</ion-item>
-        <ion-item menu-close href="#/menu/ResumoDoDia">&nbsp;&nbsp;<i class="ion-clipboard"></i> &nbsp;Resumo do Dia</ion-item>
+        <ion-item menu-close href="#/menu/turmasResumo">&nbsp;&nbsp;<i class="ion-clipboard"></i> &nbsp;Resumo do Dia</ion-item>
         <ion-item menu-close href="#/menu/comunicados">&nbsp;&nbsp;<i class="ion-email"></i> &nbsp;Comunicados</ion-item>
         <ion-item menu-close href="#/menu/eventos">&nbsp;&nbsp;<i class="ion-calendar"></i> &nbsp;Eventos</ion-item>
         <ion-item menu-close ng-click="login.signout()">&nbsp;&nbsp;<i class="ion-log-out"></i> &nbsp;Sair</ion-item>

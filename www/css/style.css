@@ -2,6 +2,20 @@
 div.id{
 	display:none;
 }
+
+#descricaoComunic {
+	font-size: 13px;
+}
+
+#tabAdicionar{
+	position: absolute;
+	font-size: 15px;
+	bottom: 10px;
+	margin-left: 11%;
+	width: 70%;
+}
+
+
 .icon.new-item {
 	position: absolute;
 	right: 20px;

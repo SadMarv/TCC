@@ -1,4 +1,4 @@
-<ion-view view-title="Comunicados" ng-controller="comunicadosCtrl as vm">
+<ion-view view-title="Comunicados" ng-controller="comunicadosAdminCtrl as vm">
 
   <div ng-if="!vm.isCreating && !vm.isEditing">
   <ion-content>
@@ -6,8 +6,11 @@
         <i class="icon ion-search placeholder-icon"></i>
         <input type="search" placeholder="Digite o título ou a data" ng-model="searchText">
     </label>
+    <div class="item item-divider">
+      Comunicados Gerais
+    </div>
     <div class="padding has-header">
-        <div class="list card" ng-repeat="object in vm.data | filter:searchText" ng-class="{'active':vm.isCurrent(object.id)}">
+        <div class="list card" ng-repeat="object in vm.data | filter:{geral:'geral'} | filter:searchText" ng-class="{'active':vm.isCurrent(object.id)}">
             <div class="item item-icon-right item-icon-left">
                 <i class="ion-compose icon" ng-click="vm.setEdited(object)"></i>
                 <p class="text-center">{{object.data | date: 'dd-MM-yyyy'}}</p>
@@ -18,19 +21,29 @@
                 <br>
                 <i class="icon ion-close-round" ng-click="vm.delete(object.id)"></i>
             </div>
-            <div class="item item-body">
+            <div id="descricaoComunic" class="item item-body">
                 {{object.descricao}}
             </div>
         </div>
     </div>
-    <br><br>
-</ion-content>
+    <div class="item item-divider">
+      Selecione uma Turma
+    </div>
+    <div  ng-repeat="object in vm.turma | filter:searchText" ng-class="{'active':vm.isCurrent(object.id)}" show-reorder="reordering">
+      <ion-item href="#/menu/comunicadosTurma/{{object.id}}" class="item-remove-animate item-icon-right">
+            <h2>Turma: {{object.turma}}</h2>
+            <p>Período: {{object.periodo}}</p>
+            <p>Ano: {{object.ano}}</p>
 
-  <div class="tabs tabs-positive">
-    <a ng-click="vm.isCreating = true" class="tab-item ion-android-add-circle"> &nbsp;Novo Comunicado</a>
+        <ion-option-button class="button-assertive icon-left ion-trash-b" ng-click="vm.delete(object.id)"></ion-option-button>
+      </ion-item>
+    </div>
+    <br><br><br>
+</ion-content>
+  <div class="bar bar-footer">
+    <a id="tabAdicionar" ng-click="vm.isCreating = true" class="button button-block button-positive ion-android-add-circle"> &nbsp;Comunicado Geral</a>
   </div>
 </div>
-
   </ion-content>
 
   </div>
@@ -40,7 +53,7 @@
       <ion-content >
           <!-- CREATING -->
           <div class="bar bar-header">
-              <h2 class="title">Criar Comunicados</h2>
+              <h2 class="title">Criar Comunicado da Escola</h2>
               <i ng-click="vm.cancelCreate()" class="ion-arrow-left-c"></i>
           </div>
           <br><br>

@@ -1,4 +1,4 @@
-<ion-view view-title="Atividades " ng-controller="AtividadesUserIDCtrl as vm">
+<ion-view view-title="Comunicados " ng-controller="comunicadosIDCtrl as vm">
   <div ng-if="!vm.isCreating && !vm.isEditing">
   <ion-content>
     <label class="item item-input">
@@ -13,25 +13,27 @@
       </ion-item>
     </ion-list>
     <div class="item item-divider">
-      Atividades
+      Comunicados da Turma
     </div>
     <div class="padding has-header">
-        <div class="list card" ng-repeat="object in vm.data |filter: {turmas: vm.turma} | filter:searchText"
+        <div class="list card" ng-repeat="object in vm.data | filter: {turmas: vm.turma}  | filter:searchText"
              ng-class="{'active':vm.isCurrent(object.id)}">
             <div  class="item item-icon-right item-icon-left">
-                <p class="text-center">Data de Entrega: {{object.data | date: 'dd/MM/yyyy'}}</p>
-                <h3 class="text-center"><b>{{object.name}}</b></h3>
+                <i class="ion-compose icon" ng-click="vm.setEdited(object)"></i>
+                <p class="text-center">{{object.data}}</p>
+                <h3 class="text-center"><b>{{object.titulo}}</b></h3>
                 <br>
+                <i class="icon ion-close-round" ng-click="vm.delete(object.id)"></i>
             </div>
-            <div  class="item item-body">
-                {{object.description}}
+            <div id="descricaoComunic" class="item item-body">
+                {{object.descricao}}
             </div>
         </div>
     </div>
     <br><br>
 </ion-content>
     <div class="bar bar-footer">
-      <a id="tabAdicionar" ng-click="vm.isCreating = true" class="button button-block button-positive ion-android-add-circle"> &nbsp;Nova Atividade</a>
+      <a id="tabAdicionar" ng-click="vm.isCreating = true" class="button button-block button-positive ion-android-add-circle"> &nbsp;Novo Comunicado</a>
     </div>
   </div>
   </ion-content>
@@ -50,21 +52,17 @@
                 ng-submit="vm.create(vm.newObject)" novalidate>
               <div class="list">
                 <div class="id" ng-bind="vm.newObject.turmas = (vm.turma)"></div>
+                <div class="id" ng-bind="vm.newObject.data = date.substring(0, 22)"></div>
                   <label class="item item-input item-stacked-label">
                       <span class="input-label">Título</span>
-                      <input type="text" class="form-control" ng-minlength="1" ng-required="true" ng-model="vm.newObject.name" placeholder="Escreva o Título da atividade">
+                      <input type="text" class="form-control" ng-minlength="1" ng-required="true" ng-model="vm.newObject.titulo" placeholder="Escreva o Título da atividade">
                       <h4 class="form-error" ng-show="ativForm.$error.required">Título da Atividade Obrigatório!</h4>
                       <h4 class="form-error" ng-show="ativForm.$error.minlength"></h4>
                   </label>
                   <label class="item item-input item-stacked-label">
                       <span class="input-label">Descrição</span>
 
-                      <textarea class="form-control" ng-model="vm.newObject.description" placeholder="Escreva a descrição"></textarea>
-                  </label>
-                  <label class="item item-input item-stacked-label">
-                      <span class="input-label">Data de Entrega</span>
-                      <input type="date" class="form-control" ng-model="vm.newObject.data" placeholder="Digite a data">
-                      </input>
+                      <textarea class="form-control" ng-model="vm.newObject.descricao" placeholder="Escreva a descrição"></textarea>
                   </label>
               </div>
               <button class="button button-block button-positive" ng-show='ativForm.$valid' type="submit">Criar</button>
@@ -76,7 +74,7 @@
     <ion-content >
         <!-- EDITING -->
         <div class="bar bar-header">
-            <h1 class="title"> {{vm.edited.name}}</h1>
+            <h1 class="title"> {{vm.edited.titulo}}</h1>
             <span ng-click="vm.cancelEditing()" class="cancel-create">Cancelar</span>
         </div>
         <br><br>
@@ -85,12 +83,12 @@
                 <div class="list">
                     <label class="item item-input item-stacked-label">
                         <span class="input-label">Título</span>
-                        <input type="text" class="form-control" ng-required="true" ng-model="vm.edited.name" placeholder="Edite o Título da atividade">
+                        <input type="text" class="form-control" ng-required="true" ng-model="vm.edited.titulo" placeholder="Edite o Título da atividade">
                         <h4 class="form-error" ng-Show="EditForm.$error.required">Título da Atividade Obrigatório!</h4>
                     </label>
                     <label class="item item-input item-stacked-label">
                         <span class="input-label">Descrição</span>
-                        <textarea class="form-control" ng-required="true" ng-model="vm.edited.description" placeholder="Edite a descrição"></textarea>
+                        <textarea class="form-control" ng-required="true" ng-model="vm.edited.descricao" placeholder="Edite a descrição"></textarea>
                     </label>
                 </div>
                 <button class="button button-block button-positive" ng-show='EditForm.$valid' type="submit">Salvar</button>

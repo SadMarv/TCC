@@ -45,7 +45,7 @@
             }else if($rootScope.token = Backand.getToken()!== null && role === 'Admin' || role === 'Coordenador' ){
               $rootScope.token = localStorage.getItem("BACKANDtoken");
               $rootScope.$broadcast('authorized');
-              $state.go('menu.usuarios');
+              $state.go('menu.home');
             }else{
               $state.go('login');
             }
@@ -297,12 +297,43 @@
             }
         });
 
+        $stateProvider.state("menu.turmasResumo",{
+            url:"/turmasResumo",
+            views:{
+              'menuContent':{
+                templateUrl:"templates/ResumoDoDia/turmasResumo.html",
+                controller: 'turmasResumoCtrl as vm'
+              }
+            }
+        });
+
+        $stateProvider.state("menu.resumoTurmasID",{
+            url:"/resumoTurmasID/:id",
+            views:{
+              'menuContent':{
+                templateUrl:"templates/ResumoDoDia/resumoTurmasID.html",
+                controller: 'resumoTurmasIDCtrl as vm'
+              }
+            }
+        });
+
+
         $stateProvider.state("menu.ResumoDoDia",{
-            url:"/ResumoDoDia",
+            url:"/ResumoDoDia/:id",
             views:{
               'menuContent':{
                 templateUrl:"templates/ResumoDoDia/ResumoDoDia.html",
-                controller: 'resumoCtrl as vm'
+                controller: 'resumoTurmasIDCtrl as vm'
+              }
+            }
+        });
+
+        $stateProvider.state("menu.alunoResumoAdmin",{
+            url:"/alunoResumoAdmin/:id",
+            views:{
+              'menuContent':{
+                templateUrl:"templates/ResumoDoDia/alunoResumoAdmin.html",
+                controller: 'resumoTurmasIDCtrl as vm'
               }
             }
         });
@@ -312,10 +343,22 @@
             views:{
               'menuContent':{
                 templateUrl:"templates/Comunicados/comunicados.html",
-                controller: 'comunicadosCtrl as vm'
+                controller: 'comunicadosAdminCtrl as vm'
               }
             }
         });
+
+
+        $stateProvider.state("menu.comunicadosTurma",{
+            url:"/comunicadosTurma/:id",
+            views:{
+              'menuContent':{
+                templateUrl:"templates/Comunicados/comunicadosTurma.html",
+                controller: 'comunicadosIDCtrl as vm'
+              }
+            }
+        });
+
 
         $stateProvider.state("menu.eventos",{
             url:"/eventos",

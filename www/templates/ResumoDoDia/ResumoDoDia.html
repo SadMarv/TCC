@@ -1,4 +1,4 @@
-<ion-view cache-view="false" view-title="Resumo do Dia" ng-controller="resumoCtrl as vm">
+<ion-view cache-view="false" view-title="Resumo do Dia" ng-controller="resumoTurmasIDCtrl as vm">
 
   <div ng-if="!vm.isEditing">
   <ion-content>
@@ -7,7 +7,7 @@
         <input type="search" placeholder="Digite data ou nome do aluno. Ex: qua, 2 de nov" ng-model="searchText">
     </label>
     <div class="padding has-header">
-        <div class="list card" ng-repeat="object in vm.data | filter:searchText"
+        <div class="list card" ng-repeat="object in vm.resumo | filter:searchText | filter:{alunos:vm.al.id}"
              ng-class="{'active':vm.isCurrent(object.id)}">
             <div class="item item-icon-right item-icon-left">
                 <i class="ion-compose icon" ng-click="vm.setEdited(object)"></i>

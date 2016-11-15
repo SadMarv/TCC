@@ -1,5 +1,5 @@
 'Use Strict';
-angular.module('UserDirectory').controller('resumoUserCtrl', function (resumo, alunos, $scope, $ionicPopup, Utils, $log) {
+angular.module('UserDirectory').controller('resumoCtrl', function (resumo, alunos, $scope, $ionicPopup, Utils, $log) {
     var vm = this;
 
     $scope.date = moment().format('llll');
@@ -112,7 +112,7 @@ angular.module('UserDirectory').controller('resumoUserCtrl', function (resumo, a
 
 });
 
-angular.module('UserDirectory').controller('turmasResumoUserCtrl', function(turmas, Backand, alunos, resumo, $stateParams, $state, $scope, $log, $ionicActionSheet, $ionicPopup, $location, $filter, moment, Utils) {
+angular.module('UserDirectory').controller('turmasResumoCtrl', function(turmas, Backand, alunos, resumo, $stateParams, $state, $scope, $log, $ionicActionSheet, $ionicPopup, $location, $filter, moment, Utils) {
   var vm = this;
 
   $scope.date = moment().format('llll');
@@ -153,49 +153,12 @@ angular.module('UserDirectory').controller('turmasResumoUserCtrl', function(turm
     });
 
 
-    angular.module('UserDirectory').controller('resumoTurmasUserIDCtrl', function(turmas, alunos, resumo, $stateParams, $state, $scope, $log, $ionicActionSheet, $ionicPopup, $location, $filter, moment, Utils) {
+    angular.module('UserDirectory').controller('resumoTurmasIDCtrl', function(turmas, alunos, resumo, $stateParams, $state, $scope, $log, $ionicActionSheet, $ionicPopup, $location, $filter, moment, Utils) {
       var vm = this;
 
       $scope.date = moment().format('llll');
 
 
-    /*  $scope.clicked = function(){
-        $ionicActionSheet.show({
-          titleText: 'Opções',
-          buttons: [
-            { text: '<i class="icon ion-share"></i> Resumo do Dia' },
-          ],
-          destructiveText: 'Delete',
-          cancelText: 'Cancel',
-          cancel: function() {
-            console.log('CANCELLED');
-          },
-          buttonClicked: function() {
-            $state.go('menu.alunoResumo',{"id":vm.aluno});
-            console.log('BUTTON CLICKED');
-            return true;
-          },
-          destructiveButtonClicked: function deleteObject(id) {
-
-               var confirmPopup = $ionicPopup.confirm({
-                 title: 'Remover Resumo',
-                 template: 'Tem certeza que deseja excluir?'
-               });
-               confirmPopup.then(function(res) {
-                 if(res){
-                   resumo.delete(id).then(function(result){
-                       getAll();
-                   });
-                 }else{
-                       cancelEditing();
-                       getAll();
-                 }
-            });
-        }
-            //console.log('DESTRUCT');
-            // /return true;
-          });
-        }*/
 
 
       function getResumosAll() {
