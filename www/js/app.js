@@ -499,7 +499,7 @@
                                         views:{
                                           'menuRespContent':{
                                             templateUrl:"templatesResp/ResumoDoDia/turmasResumoResp.html",
-                                            controller: 'turmasResumoRespCtrl as vm'
+                                            controller: 'resumoTurmasRespIDCtrl as vm'
                                           }
                                         }
                                     });

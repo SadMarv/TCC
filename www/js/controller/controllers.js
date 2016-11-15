@@ -353,7 +353,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
           var vm = this;
 
 
-            $scope.date = new Date();
+            $scope.date = moment().format('llll');
 
 
 
@@ -412,7 +412,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
 
 
           function initCreateFormAtiv() {
-              vm.newObject = {data: '', descricao: '', titulo:''};
+              vm.newObject = {data: '', descricao: '', titulo:'', geral:''};
           }
 
           function setEdited(object) {
