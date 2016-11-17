@@ -41,7 +41,7 @@
                 if(login.role === 'User'){
                   $state.go('menuUser.homeUser', {}, {reload: true});
                 }else if(login.role === 'Admin' || login.role === 'Coordenador'){
-                  $state.go('menu.usuarios', {}, {reload: true});
+                  $state.go('menu.home', {}, {reload: true});
                 }else{
                   $state.go('menuResp.homeResp', {}, {reload: true});
                 }
@@ -96,7 +96,7 @@
 
         });
 
-        
+
 
 
 

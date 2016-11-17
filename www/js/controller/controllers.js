@@ -590,7 +590,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
         vm.lastName = '';
         vm.errorMessage = '';
 
-        
+
 
             function getForID(id) {
               Utils.show();
@@ -679,6 +679,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
 
         var vm = this;
 
+        $scope.date = moment().format('YYYY');
         // GET an single task with all its users
         function readOne() {
             return $http({
