@@ -96,34 +96,7 @@
 
         });
 
-        app.controller('SignUpCtrl', function (Backand, $state, $rootScope, LoginService, $log) {
-            var vm = this;
-
-            vm.signup = signUp;
-
-            function signUp(){
-                vm.errorMessage = '';
-
-                LoginService.signup(vm.firstName, vm.lastName, vm.email, vm.password, vm.again)
-                    .then(function (response) {
-                        vm.userID = userID || Backand.getUserDetails();
-
-                    });
-            }
-
-
-            vm.email = '';
-            vm.password ='';
-            vm.again = '';
-            vm.firstName = '';
-            vm.lastName = '';
-            vm.errorMessage = '';
-        });
-
-
-
-
-
+        
 
 
 
@@ -139,19 +112,13 @@
             }
 
             function getForUserId(fullName, userId) {
-              //users.all().then(function (result){
-                  //vm.data = result.data.data;
-                  //console.log(vm.data);
 
 
-                //$rootScope.$broadcast('authorized');
-                //login.username = username || Backand.getUsername();
                 vm.fullName = fullName || Backand.getUserDetails();
                 vm.fullName =  vm.fullName.$$state.value.fullName;
 
                 vm.userID = userId || Backand.getUserDetails();
                 vm.userID =  vm.userID.$$state.value.userId;
-                //vm.userID === vm.data;
 
                 //console.log(Backand.getUsername());
                 //console.log(vm.userID);

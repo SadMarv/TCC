@@ -1,4 +1,4 @@
-<ion-view view-title="Alunos" ng-controller="alunosCtrl as vm">
+<ion-view cache-view="false" view-title="Alunos" ng-controller="alunosCtrl as vm">
   <div ng-if="!vm.isCreating && !vm.isEditing">
   <ion-content>
     <label class="item item-input">
@@ -29,39 +29,39 @@
   <ion-content>
     <div class="bar bar-header">
         <h2 class="title">Insira os dados do Aluno</h2>
-        <i ng-click="vm.cancelCreate()" class="ion-arrow-left-c"></i>
+        <i ng-click="vm.cancelCreate()" class="cancel-create">Cancelar</i>
     </div>
     <br><br>
 		<form  name="createForm" ng-submit="vm.create(vm.newObject)" novalidate>
-      <div ng-bind="vm.newObject.user = vm.newObject.users"></div>
-      <div ng-bind="vm.newObject.turma = vm.newObject.turmas"></div>
+      <div class="id" ng-bind="vm.newObject.user = vm.newObject.users"></div>
+      <div class="id" ng-bind="vm.newObject.turma = vm.newObject.turmas"></div>
 		<div class="list card">
 			<div class="item item-input item-floating-label">
 				<span class="input-label">Matrícula</span>
 				<input type="text" ng-minlength="15" ng-maxlength="15" ng-required="true" placeholder="Matrícula" ng-model="vm.newObject.matricula"></input>
-        <h4 class="form-error" ng-show="createForm.$error.required">Campo Obrigatório!</h4>
         <h4 class="form-error" ng-show="createForm.$error.maxlength">Digite uma matrícula com até 15 dígitos!</h4>
         <h4 class="form-error" ng-show="createForm.$error.minlength"></h4>
 			</div>
       <div class="item item-input item-select">
         <span class="input-label">Responsável</span>
-        <select ng-model="vm.newObject.users">
+        <select ng-required="true" ng-model="vm.newObject.users">
           <option ng-repeat="object in vm.userResp | filter: {tipo:'Responsavel'}" value="{{object.id}}">{{object.firstName}}&nbsp;{{object.lastName}}</option>
         </select>
       </div>
+
 			<div class="item item-input item-floating-label">
 				<span class="input-label">Nome</span>
-				<input type="text" placeholder="Nome" ng-model="vm.newObject.nome"/>
-        <h4 class="form-error" ng-show="createForm.$error.required">Campo Obrigatório!</h4>
+				<input type="text" placeholder="Nome" ng-required="true" ng-model="vm.newObject.nome"/>
 			</div>
 
       <div class="item item-input item-select">
         <span class="input-label">Turma</span>
-        <select ng-model="vm.newObject.turmas" >
+        <select ng-required="true" ng-model="vm.newObject.turmas" >
           <option ng-repeat="object in vm.dadoTurmas" value="{{object.id}}">{{object.turma}}</option>
-        </select>
+        </select><br>
       </div>
 		</form>
+      <h4 class="form-error" ng-show="createForm.$error.required">Informe todos os campos!</h4>
 			<div class="padding">
 				<button class="button button-block button-positive" ng-show='createForm.$valid' type="submit">Salvar</button>
 			</div>

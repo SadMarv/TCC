@@ -98,29 +98,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
 
         });
 
-        app.controller('SignUpCtrl', function (Backand, $state, $rootScope, LoginService, $log) {
-            var vm = this;
 
-            vm.signup = signUp;
-
-            function signUp(){
-                vm.errorMessage = '';
-
-                LoginService.signup(vm.firstName, vm.lastName, vm.email, vm.password, vm.again)
-                    .then(function (response) {
-                        vm.userID = userID || Backand.getUserDetails();
-
-                    });
-            }
-
-
-            vm.email = '';
-            vm.password ='';
-            vm.again = '';
-            vm.firstName = '';
-            vm.lastName = '';
-            vm.errorMessage = '';
-        });
 
         app.controller('DashboardCtrl', function (Backand, itemsAtiv, $scope, $ionicPopup, Utils) {
           var vm = this;
@@ -234,7 +212,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
 
       });
 
-      
+
 
       app.controller('eventosCtrl', function (eventos, $scope, $ionicPopup, Utils, $log) {
           var vm = this;
@@ -612,8 +590,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
         vm.lastName = '';
         vm.errorMessage = '';
 
-
-
+        
 
             function getForID(id) {
               Utils.show();
@@ -1743,42 +1720,3 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
               getAll();
 
           });
-
-          app.controller('homeCtrl', function(Backand, LoginService, users,  $rootScope, $stateParams, $state, $scope, $log, $ionicActionSheet, $ionicPopup, $location, $filter, moment, Utils) {
-            var vm = this;
-
-            function getAll(){
-              users.all().then(function(result){
-                  vm.data = result.data.data;
-                  console.log(vm.data);
-
-              });
-            }
-
-            function getForUserId(fullName, userId) {
-              //users.all().then(function (result){
-                  //vm.data = result.data.data;
-                  //console.log(vm.data);
-
-
-                //$rootScope.$broadcast('authorized');
-                //login.username = username || Backand.getUsername();
-                vm.fullName = fullName || Backand.getUserDetails();
-                vm.fullName =  vm.fullName.$$state.value.fullName;
-
-                vm.userID = userId || Backand.getUserDetails();
-                vm.userID =  vm.userID.$$state.value.userId;
-                //vm.userID === vm.data;
-
-                //console.log(Backand.getUsername());
-                console.log(vm.userID);
-              //});
-
-
-            }
-
-              getForUserId(vm.fullName, vm.userID);
-              //getUsersID($stateParams.id);
-              getAll();
-
-            });

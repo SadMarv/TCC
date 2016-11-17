@@ -16,7 +16,6 @@ div.id{
 
 }
 
-
 .icon.new-item {
 	position: absolute;
 	right: 20px;
@@ -25,7 +24,7 @@ div.id{
 }
 .cancel-create {
 	position: absolute;
-	right: 20px;
+	left: 20px;
 	font-size: 14px;
 	bottom: 13px;
 	color:#ef4e3a;
