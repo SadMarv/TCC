@@ -23,7 +23,7 @@
                 <h3 class="text-center"><b>{{object.titulo}}</b></h3>
                 <br>
             </div>
-            <div  class="item item-body">
+            <div id="descricao" class="item item-body">
                 {{object.descricao}}
             </div>
         </div>
@@ -39,7 +39,7 @@
                 <h3 class="text-center"><b>{{object.titulo}}</b></h3>
                 <br>
             </div>
-            <div  class="item item-body">
+            <div id="descricao" class="item item-body">
                 {{object.descricao}}
             </div>
         </div>
@@ -66,18 +66,19 @@
               <div class="list">
                 <div class="id" ng-bind="vm.newObject.turmas = (vm.turma)"></div>
                 <div class="id" ng-bind="vm.newObject.data = date.substring(0, 22)"></div>
-                  <label class="item item-input item-stacked-label">
+                  <label class="item item-input item-stacked-label" ng-class="{ 'has-error' : ativForm.titulo.$invalid }">
                       <span class="input-label">Título</span>
-                      <input type="text" class="form-control" ng-minlength="1" ng-required="true" ng-model="vm.newObject.titulo" placeholder="Escreva o Título da atividade">
-                      <h4 class="form-error" ng-show="ativForm.$error.required">Título da Atividade Obrigatório!</h4>
-                      <h4 class="form-error" ng-show="ativForm.$error.minlength"></h4>
+                      <input name="titulo" type="text" class="form-control" ng-required="true" ng-model="vm.newObject.titulo" placeholder="Escreva o Título do comunicado">
                   </label>
-                  <label class="item item-input item-stacked-label">
+                  <div class="form-errors" ng-messages="ativForm.titulo.$error">
+                    <div class="form-error" ng-message="required">Título do Comunicado Obrigatório!</div>
+                  </div>
+                  <label class="item item-input item-stacked-label"  ng-class="{ 'has-error' : ativForm.desc.$invalid }">
                       <span class="input-label">Descrição</span>
-
-                      <textarea class="form-control" ng-model="vm.newObject.descricao" placeholder="Escreva a descrição"></textarea>
+                      <textarea name="desc" class="form-control" ng-required="true" ng-model="vm.newObject.descricao" placeholder="Escreva a descrição"></textarea>
                   </label>
               </div>
+              <div class="form-error" ng-show="ativForm.$error.required">Preencha todos os campos!</div>
               <button class="button button-block button-positive" ng-show='ativForm.$valid' type="submit">Criar</button>
           </form>
       </div>

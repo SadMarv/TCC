@@ -10,7 +10,16 @@
             <p>Email: {{vm.perfil.email}}</p>
             <p ng-repeat="object in vm.aluno | filter: {users:vm.perfil.id}">
               Filho(a): {{object.nome}} |
-              Turma: {{object.__metadata.descriptives.turmas.label}}
-            </p>
+              Turma: {{object.__metadata.descriptives.turmas.label}}</p>
+
+      </ion-item>
+    </ion-list>
+    <div class="item item-divider">
+      Turmas acessadas por {{vm.perfil.firstName}}
+    </div>
+    <ion-list  ng-repeat="object in vm.turmas | filter: {users_turmas:vm.perfil.id} | filter:searchText" >
+      <ion-item>
+            <p>Turma: {{object.turma}}</p>
+            <p>Periodo: {{object.periodo}}</p>
       </ion-item>
     </ion-list>

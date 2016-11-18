@@ -620,6 +620,16 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
                 });
             }
 
+            function getUsersTurmas(){
+              Utils.show();
+                users_turmas.all()
+                  .then(function(result){
+                    vm.Usersturmas = result.data.data;
+                    Utils.hide();
+                    $log.log(vm.Usersturmas);
+                });
+            }
+
 
 
             function getAll(){
@@ -653,12 +663,30 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
                });
              }
 
+             function deleteObject(id) {
+                var confirmPopup = $ionicPopup.confirm({
+                  title: 'Remover Turma do Usuário',
+                  template: 'Tem certeza que deseja excluir?'
+                });
+                confirmPopup.then(function(res) {
+                  if(res){
+                    users_turmas.delete(id).then(function(result){
+                        getTurmas();
+                        $state.go($state.current, {}, {reload: true});
+                    });
+                  }else{
+                        getTurmas();
+                  }
+             });
+         }
+
 
          function initCreateFormUsers_Turmas() {
              vm.newObject = {turma:'', user:''};
          }
 
          vm.create = create;
+         vm.delete = deleteObject;
 
 
          initCreateFormUsers_Turmas();
@@ -670,6 +698,8 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
               getForID($stateParams.id);
             // Carrega turmas
               getTurmas();
+
+              getUsersTurmas();
 
 
 
@@ -1251,7 +1281,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
 
 
           function update(object) {
-            alunos.update(object.id, object),users_turmas.update(object.id, object)
+            alunos.update(object.id, object)
                   .then(function (result) {
                       cancelEditing();
                       getAll();
@@ -1536,7 +1566,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
 
       });
 
-          app.controller('RespIDCtrl', function(Backand, LoginService, turmas, responsaveis, users, alunos, $stateParams, $state, $scope, $log, $ionicActionSheet, $ionicPopup, $location, $filter, moment, Utils) {
+          app.controller('RespIDCtrl', function(Backand, LoginService, turmas, responsaveis, users, users_turmas, alunos, $stateParams, $state, $scope, $log, $ionicActionSheet, $ionicPopup, $location, $filter, moment, Utils) {
 
               var vm = this;
 
@@ -1557,6 +1587,45 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
 
 
 
+                    function getTurmas(){
+                      Utils.show();
+                        turmas.all()
+                          .then(function(result){
+                            vm.turmas = result.data.data;
+                            Utils.hide();
+                            //$log.log(vm.turmas);
+                        });
+                    }
+
+                    function getUsersTurmas(){
+                      Utils.show();
+                        users_turmas.all()
+                          .then(function(result){
+                            vm.Usersturmas = result.data.data;
+                            Utils.hide();
+                            //$log.log(vm.Usersturmas);
+                        });
+                    }
+
+                    function deleteObject(id) {
+                        var confirmPopup = $ionicPopup.confirm({
+                          title: 'Remover Turma do Usuário',
+                          template: 'Tem certeza que deseja excluir?'
+                        });
+                        confirmPopup.then(function(res) {
+                          if(res){
+                            users_turmas.delete(id).then(function(result){
+                                getTurmas();
+                                $state.go($state.current, {}, {reload: true});
+                            });
+                          }else{
+                                getTurmas();
+                          }
+                     });
+                 }
+                 vm.delete = deleteObject;
+
+
 
 
                     function getAll(){
@@ -1572,7 +1641,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
                             //vm.aluno = vm.aluno.__metadata.descriptives.responsaveis.value;
                           }
                             */
-                            $log.log(vm.aluno);
+                            //$log.log(vm.aluno);
                         });
                     }
 
@@ -1598,6 +1667,8 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
                       getForID($stateParams.id);
 
 
+                      getTurmas();
+                      getUsersTurmas();
 
 
 

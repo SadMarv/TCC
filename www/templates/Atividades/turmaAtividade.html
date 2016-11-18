@@ -54,14 +54,14 @@
                       <span class="input-label">Título</span>
                       <input name="titulo" type="text" class="form-control" ng-required="true" ng-model="vm.newObject.name" placeholder="Escreva o Título da atividade">
                   </label>
-                  <div class="form-errors" ng-messages="ativForm.titulo.$error">
+                  <div class="form-errors" ng-messages="ativForm.titulo.$error" ng-class="{ 'has-error' : ativForm.desc.$invalid }">
                     <div class="form-error" ng-message="required">Título da Atividade Obrigatório!</div>
                   </div>
                   <label class="item item-input item-stacked-label">
                       <span class="input-label">Descrição</span>
                       <textarea name="desc" class="form-control" ng-required="true" ng-model="vm.newObject.description" placeholder="Escreva a descrição"></textarea>
                   </label>
-                  <label class="item item-input item-stacked-label" >
+                  <label class="item item-input item-stacked-label" ng-class="{ 'has-error' : ativForm.data.$invalid }">
                       <span class="input-label">Data de Entrega</span>
                       <input name="data" type="date" class="form-control" ng-required="true" ng-model="vm.newObject.data" placeholder="Digite a data">
                       </input>
