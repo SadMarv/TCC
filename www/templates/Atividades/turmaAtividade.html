@@ -47,26 +47,27 @@
       <div class="padding has-header">
 
         <form name="ativForm" class="create-form" role="form"
-                ng-submit="vm.create(vm.newObject)" novalidate>
+                ng-submit="ativForm.$valid && vm.create(vm.newObject)" novalidate>
               <div class="list">
                 <div class="id" ng-bind="vm.newObject.turmas = (vm.turma)"></div>
-                  <label class="item item-input item-stacked-label">
+                  <label class="item item-input item-stacked-label" ng-class="{ 'has-error' : ativForm.titulo.$invalid }">
                       <span class="input-label">Título</span>
-                      <input type="text" class="form-control" ng-minlength="1" ng-required="true" ng-model="vm.newObject.name" placeholder="Escreva o Título da atividade">
-                      <h4 class="form-error" ng-show="ativForm.$error.required">Título da Atividade Obrigatório!</h4>
-                      <h4 class="form-error" ng-show="ativForm.$error.minlength"></h4>
+                      <input name="titulo" type="text" class="form-control" ng-required="true" ng-model="vm.newObject.name" placeholder="Escreva o Título da atividade">
                   </label>
+                  <div class="form-errors" ng-messages="ativForm.titulo.$error">
+                    <div class="form-error" ng-message="required">Título da Atividade Obrigatório!</div>
+                  </div>
                   <label class="item item-input item-stacked-label">
                       <span class="input-label">Descrição</span>
-
-                      <textarea class="form-control" ng-model="vm.newObject.description" placeholder="Escreva a descrição"></textarea>
+                      <textarea name="desc" class="form-control" ng-required="true" ng-model="vm.newObject.description" placeholder="Escreva a descrição"></textarea>
                   </label>
-                  <label class="item item-input item-stacked-label">
+                  <label class="item item-input item-stacked-label" >
                       <span class="input-label">Data de Entrega</span>
-                      <input type="date" class="form-control" ng-model="vm.newObject.data" placeholder="Digite a data">
+                      <input name="data" type="date" class="form-control" ng-required="true" ng-model="vm.newObject.data" placeholder="Digite a data">
                       </input>
                   </label>
               </div>
+                <div class="form-error" ng-show="ativForm.$error.required">Preencha todos os campos!</div>
               <button class="button button-block button-positive" ng-show='ativForm.$valid' type="submit">Criar</button>
           </form>
       </div>
@@ -83,16 +84,24 @@
         <div class="padding has-header">
             <form name="EditForm" class="edit-form" role="form" ng-submit="vm.update(vm.edited)" novalidate>
                 <div class="list">
-                    <label class="item item-input item-stacked-label">
+                    <label class="item item-input item-stacked-label" ng-class="{ 'has-error' : EditForm.titulo.$invalid }">
                         <span class="input-label">Título</span>
-                        <input type="text" class="form-control" ng-required="true" ng-model="vm.edited.name" placeholder="Edite o Título da atividade">
-                        <h4 class="form-error" ng-Show="EditForm.$error.required">Título da Atividade Obrigatório!</h4>
+                        <input name="titulo" type="text" class="form-control" ng-required="true" ng-model="vm.edited.name" placeholder="Edite o Título da atividade">
                     </label>
+                    <div class="form-errors" ng-messages="EditForm.titulo.$error">
+                      <div class="form-error" ng-message="required">Título da Atividade Obrigatório!</div>
+                    </div>
                     <label class="item item-input item-stacked-label">
                         <span class="input-label">Descrição</span>
                         <textarea class="form-control" ng-required="true" ng-model="vm.edited.description" placeholder="Edite a descrição"></textarea>
                     </label>
+                    <label class="item item-input item-stacked-label" >
+                        <span class="input-label">Data de Entrega</span>
+                        <input name="data" type="date" class="form-control" ng-required="true" ng-model="vm.edited.data" placeholder="Digite a data">
+                        </input>
+                    </label>
                 </div>
+                <div class="form-error" ng-show="EditForm.$error.required">Preencha todos os campos!</div>
                 <button class="button button-block button-positive" ng-show='EditForm.$valid' type="submit">Salvar</button>
             </form>
         </div>

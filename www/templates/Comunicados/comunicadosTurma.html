@@ -25,7 +25,7 @@
                 <br>
                 <i class="icon ion-close-round" ng-click="vm.delete(object.id)"></i>
             </div>
-            <div id="descricaoComunic" class="item item-body">
+            <div id="descricao" class="item item-body">
                 {{object.descricao}}
             </div>
         </div>
@@ -40,7 +40,7 @@
   <ion-content >
       <!-- CREATING -->
       <div class="bar bar-header">
-          <h2 class="title">Criar Atividade</h2>
+          <h2 class="title">Criar Comunicado</h2>
           <span ng-click="vm.cancelCreate()" class="cancel-create">Cancelar</span>
       </div>
       <br><br>
@@ -51,18 +51,19 @@
               <div class="list">
                 <div class="id" ng-bind="vm.newObject.turmas = (vm.turma)"></div>
                 <div class="id" ng-bind="vm.newObject.data = date.substring(0, 22)"></div>
-                  <label class="item item-input item-stacked-label">
+                  <label class="item item-input item-stacked-label" ng-class="{ 'has-error' : ativForm.titulo.$invalid }">
                       <span class="input-label">Título</span>
-                      <input type="text" class="form-control" ng-minlength="1" ng-required="true" ng-model="vm.newObject.titulo" placeholder="Escreva o Título da atividade">
-                      <h4 class="form-error" ng-show="ativForm.$error.required">Título da Atividade Obrigatório!</h4>
-                      <h4 class="form-error" ng-show="ativForm.$error.minlength"></h4>
+                      <input name="titulo" type="text" class="form-control" ng-required="true" ng-model="vm.newObject.titulo" placeholder="Escreva o Título do comunicado">
                   </label>
-                  <label class="item item-input item-stacked-label">
+                  <div class="form-errors" ng-messages="ativForm.titulo.$error">
+                    <div class="form-error" ng-message="required">Título do Comunicado Obrigatório!</div>
+                  </div>
+                  <label class="item item-input item-stacked-label"  ng-class="{ 'has-error' : ativForm.desc.$invalid }">
                       <span class="input-label">Descrição</span>
-
-                      <textarea class="form-control" ng-model="vm.newObject.descricao" placeholder="Escreva a descrição"></textarea>
+                      <textarea name="desc" class="form-control" ng-required="true" ng-model="vm.newObject.descricao" placeholder="Escreva a descrição"></textarea>
                   </label>
               </div>
+              <div class="form-error" ng-show="ativForm.$error.required">Preencha todos os campos!</div>
               <button class="button button-block button-positive" ng-show='ativForm.$valid' type="submit">Criar</button>
           </form>
       </div>
@@ -77,19 +78,22 @@
         </div>
         <br><br>
         <div class="padding has-header">
-            <form name="EditForm" class="edit-form" role="form" ng-submit="vm.update(vm.edited)" novalidate>
+            <form name="editForm" class="edit-form" role="form" ng-submit="vm.update(vm.edited)" novalidate>
                 <div class="list">
-                    <label class="item item-input item-stacked-label">
+                    <label class="item item-input item-stacked-label" ng-class="{ 'has-error' : editForm.titulo.$invalid }">
                         <span class="input-label">Título</span>
-                        <input type="text" class="form-control" ng-required="true" ng-model="vm.edited.titulo" placeholder="Edite o Título da atividade">
-                        <h4 class="form-error" ng-Show="EditForm.$error.required">Título da Atividade Obrigatório!</h4>
+                        <input name="titulo" type="text" class="form-control" ng-required="true" ng-model="vm.edited.titulo" placeholder="Edite o Título da atividade">
                     </label>
-                    <label class="item item-input item-stacked-label">
+                    <div class="form-errors" ng-messages="editForm.titulo.$error">
+                      <div class="form-error" ng-message="required">Título do Comunicado Obrigatório!</div>
+                    </div>
+                    <label class="item item-input item-stacked-label" ng-class="{ 'has-error' : editForm.desc.$invalid }">
                         <span class="input-label">Descrição</span>
-                        <textarea class="form-control" ng-required="true" ng-model="vm.edited.descricao" placeholder="Edite a descrição"></textarea>
+                        <textarea name="desc" class="form-control" ng-required="true" ng-model="vm.edited.descricao" placeholder="Edite a descrição"></textarea>
                     </label>
                 </div>
-                <button class="button button-block button-positive" ng-show='EditForm.$valid' type="submit">Salvar</button>
+                <div class="form-error" ng-show="editForm.$error.required">Preencha todos os campos!</div>
+                <button class="button button-block button-positive" ng-show='editForm.$valid' type="submit">Salvar</button>
             </form>
         </div>
     </ion-content>

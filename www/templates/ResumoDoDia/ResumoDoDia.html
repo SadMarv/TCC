@@ -39,7 +39,7 @@
   <div class="bar bar-header">
       <!--Abaixo virá o nome do Aluno com a relação do Banco de Dados-->
       <h1 class="title"> {{vm.edited.__metadata.descriptives.alunos.label}}</h1>
-      <span ng-click="vm.cancelEditing()" class="ion-arrow-left-c"></span>
+      <span ng-click="vm.cancelEditing()" class="cancel-create">Cancelar</span>
   </div>
   <br><br>
   <div class="padding has-header">
@@ -47,11 +47,13 @@
         ng-submit="vm.update(vm.edited)" novalidate>
       <div class="list">
         <div class="data">{{vm.edited.data.substring(0, 23)}}</div>
-          <label class="item item-input item-stacked-label">
+          <label class="item item-input item-stacked-label" ng-class="{ 'has-error' : resumoForm.desc.$invalid }">
               <span class="input-label">Descrição</span>
-
-              <textarea class="form-control" ng-model="vm.edited.descricao" placeholder="Escreva a descrição"></textarea>
+              <textarea name="desc" class="form-control" ng-model="vm.edited.descricao" ng-required="true" placeholder="Escreva a descrição"></textarea>
           </label>
+          <div class="form-errors" ng-messages="resumoForm.desc.$error">
+            <div class="form-error" ng-message="required">Descrição Obrigatória!</div>
+          </div>
           <ul class="list">
             <li class="item item-toggle">
                <strong>Fezes</strong>
@@ -73,7 +75,7 @@
             </li>
           </ul>
       </div>
-      <button class="button button-block button-positive" type="submit">Salvar</button>
+      <button class="button button-block button-positive" ng-show="resumoForm.$valid" type="submit">Salvar</button>
     </div>
   </form>
   </div>

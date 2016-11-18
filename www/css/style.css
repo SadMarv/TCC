@@ -3,7 +3,7 @@ div.id{
 	display:none;
 }
 
-#descricaoComunic {
+#descricao{
 	font-size: 13px;
 }
 
@@ -24,7 +24,7 @@ div.id{
 }
 .cancel-create {
 	position: absolute;
-	left: 20px;
+	left: 10px;
 	font-size: 14px;
 	bottom: 13px;
 	color:#ef4e3a;
