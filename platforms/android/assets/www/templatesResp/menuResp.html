@@ -1,0 +1,31 @@
+<ion-side-menus >
+  <ion-side-menu-content>
+    <ion-nav-bar class="bar-positive">
+      <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon button-clear ion-navicon"></button>
+      </ion-nav-buttons>
+      <ion-nav-back-button></ion-nav-back-button>
+    </ion-nav-bar>
+
+
+    <ion-nav-view name="menuRespContent"></ion-nav-view>
+  </ion-side-menu-content>
+
+  <ion-side-menu side="left" ng-controller="LoginCtrl">
+    <ion-header-bar class="bar-positive">
+      <h1 class="title">Menu</h1>
+    </ion-header-bar>
+
+    <ion-content>
+      <ion-list>
+        <ion-item menu-close href="#/menuResp/homeResp"><i class="ion-android-home"></i> &nbsp;Home</ion-item>
+        <div class="item item-divider"></div>
+        <ion-item menu-close href="#/menuResp/dashboardTurmaResp">&nbsp;&nbsp;<i class="ion-edit"></i> &nbsp;Atividades de Casa</ion-item>
+        <ion-item menu-close href="#/menuResp/turmasResumoResp">&nbsp;&nbsp;<i class="ion-clipboard"></i> &nbsp;Resumo do Dia</ion-item>
+        <ion-item menu-close href="#/menuResp/turmaComunicadosResp">&nbsp;&nbsp;<i class="ion-email"></i> &nbsp;Comunicados</ion-item>
+        <ion-item menu-close href="#/menuResp/eventosResp">&nbsp;&nbsp;<i class="ion-calendar"></i> &nbsp;Eventos</ion-item>
+        <ion-item menu-close ng-click="login.signout()">&nbsp;&nbsp;<i class="ion-log-out"></i> &nbsp;Sair</ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-side-menu>
+</ion-side-menus>

@@ -28,23 +28,38 @@
     <script src="lib/angular-admobpro.js/angular-admobpro.js"></script>
     <script src="lib/ngstorage/ngStorage.min.js"></script>
     <script src="lib/angular-messages/angular-messages.min.js"></script>
+    <script src="https://api.backand.com:4000/socket.io/socket.io.js"></script>
     <script src="lib/angularbknd-sdk/dist/backand.min.js"></script>
     <script src="lib/angular-sanitize/angular-sanitize.min.js"></script>
     <script src="lib/moment/moment.js"></script>
     <script src="lib/moment/locale/pt-br.js"></script>
     <script src="lib/angular-moment/angular-moment.js"></script>
-    
+    <script src="lib/ionic-datepicker/dist/ionic-datepicker.bundle.min.js"></script>
+
 
     <!-- services -->
     <script src="js/services/utils.js"></script>
     <script src="js/services/services.js"></script>
 
-    <!--Constants -->
+    <!--Directives -->
 
     <!--Controllers -->
     <script src="js/controller/controllers.js"></script>
-
-
+    <script src="js/controller/controllersUsers.js"></script>
+    <!--Controllers de ADMIN -->
+    <script src="templates/ResumoDoDia/ResumoDoDiaAdminCtrl.js"></script>
+    <script src="templates/Comunicados/comunicadosAdminCtrl.js"></script>
+    <!--Controllers de USER -->
+    <script src="templatesUser/Turmas/turmasCtrl.js"></script>
+    <script src="templatesUser/ResumoDoDia/ResumoDoDiaCtrl.js"></script>
+    <script src="templatesUser/Atividades/atividadesCtrl.js"></script>
+    <script src="templatesUser/Comunicados/comunicadosCtrl.js"></script>
+    <script src="templatesUser/Eventos/eventosUserCtrl.js"></script>
+    <!--Controllers de RESPONSAVEL -->
+    <script src="templatesResp/Atividades/atividadesRespCtrl.js"></script>
+    <script src="templatesResp/ResumoDoDia/ResumoDoDiaRespCtrl.js"></script>
+    <script src="templatesResp/Comunicados/comunicadosRespCtrl.js"></script>
+    <script src="templatesResp/Eventos/eventosRespCtrl.js"></script>
 
   </head>
   <body ng-app="UserDirectory" class="platform-android platform-cordova platform-webview">

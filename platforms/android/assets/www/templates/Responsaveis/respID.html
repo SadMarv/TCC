@@ -1,86 +1,25 @@
-<ion-view view-title="Criar Login" ng-controller="respIDCtrl as vm">
+<ion-view view-title="{{vm.perfil.firstName}}&nbsp;{{vm.perfil.lastName}}" ng-controller="RespIDCtrl as vm">
   <ion-content>
-
-    <ion-list>
+    <label class="item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="search" placeholder="Digite o Nome do aluno ou do responsável" ng-model="searchText">
+    </label>
+    <ion-list show-reorder="reordering">
       <ion-item class="item-remove-animate item-icon-right" >
-            <h2>CPF: {{vm.perfil.cpf}}</h2>
-            <h2>Responsável: {{vm.perfil.nome}}</h2>
-            <p ng-repeat="object in vm.aluno | filter: {responsaveis: vm.perfil.id}">Filho(a): {{object.nome}}</p>
+            <h2>Responsável: {{vm.perfil.firstName}}</h2>
+            <p>Email: {{vm.perfil.email}}</p>
+            <p ng-repeat="object in vm.aluno | filter: {users:vm.perfil.id}">
+              Filho(a): {{object.nome}} |
+              Turma: {{object.__metadata.descriptives.turmas.label}}</p>
+
       </ion-item>
     </ion-list>
     <div class="item item-divider">
-      Criar Login de {{vm.perfil.nome}}
+      Turmas acessadas por {{vm.perfil.firstName}}
     </div>
-    <div>
-      <form ng-submit="vm.signup()">
-        <div ng-repeat="object in vm.aluno | filter: {responsaveis: vm.perfil.id}" class="id" ng-bind="vm.turma = (object.turmas)"></div>
-        <div class="id" ng-bind="vm.tipo = 'Responsável'"></div>
-          <div class="list">
-              <div class="row">
-                  <div class="col">
-                      <label class="item item-input">
-                          <input id="email" name="email" type="email" placeholder="Email"
-                                 ng-model="vm.email">
-                      </label>
-                  </div>
-              </div>
-              <div class="row">
-                  <div class="col">
-                      <label class="item item-input">
-                          <input id="firstname" name="firstname" type="text" placeholder="Nome"
-                                 ng-model="vm.firstName">
-                      </label>
-                  </div>
-                  <div class="col">
-                      <label class="item item-input">
-                          <input id="username" name="lastname" type="text" placeholder="Sobrenome"
-                                 ng-model="vm.lastName">
-                      </label>
-
-                  </div>
-              </div>
-              <div class="row">
-                  <div class="col">
-                      <label class="item item-input">
-                          <input id="password" name="password" type="password" placeholder="Senha"
-                                 ng-model="vm.password">
-                      </label>
-                  </div>
-              </div>
-              <div class="row">
-                  <div class="col">
-
-                      <label class="item item-input">
-                          <input id="again" name="again" type="password" placeholder="Confirme a senha"
-                                 ng-model="vm.again">
-                      </label>
-                  </div>
-              </div>
-              <div class="row">
-                  <div class="col">
-                    <select ng-model="vm.turma" >
-                      <option ng-repeat="object in vm.turmas" value="{{object.id}}">{{object.turma}}</option>
-                    </select>
-
-                  </div>
-              </div>
-
-              <h4 style="color:red;" ng-bind="vm.errorMessage"></h4>
-
-              <div class="">
-                  <button ng-click="$ionicGoBack()" class="button button-block button-stable" type="submit">
-                      Criar
-                  </button>
-              </div>
-          </div>
-      </form>
-    </div>
-  </ion-content>
-
-
-
-
-
-
-
-  </ion-view>
+    <ion-list  ng-repeat="object in vm.turmas | filter: {users_turmas:vm.perfil.id} | filter:searchText" >
+      <ion-item>
+            <p>Turma: {{object.turma}}</p>
+            <p>Periodo: {{object.periodo}}</p>
+      </ion-item>
+    </ion-list>

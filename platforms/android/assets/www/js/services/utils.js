@@ -28,7 +28,7 @@ angular.module('UserDirectory').factory('Utils', function($ionicLoading,$ionicPo
 
 		errMessage: function(err) {
 
-	    var msg = "Usuário ou senha não conferem! Por Favor entre com as credenciais cadastradas ou contacte os administradores do Agendapp.";
+	    var msg = "Usuário ou senha não conferem!";
 
 	    if(err && err.code) {
 	      switch (err.code) {

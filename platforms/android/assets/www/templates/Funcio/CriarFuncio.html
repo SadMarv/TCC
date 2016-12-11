@@ -1,0 +1,100 @@
+<ion-view cache-view="false" view-title="Criar Funcionário" ng-controller="CriarFuncioCtrl as vm">
+  <ion-content>
+    <div class="bar bar-header">
+        <h2 class="title">Insira os dados do Funcionário</h2>
+    </div>
+    <br><br>
+      <form name="loginForm" ng-submit="loginForm.$valid && vm.signup()">
+          <div class="list">
+              <div class="row">
+                  <div class="col">
+                      <label class="item item-input" >
+                          <input ng-required="true" id="firstname" name="firstname" type="text" placeholder="Nome"
+                                 ng-model="vm.firstName">
+                      </label>
+                  </div>
+              </div>
+              <div class="row">
+                <div class="col">
+
+                <label class="item item-input item-select">
+                  <div class="input-label">
+                    Função
+                  </div>
+                  <select ng-required="true" ng-model="vm.tipo">
+                    <option selected>Professor</option>
+                    <option>Coordenador</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+              <div class="row">
+                  <div class="col">
+                      <label class="item item-input" ng-class="{ 'has-error' : loginForm.txtemail.$invalid }">
+                          <input id="email"  name="txtemail" type="email" placeholder="Email"
+                                 ng-model="vm.email"
+                                 ng-minlength="5"
+                                 ng-maxlength="30"
+                                 ng-required>
+                      </label>
+                      <div class="form-errors" ng-messages="loginForm.txtemail.$error">
+                        <div class="form-error" ng-message="required">Campo obrigatório</div>
+                        <div class="form-error" ng-message="email">Digite um email válido</div>
+                        <div class="form-error" ng-message="minlength">Este campo deve ter no mínimo 5 caracteres</div>
+                        <div class="form-error" ng-message="maxlength">Este campo deve ter no máximo 30 caracteres</div>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="row">
+                  <div class="col">
+                      <label class="item item-input" ng-class="{ 'has-error' : loginForm.password.$invalid }">
+                          <input id="password" name="password" type="password" placeholder="Senha"
+                                 ng-model="vm.password"
+                                 ng-minlength="5"
+                                 ng-maxlength="30"
+                                 ng-required="true">
+                      </label>
+                      <div class="form-errors" ng-messages="loginForm.password.$error">
+                        <div class="form-error" ng-message="required">Campo obrigatório</div>
+                        <div class="form-error" ng-message="minlength">Este campo deve ter no mínimo 5 caracteres</div>
+                        <div class="form-error" ng-message="maxlength">Este campo deve ter no máximo 30 caracteres</div>
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col">
+
+                      <label class="item item-input" ng-class="{ 'has-error' : loginForm.password.$invalid }">
+                          <input id="again" name="again" type="password" placeholder="Confirme a senha"
+                                 ng-model="vm.again" ng-pattern="vm.password"
+                                 ng-minlength="5"
+                                 ng-maxlength="30"
+                                 ng-required="true">
+                      </label>
+                      <div class="form-errors" ng-messages="loginForm.again.$error">
+                        <div class="form-error" ng-message="required">Campo obrigatório</div>
+                        <div class="form-error" ng-message="pattern">A senha não é igual!</div>
+                        <div class="form-error" ng-message="minlength">Este campo deve ter no mínimo 5 caracteres</div>
+                        <div class="form-error" ng-message="maxlength">Este campo deve ter no máximo 30 caracteres</div>
+                      </div>
+                  </div>
+              </div>
+              <h4 class="form-error" ng-show="loginForm.$error.required">Informe todos os campos!</h4>
+              <div class="">
+                  <button class="button button-block button-stable" ng-show='loginForm.$valid' type="submit">
+                      Criar
+                  </button>
+              </div>
+          </div>
+      </form>
+    </div>
+  </ion-content>
+
+
+
+
+
+
+
+  </ion-view>

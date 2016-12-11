@@ -1,0 +1,45 @@
+<ion-view view-title="Resumo do Dia" ng-controller="resumoTurmasIDCtrl as vm">
+<ion-content >
+    <!-- CREATING -->
+    <div class="bar bar-header">
+        <h2 class="title">Resumo do Dia de {{vm.al.nome}}</h2>
+    </div>
+    <br><br>
+    <div class="padding has-header">
+        <form name="resumoForm" class="create-form" role="form"
+              ng-submit="vm.create(vm.newObject)" novalidate>
+            <div class="list">
+                  <div class="id" ng-bind="vm.newObject.alunos = (vm.aluno)"></div>
+                  <div class="data" ng-bind="vm.newObject.data = date.substring(0, 22)"></div>
+                <label class="item item-input item-stacked-label" ng-class="{ 'has-error' : resumoForm.desc.$invalid }">
+                    <span class="input-label">Descrição</span>
+                    <textarea name="desc" class="form-control" ng-required="true" ng-model="vm.newObject.descricao" placeholder="Escreva a descrição"></textarea>
+                </label>
+                <div class="form-errors" ng-messages="resumoForm.desc.$error">
+                  <div class="form-error" ng-message="required">Descrição Obrigatória!</div>
+                </div>
+                <ul class="list">
+                  <li class="item item-toggle">
+                     <strong>Fezes</strong>
+                     <label class="toggle toggle-positive">
+                       <input ng-model="vm.newObject.fezes" ng-init="vm.newObject.fezes = 'Não'" ng-true-value="'Sim'" ng-false-value="'Não'"  type="checkbox">
+                       <div class="track">
+                         <div class="handle"></div>
+                       </div>
+                     </label>
+                  </li>
+                  <li class="item item-toggle">
+                     <strong>Refeição</strong>
+                     <label class="toggle toggle-positive">
+                       <input ng-model="vm.newObject.refeicao" ng-init="vm.newObject.refeicao = 'Não'" ng-true-value="'Sim'" ng-false-value="'Não'"  type="checkbox">
+                       <div class="track">
+                         <div class="handle"></div>
+                       </div>
+                     </label>
+                  </li>
+                </ul>
+            </div>
+            <button ng-click="$ionicGoBack()" class="button button-block button-positive" ng-show="resumoForm.$valid" type="submit">Criar</button>
+        </form>
+    </div>
+</ion-content>

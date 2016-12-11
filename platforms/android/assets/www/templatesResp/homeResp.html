@@ -1,0 +1,24 @@
+<ion-view cache-view="false" view-title="Home" ng-controller="homeCtrl as vm">
+  <ion-content>
+    <div class="card">
+    <div class="item item-avatar">
+    <img src="img/avatar.png">
+    <h2 ng-bind='vm.fullName'></h2>
+    <p ng-repeat="object in vm.data | filter: {id: vm.userID}">{{object.tipo}}</p>
+  </div>
+  </div>
+  &nbsp;&nbsp;&nbsp;
+  <a class="button button-block" href="#/menuResp/dashboardTurmaResp">
+    Atividades
+  </a>
+  <a class="button button-block" href="#/menuResp/turmasResumoResp">
+    Resumo do Dia
+  </a>
+  <a class="button button-block" href="#/menuResp/turmaComunicadosResp">
+    Comunicados
+  </a>
+  <a class="button button-block" href="#/menuResp/eventosResp">
+    Eventos
+  </a>
+  </ion-content>
+</ion-view>

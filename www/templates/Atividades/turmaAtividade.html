@@ -20,7 +20,7 @@
              ng-class="{'active':vm.isCurrent(object.id)}">
             <div  class="item item-icon-right item-icon-left">
                 <i class="ion-compose icon" ng-click="vm.setEdited(object)"></i>
-                <p class="text-center">Data de Entrega: {{object.data | date: 'dd/MM/yyyy'}}</p>
+                <p class="text-center">Entrega: {{object.data | date: 'dd/MM/yyyy'}}</p>
                 <h3 class="text-center"><b>{{object.name}}</b></h3>
                 <br>
                 <i class="icon ion-close-round" ng-click="vm.delete(object.id)"></i>
@@ -63,8 +63,7 @@
                   </label>
                   <label class="item item-input item-stacked-label" ng-class="{ 'has-error' : ativForm.data.$invalid }">
                       <span class="input-label">Data de Entrega</span>
-                      <input name="data" type="date" class="form-control" ng-required="true" ng-model="vm.newObject.data" placeholder="Digite a data">
-                      </input>
+                      <div name="data"  ng-required="true" ng-bind="vm.newObject.data = selected" placeholder="Selecione a data"></div><button id="databotao" type="button" ng-click="date(val)" ng-model="selected"></button>
                   </label>
               </div>
                 <div class="form-error" ng-show="ativForm.$error.required">Preencha todos os campos!</div>

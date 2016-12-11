@@ -1,4 +1,4 @@
-<ion-view cache-view="false" view-title="Resumo do Dia" ng-controller="resumoCtrl as vm">
+<ion-view cache-view="false" view-title="Resumo do Dia" ng-controller="resumoTurmasIDCtrl as vm">
 
   <div ng-if="!vm.isEditing">
   <ion-content>
@@ -7,7 +7,7 @@
         <input type="search" placeholder="Digite data ou nome do aluno. Ex: qua, 2 de nov" ng-model="searchText">
     </label>
     <div class="padding has-header">
-        <div class="list card" ng-repeat="object in vm.data | filter:searchText"
+        <div class="list card" ng-repeat="object in vm.resumo | filter:searchText | filter:{alunos:vm.al.id}"
              ng-class="{'active':vm.isCurrent(object.id)}">
             <div class="item item-icon-right item-icon-left">
                 <i class="ion-compose icon" ng-click="vm.setEdited(object)"></i>
@@ -39,19 +39,21 @@
   <div class="bar bar-header">
       <!--Abaixo virá o nome do Aluno com a relação do Banco de Dados-->
       <h1 class="title"> {{vm.edited.__metadata.descriptives.alunos.label}}</h1>
-      <span ng-click="vm.cancelEditing()" class="ion-arrow-left-c"></span>
+      <span ng-click="vm.cancelEditing()" class="cancel-create">Cancelar</span>
   </div>
   <br><br>
   <div class="padding has-header">
   <form name="resumoForm" class="create-form" role="form"
         ng-submit="vm.update(vm.edited)" novalidate>
       <div class="list">
-        <div class="data">{{vm.edited.data.substring(0, 21)}}</div>
-          <label class="item item-input item-stacked-label">
+        <div class="data">{{vm.edited.data.substring(0, 23)}}</div>
+          <label class="item item-input item-stacked-label" ng-class="{ 'has-error' : resumoForm.desc.$invalid }">
               <span class="input-label">Descrição</span>
-
-              <textarea class="form-control" ng-model="vm.edited.descricao" placeholder="Escreva a descrição"></textarea>
+              <textarea name="desc" class="form-control" ng-model="vm.edited.descricao" ng-required="true" placeholder="Escreva a descrição"></textarea>
           </label>
+          <div class="form-errors" ng-messages="resumoForm.desc.$error">
+            <div class="form-error" ng-message="required">Descrição Obrigatória!</div>
+          </div>
           <ul class="list">
             <li class="item item-toggle">
                <strong>Fezes</strong>
@@ -73,7 +75,7 @@
             </li>
           </ul>
       </div>
-      <button class="button button-block button-positive" type="submit">Salvar</button>
+      <button class="button button-block button-positive" ng-show="resumoForm.$valid" type="submit">Salvar</button>
     </div>
   </form>
   </div>

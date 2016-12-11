@@ -4,14 +4,14 @@
   <ion-content>
     <label class="item item-input">
         <i class="icon ion-search placeholder-icon"></i>
-        <input type="text" placeholder="Digite o Título do Evento" ng-model="searchText">
+        <input type="search" placeholder="Digite a data ou o nome do evento" ng-model="searchText">
     </label>
     <div class="padding has-header">
         <div class="list card" ng-repeat="object in vm.data | filter:searchText"
              ng-class="{'active':vm.isCurrent(object.id)}">
             <div class="item item-icon-right item-icon-left">
                 <i class="ion-compose icon" ng-click="vm.setEdited(object)"></i>
-                <p class="text-center">Data do Evento: {{object.data | date: 'dd/MM/yyyy'}}</p>
+                <p class="text-center">Evento: {{object.data}}</p>
                 <h3 class="text-center"><b>{{object.titulo}}</b></h3>
                 <br>
                 <i class="icon ion-close-round" ng-click="vm.delete(object.id)"></i>
@@ -55,14 +55,20 @@
                           <span class="input-label">Descrição</span>
                           <textarea name="desc" class="form-control" ng-required="true" ng-model="vm.newObject.descricao" placeholder="Escreva a descrição"></textarea>
                       </label>
+
                       <label class="item item-input item-stacked-label" ng-class="{ 'has-error' : eventForm.data.$invalid }">
                           <span class="input-label">Data</span>
-                          <input name="data" type="date" class="form-control" ng-required="true" ng-model="vm.newObject.data" placeholder="Selecione a data"></input>
+                          <div name="data"  ng-required="true" ng-bind="vm.newObject.data = selected" placeholder="Selecione a data"></div><button id="databotao" type="button" ng-click="date(val)" ng-model="selected"></button>
+
+
+
+
                       </label>
                   </div>
                   <div class="form-error" ng-show="eventForm.$error.required">Preencha todos os campos!</div>
                   <button class="button button-block button-positive" ng-show="eventForm.$valid" type="submit">Criar</button>
               </form>
+
           </div>
       </ion-content>
   </div>

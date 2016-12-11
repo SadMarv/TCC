@@ -6,7 +6,7 @@
 
 (function(){
 
-  app = angular.module('UserDirectory', ['ionic', 'backand', 'UserDirectory.services', 'UserDirectory.controllers', 'ngSanitize', 'ngStorage', 'ngCordova', 'ngMessages', 'ui.router','angularMoment']);
+  app = angular.module('UserDirectory', ['ionic', 'backand', 'UserDirectory.services', 'UserDirectory.controllers', 'ngSanitize', 'ngStorage', 'ngCordova', 'ngMessages', 'ui.router','angularMoment','ionic-datepicker']);
 
 
   app.run(function ($ionicPlatform, $rootScope, $state, LoginService, Backand, Utils) {
@@ -69,6 +69,27 @@
 
 
     })
+
+    app.config(function (ionicDatePickerProvider) {
+    var datePickerObj = {
+      inputDate: new Date(),
+      setLabel: 'Selecionar',
+      todayLabel: 'Hoje',
+      closeLabel: 'Fechar',
+      mondayFirst: false,
+      weeksList: ["D", "S", "T", "Q", "Q", "S", "S"],
+      weekDaysList:["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
+      monthsList: ["Jan", "Fev", "Mar", "Abril", "Maio", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
+      templateType: 'popup',
+      from: new Date(2012, 8, 1),
+      to: new Date(2018, 8, 1),
+      showTodayButton: false,
+      dateFormat: 'dd MMMM yyyy',
+      closeOnSelect: false,
+      disableWeekdays: [6],
+    };
+    ionicDatePickerProvider.configDatePicker(datePickerObj);
+  })
 
   app.config(function (BackandProvider, $stateProvider, $urlRouterProvider, $httpProvider) {
 

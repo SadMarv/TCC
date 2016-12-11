@@ -42,7 +42,7 @@ app = angular.module('UserDirectory.services', [])
         }
     })
 
-    
+
 
 
     app.service('itemsAtiv', function ($http, Backand) {

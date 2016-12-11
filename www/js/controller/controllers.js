@@ -1,4 +1,4 @@
-app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
+app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize','ionic-datepicker'])
 
     app.controller('LoginCtrl', function (Backand, $state, $rootScope, users, LoginService, $stateParams, Utils) {
             var login = this;
@@ -214,12 +214,39 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
 
 
 
-      app.controller('eventosCtrl', function (eventos, $scope, $ionicPopup, Utils, $log) {
+      app.controller('eventosCtrl', function (eventos, ionicDatePicker, $scope, $ionicPopup, Utils, $log) {
           var vm = this;
 
+          $scope.selected;
+         vm.selected = delete $scope.selected;
+         //$scope.date = new Date();
 
-         $scope.date = new Date();
-
+      $scope.date = function(val){
+        var options = {weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' }
+         var ipObj1 = {
+      callback: function (val) {  //Mandatory
+        console.log('Return value from the datepicker popup is : ' +  new Date(val));
+        $scope.selected = new Date(val).toLocaleDateString('pt-BR',options)
+      },
+        disabledDates: [
+          new Date(2016, 2, 16),
+          new Date(2015, 3, 16),
+          new Date(2015, 4, 16),
+          new Date(2015, 5, 16),
+          new Date('Wednesday, August 13, 2015'),
+          new Date("08-16-2016"),
+          new Date(1439676000000)
+        ],
+        from: new Date(2012, 1, 1),
+        to: new Date(2018, 10, 30),
+        inputDate: new Date(),
+        mondayFirst: true,
+        disableWeekdays: [],
+        closeOnSelect: false,
+        templateType: 'popup'
+    };
+    ionicDatePicker.openDatePicker(ipObj1);
+  };
 
 
 
@@ -1081,10 +1108,39 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize'])
             getAlunoID($stateParams.id);
           });
 
-      app.controller('AtividadesIDCtrl', function(turmas, itemsAtiv, $stateParams, $state, $scope, $log, $ionicActionSheet, $ionicPopup, $location, $filter, moment, Utils) {
+      app.controller('AtividadesIDCtrl', function(turmas, itemsAtiv, $stateParams, ionicDatePicker, $state, $scope, $log, $ionicActionSheet, $ionicPopup, $location, $filter, moment, Utils) {
         var vm = this;
 
-        $scope.date = moment().format('llll');
+        $scope.selected;
+       vm.selected = delete $scope.selected;
+       //$scope.date = new Date();
+
+    $scope.date = function(val){
+      var options = {weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' }
+       var ipObj1 = {
+    callback: function (val) {  //Mandatory
+      console.log('Return value from the datepicker popup is : ' +  new Date(val));
+      $scope.selected = new Date(val).toLocaleDateString('pt-BR',options)
+    },
+      disabledDates: [
+        new Date(2016, 2, 16),
+        new Date(2015, 3, 16),
+        new Date(2015, 4, 16),
+        new Date(2015, 5, 16),
+        new Date('Wednesday, August 13, 2015'),
+        new Date("08-16-2016"),
+        new Date(1439676000000)
+      ],
+      from: new Date(2012, 1, 1),
+      to: new Date(2018, 10, 30),
+      inputDate: new Date(),
+      mondayFirst: true,
+      disableWeekdays: [],
+      closeOnSelect: false,
+      templateType: 'popup'
+  };
+  ionicDatePicker.openDatePicker(ipObj1);
+};
 
 
 
