@@ -102,13 +102,17 @@
       BackandProvider.setAppName('tcc3agendapp1');
       BackandProvider.setSignUpToken('6cb9b63a-6151-43ef-9f35-ec75d8438d02');
       BackandProvider.setAnonymousToken('9fc0a5a0-b2c8-41ad-a29d-8aca9e14fc2b');
-      */
+
       BackandProvider.setAppName('tcc2agendapp');
       BackandProvider.setSignUpToken('f090cf74-1ff0-409b-9150-9e0332598537');
       BackandProvider.setAnonymousToken('a9b3a3d5-b2f7-41fc-8add-504670226a05');
 
       //BackandProvider.runSocket(true);
+      */
 
+      BackandProvider.setAppName('tcctst');
+      BackandProvider.setSignUpToken('77bb58e6-f37b-4fde-a3a8-1a568b0728c6');
+      BackandProvider.setAnonymousToken('0f6ce794-c3bf-4437-8e40-d85e864f24cb');
 
    });
 

@@ -98,7 +98,11 @@
             </label>
             <label class="item item-input item-stacked-label" ng-class="{ 'has-error' : editForm.data.$invalid }">
                 <span class="input-label">Data</span>
-                <input name="data" type="date" class="form-control" ng-required="true" ng-model="vm.edited.data" placeholder="Selecione a data"></input>
+                <div name="data"  ng-required="true" ng-bind="vm.edited.data = selected" placeholder="Selecione a data"></div><button id="databotao" type="button" ng-click="date(val)" ng-model="selected"></button>
+
+
+
+
             </label>
         </div>
         <div class="form-error" ng-show="editForm.$error.required">Preencha todos os campos!</div>

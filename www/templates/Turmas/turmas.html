@@ -51,7 +51,7 @@
       </label>
       <label class="item item-input item-floating-label" ng-class="{ 'has-error' : createForm.ano.$invalid }">
 				<span class="input-label"><b>Ano</b></span>
-				<input name="ano" type="text" placeholder="Ano" ng-minlength="4"  ng-maxlength="4" ng-required="true" ng-model="vm.newObject.ano || date" ></input>
+				<input name="ano" type="text" placeholder="Ano" ng-minlength="4"  ng-maxlength="4" ng-required="true" ng-model="vm.newObject.ano" ></input>
 			</label>
       <div class="form-errors" ng-messages="createForm.ano.$error">
         <div class="form-error" ng-message="minlength">Por favor, insira o ano</div>

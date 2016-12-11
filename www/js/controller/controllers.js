@@ -737,6 +737,7 @@ app = angular.module('UserDirectory.controllers', ['ngMessages', 'ngSanitize','i
         var vm = this;
 
         $scope.date = moment().format('YYYY');
+
         // GET an single task with all its users
         function readOne() {
             return $http({
